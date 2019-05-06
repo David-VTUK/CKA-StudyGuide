@@ -238,7 +238,7 @@ sudo nano /etc/kubernetes/manifests/kube-apiserver.yaml
 ```
 
 
-**To **
+**To**
 
 
 ```
