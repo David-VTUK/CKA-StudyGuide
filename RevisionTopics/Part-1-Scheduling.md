@@ -1,6 +1,6 @@
 
 
-**<span style="text-decoration:underline;">CKA Curriculum V1.12.0 Part 1 - Scheduling</span>**
+**<span style="text-decoration:underline;">CKA Curriculum Part 1 - Scheduling</span>**
 
 **<span style="text-decoration:underline;"> \
 Use labelselectors to schedule Pods.</span>**
