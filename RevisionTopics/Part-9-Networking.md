@@ -1,5 +1,5 @@
 
-**<span style="text-decoration:underline;">CKA Curriculum part 9 - Networking</span>**
+**<span style="text-decoration:underline;">CKA Curriculum Part 9 - Networking</span>**
 
 **<span style="text-decoration:underline;">Understand the networking configuration on cluster nodes</span>**
 
