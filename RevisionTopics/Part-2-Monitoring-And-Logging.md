@@ -1,5 +1,5 @@
 
-**<span style="text-decoration:underline;">CKA Curriculum V1.13.0 Part 2 - Logging and Monitoring</span>**
+**<span style="text-decoration:underline;">CKA Curriculum Part 2 - Logging and Monitoring</span>**
 
 **<span style="text-decoration:underline;">Understand how to monitor all cluster components</span>**
 
