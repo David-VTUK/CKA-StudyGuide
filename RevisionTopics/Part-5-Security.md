@@ -1,6 +1,6 @@
 
 
-**<span style="text-decoration:underline;">CKA Curriculum V1.12.0 Part 5 - Security</span>**
+**<span style="text-decoration:underline;">CKA Curriculum Part 5 - Security</span>**
 
 **<span style="text-decoration:underline;">Know how to configure authentication and authorization</span>**
 
