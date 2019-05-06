@@ -1,4 +1,6 @@
 
+**<span style="text-decoration:underline;">CKA Curriculum Part 4 - Cluster/span>**
+
 **<span style="text-decoration:underline;">Understand the Kubernetes cluster upgrade process</span>**
 
 Kubeadm is likely going to be the tool of choice to upgrade a Kubernetes cluster. Firstly, define the version you wish to upgrade to, or find the latest stable release:
