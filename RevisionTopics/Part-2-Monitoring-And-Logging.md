@@ -69,6 +69,12 @@ Or
 cat /var/log/kube-apiserver.log
 ```
 
+Or for instances where Kube-APIserver is running as a static pod:
+
+```
+kubectl logs kube-apiserver-k8s-master-03 -n kube-system
+```
+
 
 **<span style="text-decoration:underline;">Kube-Scheduler</span>**
 
@@ -85,6 +91,12 @@ Or
 
 ```
 cat /var/log/kube-scheduler.log
+```
+
+Or for instances where Kube-Scheduler is running as a static pod:
+
+```
+kubectl logs kube-scheduler-k8s-master-03 -n kube-system
 ```
 
 
@@ -105,6 +117,12 @@ Or
 cat /var/log/kube-controller-manager.log
 ```
 
+
+Or for instances where Kube-controller manager is running as a static pod:
+
+```
+kubectl logs kube-controller-manager-k8s-master-03 -n kube-system
+```
 
 
 # Worker Node(s)
