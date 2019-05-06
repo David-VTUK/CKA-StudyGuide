@@ -1,6 +1,6 @@
 
 
-**<span style="text-decoration:underline;">CKA Curriculum part 8 - Core Concepts</span>**
+**<span style="text-decoration:underline;">CKA Curriculum Part 8 - Core Concepts</span>**
 
 **<span style="text-decoration:underline;">Understand the Kubernetes API primitives</span>**
 
