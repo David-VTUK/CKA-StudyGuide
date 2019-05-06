@@ -8,12 +8,7 @@ Pods, and by extension containers require storage. Without explicitly defining a
 
 Two key ingredients are required to leverage the inherent storage capabilities within Kubernetes, PersistentVolume and PersistentVolumeClaim. Top level process is illustrated below:
 
-
-
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/CKA-Curriculum0.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/CKA-Curriculum0.png "image_tooltip")
+![alt_text](https://i.imgur.com/XhRo882.png "image_tooltip")
 
 
 **<span style="text-decoration:underline;">1 - Create storage</span>**
