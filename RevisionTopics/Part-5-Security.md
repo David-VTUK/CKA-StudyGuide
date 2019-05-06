@@ -6,19 +6,12 @@
 
 We’re basically talking about RBAC here.
 
-
-
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/CKA-Curriculum0.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/CKA-Curriculum0.png "image_tooltip")
+![alt_text](https://i.imgur.com/6SSUpmJ.png "image_tooltip")
 
 
 **<span style="text-decoration:underline;">Step 1 - Authentication</span>**
 
 First step is Authentication which is how a user or service account identifies itself. Depending on the source, a respective authentication module is used. Authentication modules include the ability to authenticate from:
-
-
 
 *   Client Certificate
 *   Password
