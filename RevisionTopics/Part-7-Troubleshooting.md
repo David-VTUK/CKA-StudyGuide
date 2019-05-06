@@ -1,6 +1,6 @@
 
 
-**<span style="text-decoration:underline;">CKA Curriculum V1.12.0 Part 7 - Troubleshooting</span>**
+**<span style="text-decoration:underline;">CKA Curriculum Part 7 - Troubleshooting</span>**
 
 **<span style="text-decoration:underline;">Troubleshoot application failure</span>**
 
