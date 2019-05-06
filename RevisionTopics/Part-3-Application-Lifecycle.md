@@ -1,5 +1,5 @@
 
-**<span style="text-decoration:underline;">CKA Curriculum V1.12.0 Part 3 - Application Lifecycle Management</span>**
+**<span style="text-decoration:underline;">CKA Curriculum Part 3 - Application Lifecycle Management</span>**
 
 **<span style="text-decoration:underline;">Understand deployments and how to perform rolling updates and rollbacks</span>**
 
