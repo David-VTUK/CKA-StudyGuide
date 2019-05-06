@@ -1,5 +1,5 @@
 
-**<span style="text-decoration:underline;">CKA Curriculum Part 4 - Cluster /span>**
+**<span style="text-decoration:underline;">CKA Curriculum Part 4 - Cluster</span>**
 
 **<span style="text-decoration:underline;">Understand the Kubernetes cluster upgrade process</span>**
 
