@@ -17,7 +17,7 @@ This is highly dependent on the infrastructure the Kubernetes environment is dep
 
 **Azure** - Azure File, Azure DIsk
 
-**Amazon ** - awsElasticBlockStore
+**Amazon** - awsElasticBlockStore
 
 **GCP** - GCEPersistentDIsk
 
