@@ -21,12 +21,7 @@ Quite a large subject to cover, but is well documented at [https://github.com/ku
     *   Kubelet
     *   Container runtime (Docker, RKT, containerd, etc)
 
-
-
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/CKA-Curriculum0.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/CKA-Curriculum0.png "image_tooltip")
+![alt_text](https://i.imgur.com/wXKjYGD.png "image_tooltip")
 
 
 **<span style="text-decoration:underline;">ETCD</span>**
