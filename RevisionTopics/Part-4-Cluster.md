@@ -113,7 +113,12 @@ sudo install -o root -g root -m 0755 ./kubelet /usr/bin/kubelet
 sudo systemctl restart kubelet.service
 ```
 
-
+Alternatively, use apt:
+```
+apt-mark unhold kubelet && \
+apt-get update && apt-get install -y kubelet=1.14.x-00 kubectl=1.14.x-00 && \
+apt-mark hold kubelet
+```
 **<span style="text-decoration:underline;">Facilitate Operating System Upgrades</span>**
 
 Occasionally upgrades have to be made to the underlying host that’s facilitating your pods. To do this in a graceful way, we can do the following.
