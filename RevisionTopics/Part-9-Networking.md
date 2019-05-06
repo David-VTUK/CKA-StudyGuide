@@ -78,7 +78,7 @@ Ingress exposes HTTP and HTTPS routes from outside the cluster to services withi
 <p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/CKA-Curriculum1.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
-![alt_text](images/CKA-Curriculum1.png "image_tooltip")
+![alt_text](https://i.imgur.com/NpS5ucy.png "image_tooltip")
 
 
 The following yaml creates two ingress rules for the website foo.bar.com
