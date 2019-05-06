@@ -3,7 +3,7 @@ The following guide is based on the Certified Kubernetes Administrator Exam Curr
 
 ### [Revision Topics](https://github.com/David-VTUK/CKA-StudyGuide/tree/master/RevisionTopics)
 
-Notes procured from revising the topics listed in the curriculum, grouped to reflect the sections listed in the curriculum
+Notes from revising the topics listed in the curriculum, grouped to correlate to the various sections listed in the curriculum.
 
 ### [Lab Guide](https://github.com/David-VTUK/CKA-StudyGuide/tree/master/LabGuide)
 
