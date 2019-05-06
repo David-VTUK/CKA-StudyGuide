@@ -16,7 +16,7 @@ Upgrade a Kubernetes cluster running a previous version to the latest version
 
 
 
-*   **Gracefully **remove a node from active service
+*   **Gracefully** remove a node from active service
     *   Verify the node has scheduling disabled
 *   Gracefully return a node into active service
     *   Verify the node has scheduling enabled 
