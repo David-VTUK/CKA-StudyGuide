@@ -5,6 +5,7 @@
 
 ![alt_text](https://i.imgur.com/8aeg5BL.png "image_tooltip")
 
+Image source: http://www.kubernet.io/networking_cka_1.9.0.html
 
 If configuring nodes from scratch, typically the only interface that the user creates is eth0. The installation of Kubernetes, Docker and a CNI will create additional interfaces 
 
