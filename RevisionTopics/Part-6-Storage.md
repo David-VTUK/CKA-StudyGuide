@@ -1,6 +1,6 @@
 
 
-**<span style="text-decoration:underline;">CKA Curriculum part 6 - Storage</span>**
+**<span style="text-decoration:underline;">CKA Curriculum Part 6 - Storage</span>**
 
 **<span style="text-decoration:underline;">Understand persistent volumes and know how to create them</span>**
 
