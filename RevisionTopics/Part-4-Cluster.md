@@ -27,6 +27,14 @@ Install Kubeadm
 sudo install -o root -g root -m 0755 ./kubeadm /usr/bin/kubeadm
 ```
 
+Alternatively, use apt
+
+```
+apt-mark unhold kubeadm && \
+apt-get update && apt-get install -y kubeadm=1.14.x-00 && \
+apt-mark hold kubeadm
+```
+
 
 Then, execute a upgrade plan
 
