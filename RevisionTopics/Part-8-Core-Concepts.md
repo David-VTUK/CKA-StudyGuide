@@ -68,6 +68,6 @@ Services are categorised into the following types:
 
 **ClusterIP** - Exposes the service on a IP address that is only accessible internally. Unless explicitly defined in the service yaml file, this is the default type.
 
-**NodePort - **Exposes the service on each worker node’s IP address (non docker bridge) over a static port. This is accessible externally from the cluster.
+**NodePort** - Exposes the service on each worker node’s IP address (non docker bridge) over a static port. This is accessible externally from the cluster.
 
 **Load Balancer** - Exposes the service externally using a **cloud provider’s** load balancer. As implied, the cloud provider must support this functionality.
