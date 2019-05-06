@@ -3,12 +3,7 @@
 
 **<span style="text-decoration:underline;">Understand the networking configuration on cluster nodes</span>**
 
-
-
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/CKA-Curriculum0.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/CKA-Curriculum0.png "image_tooltip")
+![alt_text](https://i.imgur.com/8aeg5BL.png "image_tooltip")
 
 
 If configuring nodes from scratch, typically the only interface that the user creates is eth0. The installation of Kubernetes, Docker and a CNI will create additional interfaces 
