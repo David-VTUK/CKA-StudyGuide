@@ -20,3 +20,5 @@ http://www.kubernet.io/
 https://github.com/kelseyhightower/kubernetes-the-hard-way
 
 https://linuxacademy.com
+
+https://kubernetes.io/docs/
