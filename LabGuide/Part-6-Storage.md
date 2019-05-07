@@ -13,7 +13,7 @@ Create a PV in your environment 1GB in size. Pick a type suitable for your lab:
 *   Azure Disk
 *   Etc
 
-Ensure it is capable of bein both read and written to.
+Ensure it is capable of being both read and written to.
 
 **<span style="text-decoration:underline;">Lab 2 - Modify PV</span>**
 
