@@ -13,7 +13,7 @@ To complement the revision topics, these lab guides are designed to exercise the
 
 These list potential solutions to the tasks listed in the respective lab exercises. **Note:** these provide **one** way of approaching the exercises. There are a number of ways to achieve the same goal. 
 
-### Resources
+### Resources / References
 
 http://www.kubernet.io/
 
