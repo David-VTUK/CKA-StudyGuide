@@ -135,7 +135,7 @@ kubectl apply -f https://raw.githubusercontent.com/David-VTUK/CKAExampleYaml/mas
 
 
 
-*   Gather the events from a given pod from this deployment
+*   Gather the events from a given pod from this deployment:
 
 
 ```
