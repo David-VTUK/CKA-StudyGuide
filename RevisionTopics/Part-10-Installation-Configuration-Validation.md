@@ -62,7 +62,7 @@ apt-get install -y kubelet kubeadm kubectl
 apt-mark hold kubelet kubeadm kubectl
 ~~~
 
-Inititalise a the master node:
+Initialise a the master node:
 ~~~
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ~~~
