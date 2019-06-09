@@ -22,3 +22,7 @@ https://github.com/kelseyhightower/kubernetes-the-hard-way
 https://linuxacademy.com
 
 https://kubernetes.io/docs/
+
+### Contact
+
+Twitter = @VT_UK
