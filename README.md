@@ -11,7 +11,7 @@ To complement the revision topics, these lab guides are designed to exercise the
 
 ### [Lab Guide - Answers](https://github.com/David-VTUK/CKA-StudyGuide/tree/master/LabGuideAnswers)
 
-These list potential solutions to the tasks listed in the respective lab exercises. **Note:** these provide **one** way of approaching the exercises. There are a number of ways to achieve the same goal. 
+These list potential solutions to the tasks listed in the respective lab exercises. **Note:** these provide **one** way of approaching the exercises. There are a number of ways to achieve the same goal.
 
 ### Resources / References
 
