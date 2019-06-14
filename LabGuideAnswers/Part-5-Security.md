@@ -101,22 +101,22 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
- name: rbac-test-clusterrole
+ name: cluster-role-secretadmin
 rules:
  - apiGroups: [""]
    resources: ["secret"]
    verbs: ["get", "list", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
  name: rbac-test-clusterRolebinding
 roleRef:
  apiGroup: rbac.authorization.k8s.io
- kind: Role
- name: rbac-test-clusterrole
+ kind: ClusterRole
+ name: cluster-role-secretadmin
 subjects:
-- kind: ServiceAccount
+- kind: User
  name: cluster-user-secretadmin
 ```
 
