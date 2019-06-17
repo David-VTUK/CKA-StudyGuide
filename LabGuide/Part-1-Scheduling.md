@@ -57,7 +57,7 @@ Validate the pod is using this scheduler.
 
 **<span style="text-decoration:underline;">Lab Activity 5 - Schedule Pod without a scheduler</span>**
 
-One one of the worker nodes:
+On one of the worker nodes:
 
 Create a the directory /etc/staticpods
 
