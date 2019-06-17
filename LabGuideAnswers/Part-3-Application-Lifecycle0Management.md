@@ -107,7 +107,7 @@ db_h.txt with the contents “database_host”
 
 db_p.txt with the contents “database_port”
 
-Create a configmap called “db_connection” from the above two files.
+Create a configmap called “dbconnection” from the above two files.
 
 Create a nginxpod which leverages these values as environment variables “db_h” and “db_p”
 
