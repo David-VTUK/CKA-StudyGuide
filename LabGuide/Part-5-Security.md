@@ -13,7 +13,7 @@ Implement the following:
     *   Get
     *   Watch
     *   List
-*   Bind the “rbac-test-a” service account to the “rbac-test-role” role
+*   Bind the “rbac-test-sa” service account to the “rbac-test-role” role
 *   Test RBAC is working by trying to do something the service account is not authorised to do
 
 **<span style="text-decoration:underline;">Lab 2 - RBAC within a cluster</span>**
