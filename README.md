@@ -23,6 +23,12 @@ https://linuxacademy.com
 
 https://kubernetes.io/docs/
 
+https://kubernetes.io/docs/tasks/
+
+### Lab Environments
+
+https://kubernetes.io/docs/setup/learning-environment/minikube/
+
 ### Contact
 
 Twitter = @VT_UK
