@@ -59,7 +59,7 @@ Validate the pod is using this scheduler.
 
 On one of the worker nodes:
 
-Create a the directory /etc/staticpods
+Create the directory /etc/staticpods
 
 Create a pod manifest file in this directory
 
@@ -67,14 +67,16 @@ Configure the kubelet service on this worker node to create pods from /etc/stati
 
 **<span style="text-decoration:underline;">Lab Activity 6 - Display Scheduler Events</span>**
 
-Create a pod manifest file using the nginx image which will create a pod called “nginx-web” (Alternatively do this via kubectl run)
+Create a pod manifest file using the nginx image which will create a pod called “nginx-web” (Alternatively do this via `kubectl run`)
 
-Extract the events from the cluster, particularly those pertaining to scheduling to find where this pod was scheduled to.
+Extract the events from the cluster, particularly those pertaining to scheduling to find where this pod was scheduled.
 
 Extract the logs from the pod running the default scheduler, or from the respective file if running as a deamon service on your master node.
 
 **<span style="text-decoration:underline;">Lab Activity 7 - Know how to configure the Kubernetes Scheduler</span>**
 
+Configure the Kube-Scheduler by adding `--logtostderr=true` to the existing configuration.
+=======
 Configure the Kube-Scheduler by adding --logtostderr=true to the existing configuration.
 
 **<span style="text-decoration:underline;">Lab Activity 8 - Taints</span>**
@@ -94,3 +96,4 @@ Place additional taints on the node
 [Resource Policies](https://kubernetes.io/docs/concepts/policy)
 [Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling/kube-scheduler/)
 [Taints and Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)
+
