@@ -270,3 +270,52 @@ spec:
 	- --kubeconfig=/etc/kubernetes/scheduler.conf
 	- --leader-elect=true
 	- --logtostderr=true
+
+```
+
+**<span style="text-decoration:underline;">Lab Activity 8 - Taints</span>**
+
+Add taint a node 
+
+```
+kubectl taint nodes node-01 available=no:NoExecute
+```
+
+Pod manifest with tolerations
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: activity-8
+spec:
+  containers:
+  - name: activity-8-ctr
+    image: nginx
+  tolerations:
+  - key: "key"
+    operator: "Equal"
+    value: "value"
+    effect: "NoExecute"
+```
+
+Observe behaviour by applying manifest and using `kubectl get pods -o wide` to view placement of new pod or existance of existing pod.
+
+Pod manifest with tolerationSeconds
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: activity-8
+spec:
+  containers:
+  - name: activity-8-ctr
+    image: nginx
+  tolerations:
+  - key: "key"
+    operator: "Equal"
+    value: "value"
+    effect: "NoExecute"
+    tolerationSeconds: 15
+```

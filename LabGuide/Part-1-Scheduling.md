@@ -76,3 +76,21 @@ Extract the logs from the pod running the default scheduler, or from the respect
 **<span style="text-decoration:underline;">Lab Activity 7 - Know how to configure the Kubernetes Scheduler</span>**
 
 Configure the Kube-Scheduler by adding --logtostderr=true to the existing configuration.
+
+**<span style="text-decoration:underline;">Lab Activity 8 - Taints</span>**
+
+Place a taint on a node
+
+Configure a pod with a toleration for the new taint and observe scheduling behaviour
+
+Modify toleration effects and observe scheduling behaviour
+
+Add tolerationSeconds to the pods toleration spec
+
+Place additional taints on the node 
+
+**<span style="text-decoration:underline;">Additional References</span>**
+
+[Resource Policies](https://kubernetes.io/docs/concepts/policy)
+[Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling/kube-scheduler/)
+[Taints and Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)
