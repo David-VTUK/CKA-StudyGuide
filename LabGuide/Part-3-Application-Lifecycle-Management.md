@@ -48,7 +48,7 @@ db_p.txt with the contents “database_port”
 
 Create a configmap called “db-connection” from the above two files.
 
-Create a nginxpod which leverages these values as environment variables “db_h” and “db_p”
+Create a nginx pod which leverages these values as environment variables “db_h” and “db_p”
 
 **<span style="text-decoration:underline;">Lab 7 - Create and use Secrets</span>**
 
