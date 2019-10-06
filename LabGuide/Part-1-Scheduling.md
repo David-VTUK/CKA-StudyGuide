@@ -43,7 +43,7 @@ Verify the daemonset has been created successfully
 
 **<span style="text-decoration:underline;">Lab Activity 3 - Resource Limits</span>**
 
-Create a new namespace called “Tenant-B-100Mi”
+Create a new namespace called "tenant-b-100mi"
 
 Create a memory limit of 100Mi for this namespace
 
