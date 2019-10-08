@@ -47,7 +47,7 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/62e44c867a2846
 
 * Create a worker node VM
 
-This is largely dependant on your infrastructure / lab. Three simple Ubuntu VM's will suffice in AWS/Azure/GCP/vSphere/etc
+This is largely dependant on your infrastructure / lab. Three simple Ubuntu VMs will suffice in AWS/Azure/GCP/vSphere/etc
 
 * Satisfy the prerequisites
 
