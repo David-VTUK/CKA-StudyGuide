@@ -16,6 +16,6 @@
 * Join the worker to the cluster
 * Validate the worker has joined the cluster
 
-**Lab 3 - Manage cluster wit Kubeadm**
+**Lab 3 - Manage cluster with Kubeadm**
 
 * Generate a new token to add additional worker nodes the cluster
