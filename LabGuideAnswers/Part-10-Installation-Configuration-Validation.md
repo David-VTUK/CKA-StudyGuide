@@ -4,7 +4,7 @@
 
 * Create a master node VM
 
-This is largely dependant on your infrastructure / lab. Three simple Ubuntu VM's will suffice in AWS/Azure/GCP/vSphere/etc
+This is largely dependant on your infrastructure / lab. Three simple Ubuntu VMs will suffice in AWS/Azure/GCP/vSphere/etc
 
 * Satisfy the prequisites
 
