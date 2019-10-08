@@ -78,7 +78,7 @@ kubeadm join [master][token information] - gathered from kubeadm init on master
 kubectl get nodes -o wide
 ~~~
 
-**Lab 3 - Manage cluster wit Kubeadm**
+**Lab 3 - Manage cluster with Kubeadm**
 
 * Generate a new token to add additional worker nodes the cluster
 
