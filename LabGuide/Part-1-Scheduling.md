@@ -91,7 +91,7 @@ Place additional taints on the node
 
 **<span style="text-decoration:underline;">Additional References</span>**
 
-[Resource Policies](https://kubernetes.io/docs/concepts/policy)
-[Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling/kube-scheduler/)
-[Taints and Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)
+* [Resource Policies](https://kubernetes.io/docs/concepts/policy)
+* [Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling/kube-scheduler/)
+* [Taints and Tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/)
 
