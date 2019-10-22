@@ -133,7 +133,8 @@ metadata:
    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
  rules:
- - http:
+ - host: website.com
+   http:
      paths:
      - path: /         
        backend:

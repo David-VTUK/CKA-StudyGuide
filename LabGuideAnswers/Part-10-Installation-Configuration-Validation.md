@@ -4,7 +4,7 @@
 
 * Create a master node VM
 
-This is largely dependant on your infrastructure / lab. Three simple Ubuntu VM's will suffice in AWS/Azure/GCP/vSphere/etc
+This is largely dependant on your infrastructure / lab. Three simple Ubuntu VMs will suffice in AWS/Azure/GCP/vSphere/etc
 
 * Satisfy the prequisites
 
@@ -47,7 +47,7 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/62e44c867a2846
 
 * Create a worker node VM
 
-This is largely dependant on your infrastructure / lab. Three simple Ubuntu VM's will suffice in AWS/Azure/GCP/vSphere/etc
+This is largely dependant on your infrastructure / lab. Three simple Ubuntu VMs will suffice in AWS/Azure/GCP/vSphere/etc
 
 * Satisfy the prerequisites
 
@@ -78,7 +78,7 @@ kubeadm join [master][token information] - gathered from kubeadm init on master
 kubectl get nodes -o wide
 ~~~
 
-**Lab 3 - Manage cluster wit Kubeadm**
+**Lab 3 - Manage cluster with Kubeadm**
 
 * Generate a new token to add additional worker nodes the cluster
 
