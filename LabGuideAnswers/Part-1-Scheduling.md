@@ -144,7 +144,7 @@ The Pod "default-mem-demo" is invalid: spec.containers[0].resources.requests: In
 
  **<span style="text-decoration:underline;">Lab Activity 4 - Multiple Schedulers</span>**
 
-Assume another scheduler “CustomScheduler” has been created in your environment. Configure a pod to use this scheduler.
+Assume another scheduler “custom-scheduler” has been created in your environment. Configure a pod to use this scheduler.
 
 
 ```
