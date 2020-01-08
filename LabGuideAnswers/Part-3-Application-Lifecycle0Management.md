@@ -37,11 +37,12 @@ Using the YAML file from Lab 1, amend it so that:
 ```
 Nano nginx-svc-and-deployment.yaml	
 
-    strategy:
-	rollingUpdate:
-  	maxSurge: 25%
-  	maxUnavailable: 25%
-	type: RollingUpdate
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
 ```
 
 
