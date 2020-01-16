@@ -86,7 +86,7 @@ spec:
  volumes:
    - name: readonlyvolume
      persistentVolumeClaim:
-      claimName: readonlyclaim
+      claimName: myclaim
  containers:
  - name: busybox
    image: busybox
