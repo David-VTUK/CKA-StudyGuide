@@ -293,9 +293,9 @@ spec:
   - name: activity-8-ctr
     image: nginx
   tolerations:
-  - key: "key"
+  - key: "available"
     operator: "Equal"
-    value: "value"
+    value: "no"
     effect: "NoExecute"
 ```
 
