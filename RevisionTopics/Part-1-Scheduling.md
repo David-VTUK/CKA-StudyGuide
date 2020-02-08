@@ -240,7 +240,7 @@ Kubernetes comes with its own scheduler which acts as the default for all relate
 
 This quite an advanced topic. It would be surprising if the exam asked the tester to create a new scheduler, but the process is defined [https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/](https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/)
 
-As an example, a s second, custom scheduler has been implemented in a kubernetes cluster called “custom-scheduler”. In a pod manifest we can specify a scheduler to use, if different from the default under “spec”.
+As an example, a second custom scheduler has been implemented in a kubernetes cluster called “custom-scheduler”. In a pod manifest we can specify a scheduler to use, if different from the default under “spec”.
 
 apiVersion: v1 \
 kind: Pod \
