@@ -266,7 +266,7 @@ Execute a kubectl describe pod busybox-sleep to validate which scheduler is bein
 
 Pods that are created without a scheduler are otherwise known as _“static pods”_. Static pods are managed directly by kubelet daemon on a specific node, without the API server observing it. It does not have an associated replication controller, and kubelet daemon itself watches it and restarts it when it crashes. There is no health check. Static pods are always bound to one kubelet daemon and always run on the same node with it.<span style="text-decoration:underline;"> \
  \
-</span>There are to ways to create a static pod:
+</span>There are two ways to create a static pod:
 
 
 
