@@ -152,6 +152,10 @@ db-username : dbuser
 
 db-password : dbpassword
 
+```
+kubectl create secret generic db-credentials --from-literal db-username=dbuser --from-literal db-password=dbpassword
+```
+
 Create a pod to leverage these as environment variables.
 
 
