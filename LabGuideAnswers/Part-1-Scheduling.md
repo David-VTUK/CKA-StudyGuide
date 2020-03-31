@@ -115,7 +115,7 @@ metadata:
 spec:
   limits:
   - max:
-  	memory: 100Mi
+      memory: 100Mi
     type: Container
 ```
 
