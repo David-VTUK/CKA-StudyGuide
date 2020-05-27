@@ -91,7 +91,7 @@ metadata:
    run: nginx-nodeport
  name: nginx-nodeport
  namespace: default
- spec:
+spec:
  clusterIP: 10.100.200.236
  externalTrafficPolicy: Cluster
  ports:
