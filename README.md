@@ -15,7 +15,7 @@ These list potential solutions to the tasks listed in the respective lab exercis
 
 ### Resources / References
 
-http://www.kubernet.io/
+https://www.kubernetes.io/
 
 https://github.com/kelseyhightower/kubernetes-the-hard-way
 
