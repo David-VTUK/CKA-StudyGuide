@@ -83,7 +83,7 @@ Implement the following:
 
 
 
-*   Create the user “cluster-user-secretadmin” authenticating with a password
+*   Create the user “cluster-user-secretadmin” authenticating with a password (using kubectl config set-credentials cluster-user-secretadmin --username=cluster-user-secretadmin --password=supersecret)
 *   Create a role “cluster-role-secretadmin” that grants the following cluster level secret resources:
     *   Get
     *   Watch
@@ -93,18 +93,13 @@ Implement the following:
 
 ```
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
- name: cluster-user-secretadmin
----
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
  name: cluster-role-secretadmin
 rules:
  - apiGroups: [""]
-   resources: ["secret"]
+   resources: ["secrets"]
    verbs: ["get", "list", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
