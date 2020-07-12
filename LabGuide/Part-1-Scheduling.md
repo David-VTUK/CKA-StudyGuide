@@ -71,7 +71,7 @@ Create a pod manifest file using the nginx image which will create a pod called 
 
 Extract the events from the cluster, particularly those pertaining to scheduling to find where this pod was scheduled.
 
-Extract the logs from the pod running the default scheduler, or from the respective file if running as a daemon service on your master node.
+Extract the logs from the pod running the default scheduler, or from the respective file if running as a deamon service on your master node.
 
 **<span style="text-decoration:underline;">Lab Activity 7 - Know how to configure the Kubernetes Scheduler</span>**
 
