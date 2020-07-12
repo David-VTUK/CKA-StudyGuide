@@ -273,7 +273,7 @@ Pods that are created without a scheduler are otherwise known as _“static pods
 1. From a directory
 2. From a URL
 
-Either method requires a modification to how the Kubelet functions on a given node. Because we’re not using a scheduler, the kublet daemon takes on the responsibility of creating the pods.
+Either method requires a modification to how the Kubelet functions on a given node. Because we’re not using a scheduler, the kubelet daemon takes on the responsibility of creating the pods.
 
 **<span style="text-decoration:underline;">From a Directory or web address</span>**
 
