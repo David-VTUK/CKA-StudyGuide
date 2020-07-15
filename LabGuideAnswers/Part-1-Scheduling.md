@@ -243,7 +243,7 @@ kubectl describe pod nginx-7db9fccd9b-xw6qd
 ```
 
 
-Extract the logs from the pod running the default scheduler, or from the respective file if running as a deamon service on your master node.
+Extract the logs from the pod running the default scheduler, or from the respective file if running as a daemon service on your master node.
 
 
 ```
