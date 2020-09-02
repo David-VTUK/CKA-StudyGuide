@@ -117,7 +117,7 @@ Create a nginx pod which leverages these values as environment variables “db_h
 echo "database_host" > /tmp/db_h.txt
 echo "database_port" > /tmp/db_p.txt
 
-kubectl create configmap dbconnection --from-file=dbh=/tmp/db_h.txt --from-file=dbp=/tmp/db_p.txt
+kubectl create configmap db-connection --from-file=dbh=/tmp/db_h.txt --from-file=dbp=/tmp/db_p.txt
 
 apiVersion: v1
 kind: Pod
