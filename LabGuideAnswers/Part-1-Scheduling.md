@@ -16,12 +16,12 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    Tier: App
-  name: app
+    Tier: Web
+  name: web
 spec:
   containers:
   - image: nginx
-    name: app
+    name: web
 ```
 
 
@@ -37,12 +37,12 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    Tier: Web
-  name: web
+    Tier: App
+  name: app
 spec:
   containers:
   - image: nginx
-    name: web
+    name: app
 ```
 
 
@@ -54,7 +54,7 @@ kubectl get pods --show-labels
 
 NAME                   READY   STATUS    RESTARTS   AGE   LABELS
 app  				  1/1     Running   0          24s   Tier=App
-Web			       1/1     Running   0          71s   Tier=Web
+web			       1/1     Running   0          71s   Tier=Web
 ```
 
 
