@@ -1,10 +1,8 @@
 
 
-**<span style="text-decoration:underline;">CKA Lab Part 1 - Scheduling</span>**
+#CKA Lab Part 1 - Scheduling
 
-**<span style="text-decoration:underline;">Requirements</span>**
-
-
+##Requirements
 
 *   A preconstructed Kubernetes lab with kubectl
 
