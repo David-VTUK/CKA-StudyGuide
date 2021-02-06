@@ -1,8 +1,8 @@
 
 
-#CKA Lab Part 1 - Scheduling
+# CKA Lab Part 1 - Scheduling
 
-##Requirements
+## Requirements
 
 *   A preconstructed Kubernetes lab with kubectl
 
