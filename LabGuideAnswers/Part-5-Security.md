@@ -52,7 +52,6 @@ subjects:
 - kind: ServiceAccount
  name: rbac-test-sa
  namespace: rbac-test
-
 ```
 
 
