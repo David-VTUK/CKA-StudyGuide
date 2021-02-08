@@ -188,10 +188,9 @@ Some important pieces of information to note:
 
 If we issue a kubectl get nodes command we will see the master node is not ready
 
-```
+```shell
 NAME            STATUS     ROLES    AGE     VERSION
 k8s-cl02-ms01   NotReady   master   6m20s   v1.20.2
-
 ```
 As per the output of kubeadm, install a network solution, Ie flannel
 
@@ -203,7 +202,7 @@ Set /proc/sys/net/bridge/bridge-nf-call-iptables to 1 by running `sysctl net.bri
 And install Flannel
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/62e44c867a2846fefb68bd5f178daf4da3095ccb/Documentation/kube-flannel.yml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ```
 
 After a few seconds, the master node will now be ready
@@ -249,4 +248,132 @@ To validate, run kubectl get nodes on the master node:
 NAME            STATUS   ROLES    AGE     VERSION
 k8s-cl02-ms01   Ready    master   50m     v1.20.2
 k8s-cl02-wk01   Ready    <none>   2m10s   v1.20.2
+```
+
+#  Manage a highly-available Kubernetes cluster
+
+The previous section illustrated the process in creating a K8s cluster with one master node and several worker nodes - this does not provide resilience for the control plane. Several topologies exist for doing so:
+
+## Stacked etcd
+
+![img.png](images/stacked-etcd.png)
+
+* Multiple worker nodes
+* Multiple control plane nodes fronted by a loadbalancer
+* Embedded etcd within control plane
+
+Notes:
+
+etcd is quorum based. Therefore if using stacked control plane nodes with etcd, odd numbers must be used. Control plane and etcd must be scaled together.
+
+![img.png](images/external-etcd.png)
+
+Notes:
+
+* Multiple worker nodes
+* Multiple control plane nodes fronted by a loadbalancer
+* Etcd is external of the k8s cluster
+
+Notes:
+
+Advantage with this setup is etcd and the control plane can be scaled and managed independently of each other. This provides greater flexibility at the expense of operational complexity.
+
+#  Provision underlying infrastructure to deploy a Kubernetes cluster
+
+The topology choices above will influence the underlying resources that need to be provisioned. How these are provisioned are specific to the underlying cloud provider. Some generic observations
+
+* Disable swap
+* Leverage cloud capabilities for HA - ie using muliple AZ's
+* Windows can be used for worker nodes, but not control plane
+
+# Perform a version upgrade on a Kubernetes cluster using Kubeadm 
+
+First, install kubeadm to a specific version. This will determine the k8s version that it deploys:
+
+```shell
+sudo apt-get update && sudo apt-get install -y kubeadm=1.19.0-00 kubelet=1.19.0-00 kubectl=1.19.0-00 && sudo apt-mark hold kubeadm
+```
+
+Stand up a k8s cluster
+
+```shell
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+```
+
+Add CNI
+
+```shell
+https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+```
+
+To upgrade the underlying k8s cluster, we need to upgrade kubeadm. 
+
+Update kubeadm
+```shell
+sudo apt-mark unhold kubeadm
+sudo apt-get install --only-upgrade kubeadm
+```
+
+Next we `plan` the upgrade - this won't change our cluster but will display what changes can be made:
+
+```shell
+sudo kubeadm upgrade plan
+
+Components that must be upgraded manually after you have upgraded the control plane with 'kubeadm upgrade apply':
+COMPONENT   CURRENT       AVAILABLE
+kubelet     1 x v1.19.0   v1.20.2
+
+Upgrade to the latest stable version:
+
+COMPONENT                 CURRENT   AVAILABLE
+kube-apiserver            v1.19.7   v1.20.2
+kube-controller-manager   v1.19.7   v1.20.2
+kube-scheduler            v1.19.7   v1.20.2
+kube-proxy                v1.19.7   v1.20.2
+CoreDNS                   1.7.0     1.7.0
+etcd                      3.4.9-1   3.4.13-0
+
+You can now apply the upgrade by executing the following command:
+
+	kubeadm upgrade apply v1.20.2
+```
+
+**Important note:** kubelet must be upgraded manually after this step.
+
+Upgrade the cluster:
+
+```shell
+kubeadm upgrade apply v1.20.2
+```
+
+upgrade Kubelet:
+```shell
+sudo apt-get install --only-upgrade kubelet kubectl
+```
+
+#  Implement etcd backup and restore
+
+## Backing up etcd
+
+Take a snapshot of the DB, then store it in a safe location:
+
+
+```bash
+ETCDCTL_API=3 etcdctl snapshot save snapshot.db --cacert /etc/kubernetes/pki/etcd/server.crt --cert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/ca.key
+```
+Verify the backup:
+
+```shell
+sudo ETCDCTL_API=3 etcdctl --write-out=table snapshot status snapshot.db
++----------+----------+------------+------------+
+|   HASH   | REVISION | TOTAL KEYS | TOTAL SIZE |
++----------+----------+------------+------------+
+| 2125d542 |   364069 |        770 |  	3.8 MB |
++----------+----------+------------+------------+
+```
+
+Perform a restore:
+
+```shell
+ETCDCTL_API=3 etcdctl snapshot restore snapshot.db
 ```
