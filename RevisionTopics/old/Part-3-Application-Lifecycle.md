@@ -5,6 +5,7 @@
 
 Deployments are intended to replace Replication Controllers.  They provide the same replication functions (through Replica Sets) and also the ability to rollout changes and roll them back if necessary. An example configuration is shown below:
 
+
 ```
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -24,9 +25,12 @@ spec:
         - containerPort: 80
 ```
 
+
 We can then describe it with` kubectl describe deployment nginx-deployment`
 
 To update an existing deployment, we have two main options:
+
+
 
 *   Rolling Update
 *   Recreate
