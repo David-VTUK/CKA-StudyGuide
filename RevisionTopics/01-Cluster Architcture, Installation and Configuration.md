@@ -278,6 +278,21 @@ Notes:
 
 Advantage with this setup is etcd and the control plane can be scaled and managed independently of each other. This provides greater flexibility at the expense of operational complexity.
 
+# Assessing cluster health
+
+`kubectl get componentstatus` is deprecated as of 1.20. A suitable replacement includes probing the API server directly, For example, on a master node, run `curl -k https://localhost:6443/livez?verbose` which returns:
+
+```shell
+[+]ping ok
+[+]log ok
+[+]etcd ok
+[+]poststarthook/start-kube-apiserver-admission-initializer ok
+[+]poststarthook/generic-apiserver-start-informers ok
+.....etc
+```
+Three endpoints exist - `healthz`,`livez` and `readyz` to indicate the current status of the API server
+
+
 #  Provision underlying infrastructure to deploy a Kubernetes cluster
 
 The topology choices above will influence the underlying resources that need to be provisioned. How these are provisioned are specific to the underlying cloud provider. Some generic observations
