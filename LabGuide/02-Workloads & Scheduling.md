@@ -79,3 +79,84 @@ kubectl patch deployment nginx --patch-file=patch.yaml
 kubectl rollout undo deployment/nginx
 ```
 </details>
+
+# Exercise 2 - Use ConfigMaps to configure applications
+
+1. Create a configmap named `mycm` that has the following key=value pair
+    1. `key` = owner
+    2. `value` = yourname
+2. Create a pod of your choice, such as `nginx`. Configure this Pod so that the underlying container has the environent varibale `OWNER` set to the value of this configmap 
+
+<details><summary>Answer</summary>
+
+Create Secret:
+```shell
+kubectl create configmap mycm --from-literal=owner=david
+```
+
+Define Pod:
+
+```shell
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-configmap
+spec:
+  containers:
+    - name: nginx-configmap
+      image: nginx
+      command: [ "/bin/sh", "-c", "env" ]
+      env:
+        # Define the environment variable
+        - name: OWNER
+          valueFrom:
+            configMapKeyRef:
+              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+              name: mycm
+              # Specify the key associated with the value
+              key: owner
+```
+
+Validate:
+
+```shell
+kubectl logs nginx-configmap | grep OWNER
+OWNER=david
+```
+</details>
+
+# Exercise 3 - Use Secrets to configure applications
+
+<details><summary>Answer</summary>
+1. Create a secret named `mysecret` that has the following key=value pair
+    1. `dbuser` = MyDatabaseUser
+    2. `dbpassword` = MyDatabasePassword
+2. Create a pod of your choice, such as `nginx`. Configure this Pod so that the underlying container has the the following environment variables set:
+  1. `DBUSER` from secret key `dbuser`
+  2. `DBPASS` from secret key `dbpassword`
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-web-secret
+  labels:
+    role: web
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    env:
+      - name: DBUSER
+        valueFrom:
+          secretKeyRef:
+           name: db-credentials
+           key: db-username
+      - name: db_password
+        valueFrom:
+          secretKeyRef:
+            name: db-credentials
+            key: db-password
+```
+
+</details>
