@@ -127,36 +127,202 @@ OWNER=david
 
 # Exercise 3 - Use Secrets to configure applications
 
-<details><summary>Answer</summary>
 1. Create a secret named `mysecret` that has the following key=value pair
-    1. `dbuser` = MyDatabaseUser
-    2. `dbpassword` = MyDatabasePassword
+   1. `dbuser` = MyDatabaseUser
+   2. `dbpassword` = MyDatabasePassword
 2. Create a pod of your choice, such as `nginx`. Configure this Pod so that the underlying container has the the following environment variables set:
-  1. `DBUSER` from secret key `dbuser`
-  2. `DBPASS` from secret key `dbpassword`
+1. `DBUSER` from secret key `dbuser`
+2. `DBPASS` from secret key `dbpassword`
+
+<details><summary>Answer</summary>
+
+```shell
+kubectl create secret generic mysecret --from-literal=dbuser="MyDatabaseUser" --from-literal=dbpassword="MyDatabasePassword"
+```
+
+Apply the following manifest:
 
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-web-secret
-  labels:
-    role: web
+  name: nginx-secret
 spec:
   containers:
-  - name: nginx
+  - name: nginx-secret
     image: nginx
+    command: [ "/bin/sh", "-c", "env" ]
     env:
-      - name: DBUSER
+      - name: dbuser
         valueFrom:
           secretKeyRef:
-           name: db-credentials
-           key: db-username
-      - name: db_password
+            name: mysecret
+            key: dbuser
+      - name: dbpassword
         valueFrom:
           secretKeyRef:
-            name: db-credentials
-            key: db-password
+            name: mysecret
+            key: dbpassword
+  restartPolicy: Never
 ```
 
+Which can be validated with:
+
+```shell
+kubectl logs nginx-secret | grep db                                                  
+dbuser=MyDatabaseUser
+dbpassword=MyDatabasePassword
+```
+
+</details>
+
+# Exercise 4 - Know how to scale applications
+
+1. Create a deployment object consisting of 3 `pods` containing a single `nginx` container 
+2. Increase this deployment size by adding two additional pods.
+3. Decrease this deployment back to the original size of 3 `pods`
+
+
+
+<details><summary>Answer - Imperative</summary>
+
+```shell
+kubectl create deployment nginx --image=nginx --replicas=3
+kubectl scale --replicas=5 deployment nginx
+kubectl scale --replicas=3 deployment nginx
+```
+</details>
+
+<details><summary>Answer - Declarative</summary>
+
+Apply initial YAML:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: nginx-deployment
+   labels:
+      app: nginx
+spec:
+   replicas: 3
+   selector:
+      matchLabels:
+         app: nginx
+   template:
+      metadata:
+         labels:
+            app: nginx
+      spec:
+         containers:
+            - name: nginx
+              image: nginx
+              ports:
+                 - containerPort: 80
+```
+
+Apply modified YAML:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1
+        ports:
+        - containerPort: 80
+```
+
+Apply original YAML:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+```
+</details>
+
+# Excerise 5 - Understand how resource limits can affect Pod scheduling
+
+1. Create a new namespace called "tenant-b-100mi"
+2. Create a memory limit of 100Mi for this namespace
+3. Create a pod with a memory request of 150Mi, ensure the limit has been set by verifying you get a error message.
+
+
+
+
+<details><summary>Answer</summary>
+
+```shell
+kubectl create ns tenant-b-100mi
+```
+
+Deploy the manifest:
+
+```yaml
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: tenant-b-memlimit
+  namespace: tenant-b-100mi
+spec:
+  limits:
+  - max:
+      memory: 100Mi
+    type: Container
+```
+
+Test with deploying:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: default-mem-demo
+  namespace: tenant-b-100mi
+spec:
+  containers:
+  - name: default-mem-demo
+    image: nginx
+    resources:
+      requests:
+        memory: 150Mi
+```
+
+Which should return:
+
+```shell
+The Pod "default-mem-demo" is invalid: spec.containers[0].resources.requests: Invalid value: "150Mi": must be less than or equal to memory limit
+```
 </details>
