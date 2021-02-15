@@ -5,13 +5,9 @@ The following guide is based on the Certified Kubernetes Administrator Exam Curr
 
 Notes from revising the topics listed in the curriculum, grouped to correlate to the various sections listed in the curriculum.
 
-### [Lab Guide](https://github.com/David-VTUK/CKA-StudyGuide/tree/master/LabGuide)
+### [Lab Guide With Example Answers](https://github.com/David-VTUK/CKA-StudyGuide/tree/master/LabGuide)
 
 To complement the revision topics, these lab guides are designed to exercise the topics learnt from the corresponding revision topics sections.
-
-### [Lab Guide - Answers](https://github.com/David-VTUK/CKA-StudyGuide/tree/master/LabGuideAnswers)
-
-These list potential solutions to the tasks listed in the respective lab exercises. **Note:** these provide **one** way of approaching the exercises. There are a number of ways to achieve the same goal.
 
 ### Resources / References
 
