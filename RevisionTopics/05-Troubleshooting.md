@@ -8,9 +8,7 @@ Usually, most etcd implementations also include etcdctl, which can aid in monito
 
 `find / -name etcdctl`
 
-
 Leveraging this tool to check the cluster status:
-
 
 ```bash
 ./etcdctl cluster-health
@@ -18,13 +16,11 @@ Leveraging this tool to check the cluster status:
 member 17f206fd866fdab2 is healthy: got healthy result from https://master-0.etcd.cfcr.internal:2379
 ```
 
-
 The cluster this was executed on has only one master node, hence only one result from the script. You will normally receive a response for each etcd member in the cluster.
 
 Alternatively, leverage kubectl get componentstatuses:
 
-
-```
+```bash
 kubectl get componentstatuses
 
 NAME                 STATUS    MESSAGE             ERROR
@@ -54,9 +50,9 @@ Or
 cat /var/log/kube-apiserver.log
 ```
 
-Or for instances where Kube-APIserver is running as a static pod:
+Or for instances where Kube-API server is running as a static pod:
 
-```
+```bash
 kubectl logs kube-apiserver-k8s-master-03 -n kube-system
 ```
 
@@ -86,19 +82,19 @@ kubectl logs kube-scheduler-k8s-master-03 -n kube-system
 
 For systemd-based systems
 
-```
+```bash
 journalctl -u kube-controller-manager
 ```
 
 Or
 
-```
+```bash
 cat /var/log/kube-controller-manager.log
 ```
 
 Or for instances where Kube-controller manager is running as a static pod:
 
-```
+```bash
 kubectl logs kube-controller-manager-k8s-master-03 -n kube-system
 ```
 
@@ -137,7 +133,7 @@ cat /var/log/kube-proxy.log
 
 Or for instances where Kube-proxy manager is running as a static pod:
 
-```
+```bash
 kubectl logs kube-proxy -n kube-system
 ```
 
@@ -177,7 +173,7 @@ At a cluster level, `kubectl get events` provides a good overview.
 
 #  Understand how to monitor applications
 
-This section is a bit open-ended as it highly depends on what you have deployed and the topology of an application. Typically, however, we have a application that runs as a number of inter-connected **microservices**, consequently we monitor our applications by monitoring the underlying objects that comprise it, such as:
+This section is a bit open-ended as it highly depends on what you have deployed and the topology of an application. Typically, however, we have an application that runs as a number of inter-connected **microservices**, consequently we monitor our applications by monitoring the underlying objects that comprise it, such as:
 
 * Pods
 * Deployments 
@@ -188,7 +184,7 @@ This section is a bit open-ended as it highly depends on what you have deployed 
 
 ![img.png](images/logging.png)
 
-Kubernetes handles and redirects any output generated from a containers stdout and stderr streams. These get directed through a logging driver which influences where to store these logs. Different implementations of Docker differ (such as RHEL's implementation) but commonly, these drivers will write to a file in json format:
+Kubernetes handles and redirects any output generated from a containers stdout and stderr streams. These get directed through a logging driver which influences where to store these logs. Different implementations of Docker differ in exact implementation (such as RHEL's flavor of Docker) but commonly, these drivers will write to a file in json format:
 
 ```shell
 root@ubuntu:~# docker info | grep "Logging Driver"
@@ -236,7 +232,7 @@ Covered in "Evaluate cluster and node logging"
 
 Pod DNS records resolve to a single entity, even if the Pod contains multiple containers as they share the same networking space.
 
-Service DNS records resolve to a the respective service object.
+Service DNS records resolve to the respective service object.
 
 Pods will automatically have their DNS resolution configured based on coredns settings. This can be validated by opening a shell to the pod and inspecting /etc/resolv.conf:
 
@@ -268,7 +264,7 @@ Knowing the format of the A record:
 
 `pod-ip-address.my-namespace.pod.cluster-domain.example`
 
-We should be able to resolve `10-42-1-31.default.pod.cluster.local`. Tip : To determine the cluster domain, inspect the coredns configmap. Below indiciating `cluster.local`.
+We should be able to resolve `10-42-1-31.default.pod.cluster.local`. Tip : To determine the cluster domain, inspect the coredns configmap. Below indicating `cluster.local`.
 
 ```shell
 > kubectl get cm coredns -n kube-system -o yaml
@@ -305,7 +301,7 @@ Name:   10-42-1-31.default.pod.cluster.local
 Address: 10.42.1.31
 ```
 
-Similarly, for a service, in this case a service called `nginx-service` that resides in the defualt namespace:
+Similarly, for a service, in this case a service called `nginx-service` that resides in the default namespace:
 
 
 
@@ -339,4 +335,4 @@ nginx   0/1     Pending   0          57s   <none>   <none>   <none>           <n
 
 ## Port Checking
 
-Similarly with leveraging `nslookup` to validate DNS resolution in our cluster, we can lean on other tools to perform other diagnostic. All we need is a pod that has a utility like `netcat`, `telnet` etc.
+Similarly, with leveraging `nslookup` to validate DNS resolution in our cluster, we can lean on other tools to perform other diagnostic. All we need is a pod that has a utility like `netcat`, `telnet` etc.

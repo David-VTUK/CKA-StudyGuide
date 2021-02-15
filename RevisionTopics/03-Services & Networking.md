@@ -4,43 +4,34 @@
 
 At the host level, we have an interface (typically something like `eth0` or `ens192` etc) that acts as the primary network adapter.  
 
-Each host is responsible for one subnet of the the CNI range. In this example, the left host is responsible for 10.1.1.0/24, and the right host 10.1.2.0/24.
+Each host is responsible for one subnet of the CNI range. In this example, the left host is responsible for 10.1.1.0/24, and the right host 10.1.2.0/24. The overall pod CIDR block may be something like 10.1.0.0/16.
 
-Virtual ethernet adapters are paired with a corresponding Pod network adapter. Kernel routing is used to enable Pods to communicate outside of the host it resides in.
+Virtual ethernet adapters are paired with a corresponding Pod network adapter. Kernel routing is used to enable Pods to communicate outside the host it resides in.
 
 # Understand connectivity between Pods
 
-
-Every Pod gets its own IP address. This means you do not need to explicitly create links between Pods and you almost never need to deal with mapping container ports to host ports. This creates a clean, backwards-compatible model where Pods can be treated much like VMs or physical hosts from the perspectives of port allocation, naming, service discovery, load balancing, application configuration, and migration.
+Every Pod gets its own IP address. This means you do not need to explicitly create links between Pods, and you almost never need to deal with mapping container ports to host ports. This creates a clean, backwards-compatible model where Pods can be treated much like VMs or physical hosts from the perspectives of port allocation, naming, service discovery, load balancing, application configuration, and migration.
 
 Kubernetes imposes the following fundamental requirements on any networking implementation (barring any intentional network segmentation policies):
-
-
 
 *   Pods on a node can communicate with all pods on all nodes without NAT
 *   Agents on a node (e.g. system daemons, kubelet) can communicate with all pods on that node
 
-Note: For those platforms that support Pods running in the host network (e.g. Linux):
-
-
+Note: When running workloads that leverage `hostNetwork`:
 
 *   Pods in the host network of a node can communicate with all pods on all nodes without NAT
 
 # Understand ClusterIP, NodePort, LoadBalancer service types and endpoint
 
-
-Pods are ephemeral. Therefore placing these behind a service which provides a stable, static entrypoint is a fundamental use of the kubernetes service object. To reiterate, services take the form of the following:
-
-
+Pods are ephemeral. Therefore, placing these behind a service which provides a stable, static entrypoint is a fundamental use of the kubernetes service object. To reiterate, services take the form of the following:
 
 *   ClusterIP - Internal only
-*   LoadBalancer - External, requires cloud provider to provide one
+*   LoadBalancer - External, requires cloud provider, or software implementation to provide one
 *   NodePort - External, requires access the nodes directly
 *   Ingress resource - L7 An Ingress can be configured to give services externally-reachable URLs, load balance traffic, terminate SSL, and offer name based virtual hosting. An Ingress controller is responsible for fulfilling the Ingress, usually with a loadbalancer, though it may also configure your edge router or additional frontends to help handle the traffic.
 
 
 # Know how to use Ingress controllers and Ingress resources
-
 
 Ingress exposes HTTP and HTTPS routes from outside the cluster to services within a cluster. Ingress consists of two components. Ingress Resource is a collection of rules for the inbound traffic to reach Services. These are Layer 7 (L7) rules that allow hostnames (and optionally paths) to be directed to specific Services in Kubernetes. The second component is the Ingress Controller which acts upon the rules set by the Ingress Resource, typically via an HTTP or L7 load balancer. It is vital that both pieces are properly configured to route traffic from an outside client to a Kubernetes Service.
 
@@ -93,7 +84,7 @@ ingress-nginx              nginx-ingress-controller-r2ksq                       
 # Know how to configure and use CoreDNS
 
 
-As of 1.13, coredns has replace kube-dns as the facilitator of cluster DNS and runs as pods.
+As of 1.13, coredns has replaced kube-dns as the facilitator of cluster DNS and runs as pods.
 
 
 ```shell
@@ -116,17 +107,17 @@ search default.svc.cluster.local svc.cluster.local cluster.local virtualthoughts
 options ndots:5
 ```
 
-
 “10.96.0.10” references the `Kube-DNS` service
 
 “Default.svc.cluster.local” References the namespace with the suffix svc.cluster.local.
 
 All pods are provisioned a DNS record and are in the format of
 
-**[Pod IP separated by dashes].[Namespace].[Base Domain Name]**
+**[Pod IP separated by dashes].[Namespace].[type].[Base Domain Name]**
+
+Where `[type]` is `pod` in this example, put services can be resolved by the same convention.
 
 For example:
-
 
 ```shell
 / # nslookup 10-42-2-68.default.pod.cluster.local
@@ -138,22 +129,19 @@ Address: 10.42.2.68
 
 ```
 
-
 Services follow a similar pattern
 
-**[Service Name].[Namespace].[Base Domain Name]**
+**[Service Name].[Namespace].[type].[Base Domain Name]**
 
 For example:
 
-
-```
+```shell
 my-svc.my-namespace.svc.cluster-domain.example
 ```
 
 Headless services are those without a cluster ip, but will respond with a list of IP’s of pods that are applicable at that particular moment in time.
 
-
-```
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -171,7 +159,7 @@ spec:
 We can modify the default behavior of the pod dns configuration in the yaml file:
 
 
-```
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -197,7 +185,7 @@ spec:
 CoreDNS also has a configmap that can be modified:
 
 ```shell
-kubectl get cm coredns -n kube-system -o yaml                                                             ✔  local ⎈ 
+kubectl get cm coredns -n kube-system -o yaml                                                            
 apiVersion: v1
 data:
   Corefile: |

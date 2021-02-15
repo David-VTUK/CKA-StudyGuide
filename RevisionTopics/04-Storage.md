@@ -1,6 +1,6 @@
 # Understand storage classes, persistent volumes
 
-A StorageClass provides a way for administrators to describe the "classes" of storage they offer. Different classes might map to quality-of-service levels, or to backup policies, or to arbitrary policies determined by the cluster administrators. Kubernetes itself is unopinionated about what classes represent. This concept is sometimes called "profiles" in other storage systems.
+A `StorageClass` provides a way for administrators to describe the "classes" of storage they offer. Different classes might map to quality-of-service levels, or to backup policies, or to arbitrary policies determined by the cluster administrators. Kubernetes itself is un-opinionated about what classes represent. This concept is sometimes called "profiles" in other storage systems.
 
 An example of a storage class is below:
 
@@ -21,9 +21,9 @@ volumeBindingMode: Immediate
 
 Key declarations are:
 
-* `provisioner` : Determine which volume plugin to use. This usually matches to a cloud provider and a specific storage service that it offers. In this example AWS Elastic Block Store
+* `provisioner` : Determine which volume plugin to use. This usually matches to a cloud provider, and a specific storage service that it offers. In this example AWS Elastic Block Store
 
-* `parameters` : Describe characteristics of this storage class in context of the underlying provisioner. In this cample, the `type` is `gp2` which, in AWS lingo means General Purpose SSD. Other types include `IO1` (Provisioned IOPS), `ST1` (Throughput Optimised) and `STC` (Cold Storage).
+* `parameters` : Describe characteristics of this storage class in context of the underlying provisioner. In this example, the `type` is `gp2` which, in AWS lingo means General Purpose SSD. Other types include `IO1` (Provisioned IOPS), `ST1` (Throughput Optimised) and `STC` (Cold Storage).
 
 A `storageclass` object by itself defines what storage is provisioned *when it is invoked*. By itself, it does nothing.
 
@@ -50,10 +50,9 @@ spec:
 
 Only two exist:
 
-* `block` - Mounted to a pod as a raw block device *without* a filesystem. The Pod / application needs to understand how to deal with raw block devices. Presenting storage can yield better performance, at the expense of complexity.
-  
+* `block` - Mounted to a pod as a raw block device *without* a filesystem. The Pod / application needs to understand how to deal with raw block devices. Presenting it in this way can yield better performance, at the expense of complexity.
 
-* `filesystem` - Mounted inside a pods filesystem inside a directory. If the volume is backed by a block device with no filesystem, Kubernetes will create one. Compared to `block` devices, this method offers the highest compatibility, at the expense of performance.
+* `filesystem` - Mounted inside a pods' filesystem inside a directory. If the volume is backed by a block device with no filesystem, Kubernetes will create one. Compared to `block` devices, this method offers the highest compatibility, at the expense of performance.
 
 ## Access Modes
 
@@ -95,7 +94,7 @@ spec:
     path: "/mnt/data"
 ```
 
-Create the workload to levage this:
+Create the workload to leverage this:
 
 ```yaml
 apiVersion: v1
