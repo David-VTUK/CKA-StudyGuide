@@ -129,4 +129,19 @@ spec:
        name: myvol
 ```
 
+Validate with:
+
+```shell
+kubectl get po,pv,pvc
+NAME               READY   STATUS    RESTARTS   AGE
+pod/pod-with-pvc   1/1     Running   0          2m7s
+
+NAME                               CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                        STORAGECLASS   REASON   AGE
+persistentvolume/pv-hostpath-1gb   1Gi        RWO            Recycle          Bound    default/pvc-hostpath-claim   manual                  2m7s
+
+NAME                                       STATUS   VOLUME            CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/pvc-hostpath-claim   Bound    pv-hostpath-1gb   1Gi        RWO            manual         2m7s
+
+```
+
 </details>

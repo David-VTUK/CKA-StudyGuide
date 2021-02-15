@@ -64,12 +64,19 @@ kubectl describe deployment nginx (unless specified, will be listed as "UpdateSt
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
+   name: nginx
 spec:
-  strategy:
-    rollingUpdate:
-      maxSurge: 50%
-      maxUnavailable: 50%
+   strategy:
+      rollingUpdate:
+         maxSurge: 50%
+         maxUnavailable: 50%
+   template:
+      spec:
+         containers:
+            - name: nginx
+              image: nginx:1.19.6
+              ports:
+                 - containerPort: 80
 ```
 ```shell
 kubectl patch deployment nginx --patch-file=patch.yaml
