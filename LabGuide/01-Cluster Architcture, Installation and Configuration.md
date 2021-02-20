@@ -1,4 +1,4 @@
-# Lab Exercises for Cluster Architcture, Installation and Configuration
+# Lab Exercises for Cluster Architecture, Installation and Configuration
 
 # Exercise 0 - Setup
 
