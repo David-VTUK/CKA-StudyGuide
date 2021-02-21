@@ -2,7 +2,7 @@
 
 # Exercise 0 - Setup
 
-* Prepare a cluster (Single node, kubedm, k3s, etc)
+* Prepare a cluster (Single node, kubeadm, k3s, etc)
 * Open browser tabs to https://kubernetes.io/docs/, https://github.com/kubernetes/ and  https://kubernetes.io/blog/ (these are permitted as per [the current guidelines](https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed#certified-kubernetes-administrator-cka-and-cerified-kubernetes-application-developer-ckad))
 
 # Exercise 1 - Understand connectivity between Pods
