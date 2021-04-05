@@ -29,7 +29,7 @@ kubectl --as=system:serviceaccount:rbac:job-inspector auth can-i get deployment 
 </details>
 
 
-<details><summary>Answer - Delcarative</summary>
+<details><summary>Answer - Declarative</summary>
 
 ```yaml
 apiVersion: v1
