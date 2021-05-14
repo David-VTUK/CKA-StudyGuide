@@ -12,7 +12,7 @@ A third party application requires access to describe `ingress` objects that res
 
 1. Create a namespace called `rbac`
 2. Create a service account called `job-inspector` for the `rbac` namespace
-3. Create a role that ha rules to `get` and `list` job objects
+3. Create a role that has rules to `get` and `list` job objects
 4. Create a rolebinding that binds the service account `job-inspector` to the role created in step 3
 5. Prove the `job-inspector` service account can "get" `job` objects but not `deployment` objects
 
