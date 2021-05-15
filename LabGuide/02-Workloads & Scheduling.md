@@ -96,7 +96,7 @@ kubectl rollout undo deployment/nginx
 
 <details><summary>Answer</summary>
 
-Create Secret:
+Create configmap:
 ```shell
 kubectl create configmap mycm --from-literal=owner=david
 ```
