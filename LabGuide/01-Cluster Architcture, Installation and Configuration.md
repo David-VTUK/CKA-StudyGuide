@@ -220,7 +220,7 @@ sudo apt-get install --only-upgrade kubelet
 Take a snapshot of etcd:
 
 ```shell
-ETCDCTL_API=3 etcdctl snapshot save snapshot.db --cert /etc/kubernetes/pki/etcd/server.crt --cacert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/ca.key
+ETCDCTL_API=3 etcdctl snapshot save snapshot.db --cert /etc/kubernetes/pki/etcd/server.crt --cacert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/server.key
 ```
 
 Verify the snapshot:
