@@ -21,7 +21,7 @@ The cluster this was executed on has only one master node, hence only one result
 Alternatively, leverage kubectl get componentstatuses:
 
 ```bash
-kubectl get componentstatuses
+kubectl get componentstatuses #ComponentStatus is deprecated in v1.19+
 
 NAME                 STATUS    MESSAGE             ERROR
 scheduler            Healthy   ok                   

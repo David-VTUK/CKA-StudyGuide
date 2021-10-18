@@ -2,7 +2,7 @@
 
 # Imperative vs Declarative
 
-The Lab guide, where feasible will presnt both imperative and declarative answers to address a question. Outside the exam, we should opreate in a Declarative manner. During the exam, however, time is an expensive commodity. Therefore, if you can, try and be as imperative as possible to save time.
+The Lab guide, where feasible will presnt both imperative and declarative answers to address a question. Outside the exam, we should operate in a Declarative manner. During the exam, however, time is an expensive commodity. Therefore, if you can, try and be as imperative as possible to save time.
 
 # Use the documentation
 
