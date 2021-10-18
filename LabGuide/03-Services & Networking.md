@@ -193,9 +193,10 @@ kubectl create ingress myingress --rule="myingress.mydomain/=main:80" --rule="my
 Apply the following YAML:
 
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  creationTimestamp: null
   name: myingress
 spec:
   rules:
@@ -203,15 +204,21 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: main
-          servicePort: 80
+          service:
+            name: main
+            port:
+              number: 80
         path: /
         pathType: Exact
       - backend:
-          serviceName: api
-          servicePort: 8080
+          service:
+            name: api
+            port:
+              number: 8080
         path: /api
         pathType: Exact
+status:
+  loadBalancer: {}
 ```
 
 </details>
