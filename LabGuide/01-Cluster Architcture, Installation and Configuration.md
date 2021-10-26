@@ -8,7 +8,7 @@
 
 # Exercise 1 - RBAC
 
-A third party application requires access to describe `ingress` objects that reside in a namespace called `rbac`. Perform the following:
+A third party application requires access to describe `job` objects that reside in a namespace called `rbac`. Perform the following:
 
 1. Create a namespace called `rbac`
 2. Create a service account called `job-inspector` for the `rbac` namespace
