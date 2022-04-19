@@ -3,7 +3,7 @@
 Deployments are intended to replace Replication Controllers.  They provide the same replication functions (through Replica Sets) and also the ability to rollout changes and roll them back if necessary. An example configuration is shown below:
 
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
@@ -40,7 +40,7 @@ Examples listed in the Kubernetes documentation are largely imperative, but I pr
 
 
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
@@ -198,7 +198,7 @@ Constantly adding more, individual pods is not a sustainable model for scaling a
 As an example, if the following is deployed:
 
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
  name: nginx-deployment
