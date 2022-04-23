@@ -47,29 +47,36 @@ Paths ending in /bar will direct traffic to the service “service2” which lis
 
 
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: simple-fanout-example
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: foo.bar.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: default-service
-          servicePort: 80
-      - path: /foo
-        backend:
-          serviceName: service1
-          servicePort: 4200
-      - path: /bar
-        backend:
-          serviceName: service2
-          servicePort: 8080
+    - host: foo.bar.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: default-service
+                port:
+                  number: 80
+          - path: /foo
+            pathType: Prefix
+            backend:
+              service:
+                name: service1
+                port:
+                  number: 4200
+          - path: /bar
+            pathType: Prefix
+            backend:
+              service:
+                name: service2
+                port:
+                  number: 8080
 ```
 
 In order for the Ingress resource to work, the cluster must have an ingress controller running. Ingress controllers are deployed into the Kubernetes cluster as a workload:

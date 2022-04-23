@@ -11,9 +11,14 @@ Usually, most etcd implementations also include etcdctl, which can aid in monito
 Leveraging this tool to check the cluster status:
 
 ```bash
-./etcdctl cluster-health
+etcdctl --write-out=table --endpoints=$ENDPOINTS endpoint status
 
-member 17f206fd866fdab2 is healthy: got healthy result from https://master-0.etcd.cfcr.internal:2379
+
++------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+|        ENDPOINT        |        ID        | VERSION | DB SIZE | IS LEADER | IS LEARNER | RAFT TERM | RAFT INDEX | RAFT APPLIED INDEX | ERRORS |
++------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+| https://127.0.0.1:2379 | 4e30a295f2c3c1a4 |   3.5.0 |  8.1 MB |      true |      false |         3 |       7903 |               7903 |        |
++------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
 ```
 
 The cluster this was executed on has only one master node, hence only one result from the script. You will normally receive a response for each etcd member in the cluster.

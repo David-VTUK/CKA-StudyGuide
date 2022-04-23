@@ -18,14 +18,24 @@
 
 <details><summary>Answer</summary>
 
-1. 1 Is dependent on how the cluster was made and potentially which OS's were used.
+1. 1 Is dependent on how the cluster was made and potentially which OS's were used. For example, if K8S components manifest as Kubernetes Pods:
+
+```shell
+kubectl logs <podname> <namespace>
+```
 
 ```shell
 kubectl get events
 ```
 
 ```shell
-etcdctl cluster-health
+etcdctl --write-out=table --endpoints=$ENDPOINTS endpoint status
++------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+|        ENDPOINT        |        ID        | VERSION | DB SIZE | IS LEADER | IS LEARNER | RAFT TERM | RAFT INDEX | RAFT APPLIED INDEX | ERRORS |
++------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+| https://127.0.0.1:2379 | 4e30a295f2c3c1a4 |   3.5.0 |  8.1 MB |      true |      false |         3 |       7903 |               7903 |        |
++------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+
 ```
 </details>
 

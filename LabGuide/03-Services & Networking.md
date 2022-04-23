@@ -31,8 +31,6 @@ Service name will be, based on the format `[Service Name].[Namespace].[Type].[Ba
 ```shell
 nginx-service.default.svc.cluster.local
 ```
-
-Identify the associated Pods based on this label:
 </details>
 
 # Exercise 2 - Understand ClusterIP, NodePort, LoadBalancer service types and endpoint
