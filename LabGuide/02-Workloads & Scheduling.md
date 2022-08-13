@@ -92,7 +92,7 @@ kubectl rollout undo deployment/nginx
 1. Create a configmap named `mycm` that has the following key=value pair
     1. `key` = owner
     2. `value` = yourname
-2. Create a pod of your choice, such as `nginx`. Configure this Pod so that the underlying container has the environent varibale `OWNER` set to the value of this configmap 
+2. Create a pod of your choice, such as `nginx`. Configure this Pod so that the underlying container has the environment variable `OWNER` set to the value of this configmap 
 
 <details><summary>Answer</summary>
 
