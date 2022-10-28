@@ -15,7 +15,7 @@ http://www.kubernet.io/ (Currently offline)
 
 https://github.com/kelseyhightower/kubernetes-the-hard-way
 
-https://linuxacademy.com
+https://acloudguru.com/course/certified-kubernetes-administrator-cka
 
 https://kubernetes.io/docs/
 
@@ -24,6 +24,8 @@ https://kubernetes.io/docs/tasks/
 ### Lab Environments
 
 https://kubernetes.io/docs/setup/learning-environment/minikube/
+
+https://kubernetes.io/blog/2020/05/21/wsl-docker-kubernetes-on-the-windows-desktop/
 
 ### Contact
 
