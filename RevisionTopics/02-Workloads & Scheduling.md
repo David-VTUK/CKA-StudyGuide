@@ -308,7 +308,7 @@ spec:
 Apply this to the aforementioned namespace: 
 
 ```shell
-kubectl apply -f maxmem.yaml`
+kubectl apply -f maxmem.yaml
 ```
 
 To create a pod with a memory request that exceeds the limit:
