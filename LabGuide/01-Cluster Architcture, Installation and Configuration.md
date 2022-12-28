@@ -81,11 +81,10 @@ subjects:
 Prep kubeadm (as mentioned above, I doubt we will need to do this part in the exam)
 
 ```shell
+# Install a container runtime, IE https://github.com/containerd/containerd/blob/main/docs/getting-started.md
 apt-get update && apt-get install -y apt-transport-https curl
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
-deb https://apt.kubernetes.io/ kubernetes-xenial main
-EOF
+curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 apt-get update
 apt-get install -y kubelet kubeadm kubectl
 apt-mark hold kubelet kubeadm kubectl
@@ -120,8 +119,8 @@ Validate by running `kubectl get no` on the master node:
 ```shell
 kubectl get no
 NAME      STATUS   ROLES                  AGE     VERSION
-ubuntu    Ready    control-plane,master   9m53s   v1.20.2
-ubuntu2   Ready    <none>                 50s     v1.20.2
+ubuntu    Ready    control-plane,master   9m53s   v1.26.0
+ubuntu2   Ready    <none>                 50s     v1.26.0
 ```
 </details>
 
