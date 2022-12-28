@@ -1,5 +1,5 @@
 # CKA-Study Guide
-The following guide is based on the Certified Kubernetes Administrator Exam Curriculum 1.22 and consists of the following sections:
+The following guide is based on the Certified Kubernetes Administrator Exam Curriculum 1.26 and consists of the following sections:
 
 ### [Revision Topics](https://github.com/David-VTUK/CKA-StudyGuide/tree/master/RevisionTopics)
 
