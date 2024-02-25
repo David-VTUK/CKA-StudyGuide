@@ -7,7 +7,7 @@
 
 # Exercise 1 - Understand storage classes, persistent volumes
 
-Note: Leverage the docs to help you. It's unlikey you will need to recall the nuances from memory - https://kubernetes.io/docs/concepts/storage/storage-classes/
+Note: Leverage the docs to help you. It's unlikely you will need to recall the nuances from memory - https://kubernetes.io/docs/concepts/storage/storage-classes/
 
 1. Create a `storageclass` object named `aws-ebs` with the following specification:
     1. The `provisioner` should be `kubernetes.io/aws-ebs`

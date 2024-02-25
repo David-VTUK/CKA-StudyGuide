@@ -15,7 +15,7 @@ Every Pod gets its own IP address. This means you do not need to explicitly crea
 Kubernetes imposes the following fundamental requirements on any networking implementation (barring any intentional network segmentation policies):
 
 *   Pods on a node can communicate with all pods on all nodes without NAT
-*   Agents on a node (e.g. system daemons, kubelet) can communicate with all pods on that node
+*   Agents on a node (e.g. system daemons, Kubelet) can communicate with all pods on that node
 
 Note: When running workloads that leverage `hostNetwork`:
 

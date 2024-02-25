@@ -2,11 +2,13 @@
 
 # Imperative vs Declarative
 
-The Lab guide, where feasible will presnt both imperative and declarative answers to address a question. Outside the exam, we should operate in a Declarative manner. During the exam, however, time is an expensive commodity. Therefore, if you can, try and be as imperative as possible to save time.
+The Lab guide will present both imperative and declarative answers to questions where possible. Due to time constraints in the exam, using imperative commands may be more efficient. Outside of the exam, declarative management is the preferred approach.
 
 # Use the documentation
 
 At time of writing, https://kubernetes.io/docs/, https://github.com/kubernetes/ and  https://kubernetes.io/blog/ are permitted to be used during the exam as per [the current guidelines](https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed#certified-kubernetes-administrator-cka-and-certified-kubernetes-application-developer-ckad). If you need to get boiletplate YAML manifests to address an exam question, feel free to get them from here. The key is to know **what** to search for. 
+
+For example, if asked to create and apply a `service` object, search for `Service YAML` in the Kubernetes docs and [modify an example](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service) to suit the question objectives.
 
 ## Caution on documentation
 
@@ -14,10 +16,10 @@ When using the Kubernetes.io docs, be careful of the search results - **some wil
 
 ## Don't write YAML manifests from scratch
 
-If you can, copy/paste from the docs. If you can't find what you're looking for, kubectl has a good way to generate YAML:
+In addition to the above example, leverage the combination of `--dry-run` and `-o` to generate YAML that can be modified. 
 
 ```shell
-kubectl run nginx --image=nginx --dry-run -o yaml > pod.yaml
+kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yaml
 ```
 
 Which will generate:
@@ -43,8 +45,6 @@ status: {}
 `--dry-run` won't commit the command  
 `-o yaml` specifies YAML as the output  
 `> pod.yaml` redirects the output to a file
-
-At which point you can edit the object as you see fit before committing it to the cluster with `kubectl apply -f pod.yaml`. This can save a **lot** of time.
 
 # Become BFF's with `kubectl`
 

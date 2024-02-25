@@ -51,7 +51,7 @@ kubectl logs counter
 0: Sun Feb 14 19:09:01 UTC 2021
 1: Sun Feb 14 19:09:02 UTC 2021
 2: Sun Feb 14 19:09:03 UTC 2021
-3: Sun Feb 14 19:09:04 UTC 202
+3: Sun Feb 14 19:09:04 UTC 2021
 ```
 </details>
 
