@@ -215,8 +215,6 @@ spec:
               number: 8080
         path: /api
         pathType: Exact
-status:
-  loadBalancer: {}
 ```
 
 </details>

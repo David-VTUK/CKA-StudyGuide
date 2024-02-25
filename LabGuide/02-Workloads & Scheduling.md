@@ -8,7 +8,7 @@
 # Exercise 1 - Understand deployments and how to perform rolling update and rollbacks
 
 1. Create a deployment object consisting of 6 pods, each containing a single `nginx:1.19.5` container
-2. Identify the update strategy employed by this deployment
+2. Identify the update strategy adopted by this deployment
 3. Modify the update strategy so `maxSurge` is equal to `50% `and `maxUnavailable` is equal to `50%`
 4. Perform a rolling update to this deployment so that the image gets updated to `nginx1.19.6`
 5. Undo the most recent change
@@ -18,7 +18,7 @@
 
 ```shell
 kubectl create deployment nginx --image=nginx:1.19.5 --replicas=6
-kubectl describe deployment nginx (unless specified, will be listed as "UpdateStrategy")
+kubectl describe deployment nginx | grep StrategyType
 kubectl patch deployment nginx -p "{\"spec\": {\"strategy\": {\"rollingUpdate\": { \"maxSurge\":\"50%\"}}}}" --record=true
 kubectl patch deployment nginx -p "{\"spec\": {\"strategy\": {\"rollingUpdate\": { \"maxUnavailable\":\"50%\"}}}}" --record=true
 kubectl set image deployment nginx nginx=nginx:1.19.6 --record=true
