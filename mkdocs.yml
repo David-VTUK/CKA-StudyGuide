@@ -1,0 +1,30 @@
+site_name: CKA-Studyguide 
+theme:
+  name: readthedocs
+
+docs_dir: cka-study-guide/docs
+
+nav:
+  - Home: 'index.md'
+  - 'Revision Topics':
+      - 'Part One - Architecture, Installation and Configuration' : 'revision-topics/01-architcture-installation-configuration.md'
+      - 'Part Two - Workloads & Scheduling' : 'revision-topics/02-workloads-and-scheduling.md'
+      - 'Part Three - Services & Networking' : 'revision-topics/03-services-and-networking.md'
+      - 'Part Four - Storage' : 'revision-topics/04-storage.md'
+      - 'Part Five - Troubleshooting' : 'revision-topics/05-troubleshooting.md'
+
+  - 'Lab Guide':
+      - 'Part Zero - General Advice': 'lab-guide/00-general-advice.md'
+      - 'Part One - Architecture, Installation and Configuration' : 'lab-guide/01-architcture-installation-configuration.md'
+      - 'Part Two - Workloads & Scheduling' : 'lab-guide/02-workloads-and-scheduling.md'
+      - 'Part Three - Services & Networking' : 'lab-guide/03-services-and-networking.md'
+      - 'Part Four - Storage' : 'lab-guide/04-storage.md'
+      - 'Part Five - Troubleshooting' : 'lab-guide/05-troubleshooting.md'
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+extra_css:
+  - custom.css

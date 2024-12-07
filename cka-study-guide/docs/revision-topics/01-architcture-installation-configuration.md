@@ -10,13 +10,13 @@ To determine who (or what) has access to which resources, a number of steps have
 
 First step is Authentication which is how a user or service account identifies itself. Depending on the source, a corresponding authentication module is used. Authentication modules include the ability to authenticate from the following:
 
-*   Client Certificate
-*   Password
-*   Plain Tokens
-*   Bootstrap Tokens
-*   JWT Tokens (for service accounts)
+* Client Certificate
+* Password
+* Plain Tokens
+* Bootstrap Tokens
+* JWT Tokens (for service accounts)
 
-All authentication is handled via HTTP over TLS. 
+All authentication is handled via HTTP over TLS.
 
 ## Step 2 - Authorization
 
@@ -28,7 +28,7 @@ Any and all requests are facilitated providing an existing policy gives the user
 
 Admission Control Modules are software modules that can modify or reject requests. In addition to the attributes available to Authorization Modules, Admission Control Modules can access the contents of the object that is being created or updated. They act on objects being created, deleted, updated or connected (proxy), but not reads.
 
-## `role` and `rolebindings`
+### `role` and `rolebindings`
 
 Implementing RBAC rules largely involves two object types within Kubernetes - `role` and `rolebindings`:
 
@@ -44,7 +44,7 @@ A `rolebinding` grants the permissions from a role to a user, group or service a
 
 `Users` can either be `serviceaccounts` or `users`. The former is typically used to authenticate applications, the latter for human users.
 
-To test, the below creates `namespace`, `serviceaccount`, `role` and `rolebinding` 
+To test, the below creates `namespace`, `serviceaccount`, `role` and `rolebinding`
 
 ```yaml
 apiVersion: v1
@@ -60,10 +60,12 @@ metadata:
  name: rbac-test-sa
  namespace: rbac-test
  ```
+
 of particular importance is the format of the below.  
 `apiGroup` : Determines which API group to apply this to.
 `resources`: Which resource types to apply this to.
 `verbs`: What we can do to these objects (ie create, delete, watch, etc)
+
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -75,6 +77,7 @@ rules:
    resources: ["pods"]
    verbs: ["get", "list", "watch"]
 ```
+
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -105,7 +108,7 @@ kubectl -n rbac-test --as=system:serviceaccount:rbac-test:rbac-test-sa auth can-
 no
 ```
 
-#  Use Kubeadm to install a basic cluster
+## Use Kubeadm to install a basic cluster
 
 kubeadm is a utility to bootstrap Kubernetes to a number of existing, vanilla nodes. It takes care of the etcd cluster, Kubernetes master and worker nodes including all the required components to instantiate a viable minimum k8s cluster.
 
@@ -150,9 +153,11 @@ apt-mark hold kubelet kubeadm kubectl
 ```
 
 Initialise the master node:
+
 ```shell
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
+
 Note, the requirement to pass --pod-network is dependent on the chosen CNI. For Flannel, this is required. Kubeadm will also let you know if any prerequisites are not made.
 
 Once completed, a message will be displayed:
@@ -178,12 +183,11 @@ kubeadm join 172.16.10.80:6443 --token j5nqhd.cnfmnjgc68aato60 \
 
 Some important pieces of information to note:
 
-*  Kubeadm has created the admin kubeconfig file for you, and recommends copying this to the logged on users home directory for ease
+* Kubeadm has created the admin kubeconfig file for you, and recommends copying this to the logged on users home directory for ease
 
 * Kubeadm has **not** deployed a pod networking solution yet. Therefore, this is a post-install activity
 
-*  Kubeadm has provided a join command together with a token to add worker nodes. We can regenerate this token if required.
-
+* Kubeadm has provided a join command together with a token to add worker nodes. We can regenerate this token if required.
 
 If we issue a kubectl get nodes command we will see the master node is not ready
 
@@ -191,6 +195,7 @@ If we issue a kubectl get nodes command we will see the master node is not ready
 NAME            STATUS     ROLES    AGE     VERSION
 k8s-cl02-ms01   NotReady   master   6m20s   v1.20.2
 ```
+
 As per the output of kubeadm, install a network solution, Ie flannel.
 
 For flannel to work correctly, you must pass --pod-network-cidr=10.244.0.0/16 to kubeadm init.
@@ -234,6 +239,7 @@ Use this command on the worker (as root)
 ```shell
 root@k8s-cl02-wk01:~# kubeadm join 172.16.10.80:6443 --token ht55yv.8lq69q0189xhe2ql     --discovery-token-ca-cert-hash sha256:cbc91031c1ffa47bbea83aa1cf65e99821a1f582c4363e1a4408715bfd66bb60
 ```
+
 After which confirmation will be displayed:
 
 ```shell
@@ -243,18 +249,20 @@ This node has joined the cluster:
 
 Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 ```
+
 To validate, run kubectl get nodes on the master node:
+
 ```shell
 NAME            STATUS   ROLES    AGE     VERSION
 k8s-cl02-ms01   Ready    master   50m     v1.20.2
 k8s-cl02-wk01   Ready    <none>   2m10s   v1.20.2
 ```
 
-#  Manage a highly-available Kubernetes cluster
+## Manage a highly-available Kubernetes cluster
 
 The previous section demonstrated creating a K8s cluster with one master node and several worker nodes - this does not provide resilience for the control plane. Several topologies exist for doing so:
 
-## Stacked etcd
+### Stacked etcd
 
 ![img.png](images/stacked-etcd.png)
 
@@ -265,6 +273,8 @@ The previous section demonstrated creating a K8s cluster with one master node an
 Notes:
 
 etcd is quorum based. Therefore, if using stacked control plane nodes with etcd, odd numbers must be used.
+
+### External etcd
 
 ![img.png](images/external-etcd.png)
 
@@ -278,7 +288,7 @@ Notes:
 
 Advantage with this setup is etcd and the control plane can be scaled and managed independently of each other. This provides greater flexibility at the expense of operational complexity.
 
-# Assessing cluster health
+## Assessing cluster health
 
 `kubectl get componentstatus` is deprecated as of 1.20. A suitable replacement includes probing the API server directly, For example, on a master node, run `curl -k https://localhost:6443/livez?verbose` which returns:
 
@@ -290,9 +300,10 @@ Advantage with this setup is etcd and the control plane can be scaled and manage
 [+]poststarthook/generic-apiserver-start-informers ok
 .....etc
 ```
+
 Three endpoints exist - `healthz`,`livez` and `readyz` to indicate the current status of the API server
 
-#  Provision underlying infrastructure to deploy a Kubernetes cluster
+## Provision underlying infrastructure to deploy a Kubernetes cluster
 
 The topology choices above will influence the underlying resources that need to be provisioned. How these are provisioned are specific to the underlying cloud provider. Some generic observations:
 
@@ -300,7 +311,7 @@ The topology choices above will influence the underlying resources that need to 
 * Leverage cloud capabilities for HA - ie using multiple AZ's.
 * Windows can be used for worker nodes, but not control plane.
 
-# Perform a version upgrade on a Kubernetes cluster using Kubeadm 
+## Perform a version upgrade on a Kubernetes cluster using Kubeadm
 
 First, install kubeadm to a specific version. This will determine the k8s version that it deploys:
 
@@ -320,9 +331,10 @@ Add CNI
 https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ```
 
-To upgrade the underlying k8s cluster, we need to upgrade kubeadm. 
+To upgrade the underlying k8s cluster, we need to upgrade kubeadm.
 
 Update kubeadm
+
 ```shell
 sudo apt-mark unhold kubeadm
 sudo apt-get install --only-upgrade kubeadm
@@ -349,7 +361,7 @@ etcd                      3.4.9-1   3.4.13-0
 
 You can now apply the upgrade by executing the following command:
 
-	kubeadm upgrade apply v1.20.2
+kubeadm upgrade apply v1.20.2
 ```
 
 **Important note:** kubelet must be upgraded manually after this step.
@@ -361,19 +373,21 @@ kubeadm upgrade apply v1.20.2
 ```
 
 upgrade Kubelet:
+
 ```shell
 sudo apt-get install --only-upgrade kubelet kubectl
 ```
 
-#  Implement etcd backup and restore
+## Implement etcd backup and restore
 
-## Backing up etcd
+### Backing up etcd
 
 Take a snapshot of the DB, then store it in a safe location:
 
 ```bash
 ETCDCTL_API=3 etcdctl snapshot save snapshot.db --cacert /etc/kubernetes/pki/etcd/server.crt --cert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/ca.key
 ```
+
 Verify the backup:
 
 ```shell
@@ -381,11 +395,13 @@ sudo ETCDCTL_API=3 etcdctl --write-out=table snapshot status snapshot.db
 +----------+----------+------------+------------+
 |   HASH   | REVISION | TOTAL KEYS | TOTAL SIZE |
 +----------+----------+------------+------------+
-| 2125d542 |   364069 |        770 |  	3.8 MB |
+| 2125d542 |   364069 |        770 |  3.8 MB    |
 +----------+----------+------------+------------+
 ```
 
-Perform a restore:
+### Restore to etcd
+
+To perform a restore:
 
 ```shell
 ETCDCTL_API=3 etcdctl snapshot restore snapshot.db

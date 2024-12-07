@@ -1,4 +1,6 @@
-# Understand deployments and how to perform rolling update and rollbacks
+# Workloads and Scheduling
+
+## Understand deployments and how to perform rolling update and rollbacks
 
 Deployments are intended to replace Replication Controllers.  They provide the same replication functions (through Replica Sets) and also the ability to rollout changes and roll them back if necessary. An example configuration is shown below:
 
@@ -23,12 +25,14 @@ spec:
 
 The main reason why leverage `deployments` is to manage a number of identical pods via one administrative unit - the `deployment` object. Should we need to make changes, we apply this to the `deployment` object, not individual pods. Because of the declarative nature of `deployments`, Kubernetes will rectify any changes between desired and running state, and rectify accordingly. For example, if we manually deleted 
 
-We can then describe it with` kubectl describe deployment nginx-deployment`
+We can then describe it with `kubectl describe deployment nginx-deployment`
+
+### Update
 
 To update an existing deployment, we have two main options:
 
-*   Rolling Update
-*   Recreate
+* Rolling Update
+* Recreate
 
 A rolling update, as the name implies, will swap out containers in a deployment with one created by a new image.
 
@@ -37,7 +41,6 @@ Use a rolling update when the application supports having a mix of different pod
 A recreation will delete all the existing pods and then spin up new ones. This method will involve downtime. Consider this a “bing bang” approach
 
 Examples listed in the Kubernetes documentation are largely imperative, but I prefer to be declarative. As an example, create a new yaml file and make the required changes, in this example, the version of the nginx container is incremented.
-
 
 ```yaml
 apiVersion: apps/v1
@@ -58,11 +61,9 @@ spec:
         - containerPort: 80
 ```
 
-
-We can then apply this file` kubectl apply -f updateddeployment.yaml --record=true`
+We can then apply this file `kubectl apply -f updateddeployment.yaml --record=true`
 
 Followed by the following:
-
 
 ```shell
 kubectl rollout status deployment/nginx-deployment
@@ -87,19 +88,17 @@ Waiting for deployment "nginx-deployment" rollout to finish: 4 of 5 updated repl
 deployment "nginx-deployment" successfully rolled out
 ```
 
-
 We can also use the kubectl rollout history to look at the revision history of a deployment
-
 
 ```shell
 kubectl rollout history deployment/nginx-deployment
 
 deployment.extensions/nginx-deployment
 REVISION  CHANGE-CAUSE
-1     	<none>
-2     	<none>
-4     	<none>
-5     	kubectl apply --filename=updateddeployment.yaml --record=true
+1     <none>
+2     <none>
+4     <none>
+5     kubectl apply --filename=updateddeployment.yaml --record=true
 ```
 
 Alternatively, we can also do this imperatively:
@@ -111,7 +110,7 @@ deployment.extensions/nginx-deployment image updated
 deployment.extensions/nginx-deployment image updated
 ```
 
-## Rollback
+### Rollback
 
 To rollback to the previous version:
 
@@ -127,7 +126,7 @@ kubectl rollout undo deployment/nginx-deployment --to-revision 5
 
 Source of `revision`: `kubectl rollout history deployment/nginx-deployment`
 
-# Use ConfigMaps and Secrets to configure applications
+## Use ConfigMaps and Secrets to configure applications
 
 Configmaps are a way to decouple configuration from a pod manifest. Obviously, the first step is to create a config map before we can get pods to use them:
 
@@ -183,7 +182,6 @@ spec:
 
 The pod above will output the environment variables, so we can validate it’s leveraged the config map by extracting the logs from the pod:
 
-
 ```shell
 kubectl logs config-test-pod | grep "BLOG_NAME="
 ...
@@ -191,7 +189,7 @@ BLOG_NAME=virtualthoughts.co.uk
 ...
 ```
 
-#  Know how to scale applications
+## Know how to scale applications
 
 Constantly adding more, individual pods is not a sustainable model for scaling an application. To facilitate applications at scale, we need to leverage higher level constructs such as replicasets or deployments. As mentioned previously, `deployments` provide us with a single administrative unit to manage the underlying pods. We can scale a `deployment` object to increase the number of `pods`.
 
@@ -222,7 +220,7 @@ If we wanted to scale this, we can simply modify the yaml file and scale up/down
 kubectl scale deployment nginx-deployment --replicas 10
 ```
 
-# Understand the primitives used to create robust, self-healing, application deployments
+## Understand the primitives used to create robust, self-healing, application deployments
 
 Deployments facilitate this by employing a reconciliation loop to check the number of deployed pods matches what’s defined in the manifest. Under the hood, deployments leverage ReplicaSets, which are primarily responsible for this feature.
 
@@ -230,10 +228,10 @@ Stateful Sets are similar to deployments, for example they manage the deployment
 
 StatefulSets are valuable for applications that require one or more of the following.
 
-*   Stable, unique network identifiers.
-*   Stable, persistent storage.
-*   Ordered, graceful deployment and scaling.
-*   Ordered, automated rolling updates.
+* Stable, unique network identifiers.
+* Stable, persistent storage.
+* Ordered, graceful deployment and scaling.
+* Ordered, automated rolling updates.
 
 ```yaml
 apiVersion: apps/v1
@@ -258,7 +256,7 @@ spec:
        - containerPort: 80
 ```
 
-# Understand how resource limits can affect Pod scheduling
+## Understand how resource limits can affect Pod scheduling
 
 At a namespace level, we can define resource limits. This enables a restriction in resources, especially helpful in multi-tenancy environments and provides a mechanism to prevent pods from consuming more resources than permitted, which may have a detrimental effect on the environment as a whole.
 
@@ -270,26 +268,28 @@ Minimum and Maximum memory / CPU **constraints** for a namespace
 
 Memory/CPU **Quotas** for a namespace
 
-## Default Requests and Limits
+### Default Requests and Limits
 
 If a container is created in a namespace with a default request/limit value and doesn't explicitly define these in the manifest, it inherits these values from the namespace
 
 Note, if you define a container with a memory/CPU limit, but not a request, Kubernetes will define the limit the same as the request.
 
-## Minimum / Maximum Constraints
+### Minimum / Maximum Constraints
 
 If a pod does not meet the range in which the constraints are valued at, it will not be scheduled.
 
-## Quotas
+### Quotas
 
 Control the _total_ amount of CPU/memory that can be consumed in the _namespace_ as a whole.
 
 Example: Attempt to schedule a pod that request more memory than defined in the namespace
 
 Create a namespace:
+
 ```shell
 kubectl create namespace tenant-mem-limited
 ```
+
 Create a YAML manifest to limit resources:
 
 ```yaml
@@ -305,7 +305,7 @@ spec:
     type: Container
 ```
 
-Apply this to the aforementioned namespace: 
+Apply this to the aforementioned namespace:
 
 ```shell
 kubectl apply -f maxmem.yaml
@@ -336,9 +336,9 @@ The Pod "too-much-memory" is invalid: spec.containers[0].resources.requests: Inv
 
 As we have defined the pod limit of the namespace to 250MiB, a request for 300MiB will fail.
 
-#  Awareness of manifest management and common templating tools
+## Awareness of manifest management and common templating tools
 
-## Kustomize
+### Kustomize
 
 Kustomize is a templating tool for Kubernetes manifests in its native form (Yaml). When working with raw YAML files you will typically have a directory containing several files identifying the resources it creates. To begin, a directory containing our manifests needs to exist:
 
@@ -374,7 +374,7 @@ resources:
 - service.yaml
 ```
 
-## Variants and Overlays
+#### Variants and Overlays
 
 * variant - Divergence in configuration from the `base`
 * overlay - Composes variants together 
@@ -385,11 +385,13 @@ Say, for example, we wanted to generate manifests for different environments (pr
 mkdir -p overlays/{dev,prod}
 cd overlays/dev 
 ```
+
 Begin by creating a Kustomization object specifying the base (this will create `kustomization.yaml`) :
 
 ```shell
 kustomize create --resources ../../base
 ```
+
 In this example, I want to change the replica count to 1, as it's a dev environment. In the `dev` directory, create a new file `deployment.yaml` containing:
 
 ```yaml
@@ -413,6 +415,7 @@ bases:
 patchesStrategicMerge:
   - deployment.yaml
 ```
+
 Patches can be used to apply different customizations to Resources. Kustomize supports different patching mechanisms through `patchesStrategicMerge` and `patchesJson6902`. `patchesStrategicMerge` is a list of file paths.
 
 We can generate the manifests and apply to the cluster by executing (from the base folder):
@@ -423,13 +426,13 @@ kustomize build ./overlay/dev | kubectl apply -f -
 
 By running this, only 1 pod will be created in the deployment object, instead of what's defined in the `base` because of the customisation we've applied. We can do the same with prod, or any arbitrary number of environments.
 
-## Helm
+### Helm
 
 Helm is synonymous to what `apt` or `yum` are in the Linux world. It's effectively a package manager for Kubernetes. "Packages" in Helm are called `charts` to which you can customise with your own values.
 
 It's unlikely the exam will require anyone to create a helm chart from scratch, but an understanding of how it works is a good idea.
 
-## Helm Repos
+#### Helm Repos
 
 Repos are where helm charts are stored. Typically, a repo will contain a number of charts to choose from. Helm can be managed by a CLI client, and a repo can be added by running:
 

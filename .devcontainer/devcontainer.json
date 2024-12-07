@@ -1,0 +1,17 @@
+{
+    "name": "markdown-dev",
+    "build": {"dockerfile": "Dockerfile"},
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "streetsidesoftware.code-spell-checker",
+				"GitHub.copilot",
+                "yzhang.markdown-all-in-one",
+                "davidanson.vscode-markdownlint"
+            ]
+        }
+    },
+
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,Z",
+	"workspaceFolder": "/workspace"
+}
