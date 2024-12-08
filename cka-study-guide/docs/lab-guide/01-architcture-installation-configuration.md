@@ -79,12 +79,31 @@ A third party application requires access to describe `job` objects that reside 
 
     ```shell
     # Install a container runtime, IE https://github.com/containerd/containerd/blob/main/docs/getting-started.md
-    apt-get update && apt-get install -y apt-transport-https curl
-    curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-    apt-get update
-    apt-get install -y kubelet kubeadm kubectl
-    apt-mark hold kubelet kubeadm kubectl
+
+    sudo apt update && apt install containerd -y
+
+    sudo apt-get update
+    # apt-transport-https may be a dummy package; if so, you can skip that package
+    sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+
+    # If the directory `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below.
+    # sudo mkdir -p -m 755 /etc/apt/keyrings
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+
+    # This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+    sudo apt-get update
+    sudo apt-get install -y kubelet kubeadm kubectl
+    sudo apt-mark hold kubelet kubeadm kubectl
+    ```
+
+    ```shell
+    You may need to execute the following:
+    modprobe br_netfilter
+    echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
+    echo 1 > /proc/sys/net/ipv4/ip_forward
     ```
 
     Turn this node into a master
@@ -116,8 +135,8 @@ A third party application requires access to describe `job` objects that reside 
     ```shell
     kubectl get no
     NAME      STATUS   ROLES                  AGE     VERSION
-    ubuntu    Ready    control-plane,master   9m53s   v1.26.0
-    ubuntu2   Ready    <none>                 50s     v1.26.0
+    ubuntu    Ready    control-plane,master   9m53s   v1.31.3
+    ubuntu2   Ready    <none>                 50s     v1.31.3
     ```
 
 ## Exercise 3 - Manage a highly-available Kubernetes cluster
