@@ -23,7 +23,7 @@ Note: When running workloads that leverage `hostNetwork`:
 
 * Pods in the host network of a node can communicate with all pods on all nodes without NAT
 
-## Understand ClusterIP, NodePort, LoadBalancer service types and endpoint
+## Understand ClusterIP, NodePort, LoadBalancer service types and endpoints
 
 Pods are ephemeral. Therefore, placing these behind a service which provides a stable, static entrypoint is a fundamental use of the kubernetes service object. To reiterate, services take the form of the following:
 

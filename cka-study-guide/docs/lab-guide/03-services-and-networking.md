@@ -31,7 +31,7 @@
     nginx-service.default.svc.cluster.local
     ```
 
-## Exercise 2 - Understand ClusterIP, NodePort, LoadBalancer service types and endpoint
+## Exercise 2 - Understand ClusterIP, NodePort, LoadBalancer service types and endpoints
 
 1. Create three `deployments` of your choosing
 2. Expose one of these deployments with a service of type `ClusterIP`
