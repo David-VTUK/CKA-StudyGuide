@@ -1,4 +1,6 @@
-# Understand storage classes, persistent volumes
+# Storage
+
+## Understand storage classes, persistent volumes
 
 A `StorageClass` provides a way for administrators to describe the "classes" of storage they offer. Different classes might map to quality-of-service levels, or to backup policies, or to arbitrary policies determined by the cluster administrators. Kubernetes itself is un-opinionated about what classes represent. This concept is sometimes called "profiles" in other storage systems.
 
@@ -44,9 +46,9 @@ spec:
   storageClassName: standard
 ```
 
-# Understand volume mode, access modes and reclaim policies for volumes
+## Understand volume mode, access modes and reclaim policies for volumes
 
-## Volume modes:
+### Volume modes
 
 Only two exist:
 
@@ -54,28 +56,27 @@ Only two exist:
 
 * `filesystem` - Mounted inside a pods' filesystem inside a directory. If the volume is backed by a block device with no filesystem, Kubernetes will create one. Compared to `block` devices, this method offers the highest compatibility, at the expense of performance.
 
-## Access Modes
+### Access Modes
 
 Three options exist:
 
-*  `ReadWriteOnce` – The volume can be mounted as read-write by a single node
-*  `ReadOnlyMany` – The volume can be mounted read-only by many nodes
-*  `ReadWriteMany` – The volume can be mounted as read-write by many nodes
+* `ReadWriteOnce` – The volume can be mounted as read-write by a single node
+* `ReadOnlyMany` – The volume can be mounted read-only by many nodes
+* `ReadWriteMany` – The volume can be mounted as read-write by many nodes
 
-# Understand persistent volume claims primitive
+## Understand persistent volume claims primitive
 
 A `PersistentVolume` can be thought of as storage provisioned by an administrator. Think of this as pre-allocation
 
-A `PersistentVolumeClaim` can be thought of as storage requested by a user/workload. 
+A `PersistentVolumeClaim` can be thought of as storage requested by a user/workload.
 
 When the user creates PVC to request storage, Kubernetes will try to match that PVC with a pre-allocated PV. If a match can be found, the PVC will be bound to the PV, and the user will start to use that pre-allocated piece of storage.
 
-
-# Know how to configure applications with persistent storage
+## Know how to configure applications with persistent storage
 
 When not using storageclasses there are a number of steps:
 
-Create the PV: 
+Create the PV:
 
 ```yaml
 apiVersion: v1
@@ -131,7 +132,6 @@ spec:
 
 If leveraging a storageclass, a `persistentvolume` object is not required, we just need a `persistentvolumeclaim`
 
-
 ```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -164,5 +164,3 @@ spec:
         - mountPath: "/usr/share/nginx/html"
           name: task-pv-storage
 ```
-
-

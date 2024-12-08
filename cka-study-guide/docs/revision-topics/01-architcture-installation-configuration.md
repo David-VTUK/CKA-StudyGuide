@@ -1,4 +1,6 @@
-# Manage Role Based Access Control (RBAC)
+# Cluster Architecture, Installation & Configuration
+
+## Manage Role Based Access Control (RBAC)
 
 Kubernetes implements an RBAC framework to govern access to resources within a cluster and forms part of the overall Authentication, Authorization and Admission control framework.
 
@@ -6,7 +8,7 @@ Kubernetes implements an RBAC framework to govern access to resources within a c
 
 To determine who (or what) has access to which resources, a number of steps have to be executed.
 
-## Step 1 - Authentication
+### Step 1 - Authentication
 
 First step is Authentication which is how a user or service account identifies itself. Depending on the source, a corresponding authentication module is used. Authentication modules include the ability to authenticate from the following:
 
@@ -18,17 +20,17 @@ First step is Authentication which is how a user or service account identifies i
 
 All authentication is handled via HTTP over TLS.
 
-## Step 2 - Authorization
+### Step 2 - Authorization
 
 After a user or service account is authenticated, the request must then be authorized. Any authentication request is followed by some kind of action request, and the action defines the object(s) that request needs to apply to, and what the action is. For example, to list the pods in a given namespace.
 
 Any and all requests are facilitated providing an existing policy gives the user those permissions.
 
-## Steps 3 & 4 - Admission Control
+### Steps 3 & 4 - Admission Control
 
 Admission Control Modules are software modules that can modify or reject requests. In addition to the attributes available to Authorization Modules, Admission Control Modules can access the contents of the object that is being created or updated. They act on objects being created, deleted, updated or connected (proxy), but not reads.
 
-### `role` and `rolebindings`
+### `Role` and `Rolebindings`
 
 Implementing RBAC rules largely involves two object types within Kubernetes - `role` and `rolebindings`:
 
@@ -129,7 +131,7 @@ Kubeadm is a command line utility that performs the following functions:
 * **kubeadm version** to print the kubeadm version
 * **kubeadm alpha** to preview a set of features made available for gathering feedback from the community
 
-## Kubeadm - Master Node Install
+### Kubeadm - Master Node Install
 
 In the following examples 3x Ubuntu Server VMs were created
 
@@ -216,7 +218,7 @@ k8s-cl02-ms01   Ready    master   10m   v1.20.2
 
 ```
 
-## Kubeadm - Install worker nodes
+### Kubeadm - Install worker nodes
 
 The installation process for worker nodes is similar to master nodes - the only exception is we do **not** execute the "kubeadm init" command, as this is only run on masters. For workers, we use "kubeadm join".
 
@@ -288,7 +290,7 @@ Notes:
 
 Advantage with this setup is etcd and the control plane can be scaled and managed independently of each other. This provides greater flexibility at the expense of operational complexity.
 
-## Assessing cluster health
+### Assessing cluster health
 
 `kubectl get componentstatus` is deprecated as of 1.20. A suitable replacement includes probing the API server directly, For example, on a master node, run `curl -k https://localhost:6443/livez?verbose` which returns:
 

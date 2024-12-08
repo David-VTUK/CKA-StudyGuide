@@ -23,7 +23,7 @@ spec:
         - containerPort: 80
 ```
 
-The main reason why leverage `deployments` is to manage a number of identical pods via one administrative unit - the `deployment` object. Should we need to make changes, we apply this to the `deployment` object, not individual pods. Because of the declarative nature of `deployments`, Kubernetes will rectify any changes between desired and running state, and rectify accordingly. For example, if we manually deleted 
+The main reason why leverage `deployments` is to manage a number of identical pods via one administrative unit - the `deployment` object. Should we need to make changes, we apply this to the `deployment` object, not individual pods. Because of the declarative nature of `deployments`, Kubernetes will rectify any changes between desired and running state, and rectify accordingly. For example, if we manually deleted.
 
 We can then describe it with `kubectl describe deployment nginx-deployment`
 
@@ -135,7 +135,6 @@ kubectl create configmap <map-name> <data-source>
 ```
 
 “Map-name” is an arbitrary name we give to this particular map, and “data-source” corresponds to a key-value pair that resides in the config map.
-
 
 ```shell
 kubectl create configmap vt-cm --from-literal=blog=virtualthoughts.co.uk
@@ -377,7 +376,7 @@ resources:
 #### Variants and Overlays
 
 * variant - Divergence in configuration from the `base`
-* overlay - Composes variants together 
+* overlay - Composes variants together
 
 Say, for example, we wanted to generate manifests for different environments (prod and dev) that are based from this config, but have additional customisations. In this example we will create a `dev` variant encapsulated in a single Overlay
 
@@ -454,7 +453,7 @@ helm install my-release bitnami/mariadb
 
 Where `my-release` is a string identifying an installed instance of this application
 
-Parameters that can be customised - are dependent on how the chart is configured. For the aforementioned MariaDB chart, they are listed at  https://github.com/bitnami/charts/tree/master/bitnami/mariadb/#parameters
+Parameters that can be customised - are dependent on how the chart is configured. For the aforementioned MariaDB chart, they are listed at [https://github.com/bitnami/charts/tree/master/bitnami/mariadb/#parameters](https://github.com/bitnami/charts/tree/master/bitnami/mariadb/#parameters)
 
 These values are encapsulated in the corresponding `values.yaml` file in the repo. You can populate an instance of it and apply it with:
 
