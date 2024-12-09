@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Part Three - Services & Networking - CKA-Studyguide</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../custom.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Part Three - Services \u0026 Networking";
+        var mkdocs_page_input_path = "lab-guide/03-services-and-networking.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CKA-Studyguide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Revision Topics</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lab Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../00-general-advice/">Part Zero - General Advice</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Part Three - Services & Networking</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-0-setup">Exercise 0 - Setup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-1-understand-connectivity-between-pods">Exercise 1 - Understand connectivity between Pods</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-2-understand-clusterip-nodeport-loadbalancer-service-types-and-endpoints">Exercise 2 - Understand ClusterIP, NodePort, LoadBalancer service types and endpoints</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-3-know-how-to-use-ingress-controllers-and-ingress-resources">Exercise 3 - Know how to use Ingress controllers and Ingress resources</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-4-know-how-to-configure-and-use-coredns">Exercise 4 - Know how to configure and use CoreDNS</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CKA-Studyguide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Lab Guide</li>
+      <li class="breadcrumb-item active">Part Three - Services & Networking</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="lab-exercises-for-services-networking">Lab Exercises for Services &amp; Networking</h1>
+<h2 id="exercise-0-setup">Exercise 0 - Setup</h2>
+<ul>
+<li>Prepare a cluster (Single node, kubeadm, k3s, etc)</li>
+<li>Open browser tabs to <a href="https://kubernetes.io/docs/">https://kubernetes.io/docs/</a>, <a href="https://github.com/kubernetes/">https://github.com/kubernetes/</a> and  <a href="https://kubernetes.io/blog/">https://kubernetes.io/blog/</a> (these are permitted as per <a href="https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed#certified-kubernetes-administrator-cka-and-cerified-kubernetes-application-developer-ckad">the current guidelines</a>)</li>
+</ul>
+<h2 id="exercise-1-understand-connectivity-between-pods">Exercise 1 - Understand connectivity between Pods</h2>
+<ol>
+<li>Deploy <a href="https://raw.githubusercontent.com/David-VTUK/CKAExampleYaml/master/nginx-svc-and-deployment.yaml">the following manifest</a></li>
+<li>Using <code>kubectl</code>, identify the Pod IP addresses</li>
+<li>Determine the DNS name of the service.</li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<p>Identify the <code>selector</code> for the service:</p>
+<p><pre class="highlight"><code class="language-shell">kubectl describe service nginx-service | grep -i selector
+Selector:          app=nginx</code></pre>
+Filter <code>kubectl</code> output:</p>
+<pre class="highlight"><code class="language-shell">kubectl get po -l app=nginx -o wide</code></pre>
+<p>Service name will be, based on the format <code>[Service Name].[Namespace].[Type].[Base Domain Name]</code> :</p>
+<pre class="highlight"><code class="language-shell">nginx-service.default.svc.cluster.local</code></pre>
+</details>
+<h2 id="exercise-2-understand-clusterip-nodeport-loadbalancer-service-types-and-endpoints">Exercise 2 - Understand ClusterIP, NodePort, LoadBalancer service types and endpoints</h2>
+<ol>
+<li>Create three <code>deployments</code> of your choosing</li>
+<li>Expose one of these deployments with a service of type <code>ClusterIP</code></li>
+<li>Expose one of these deployments with a service of type <code>Nodeport</code></li>
+<li>Expose one of these deployments with a service of type <code>Loadbalancer</code><ol>
+<li>Note, this remains in <code>pending</code> status unless your cluster has integration with a cloud provider that provisions one for you (ie AWS ELB), or you have a software implementation such as <code>metallb</code></li>
+</ol>
+</li>
+</ol>
+<details>
+<summary>Answer - Imperative</summary>
+<pre class="highlight"><code class="language-shell">kubectl create deployment nginx-clusterip --image=nginx --replicas 1
+kubectl create deployment nginx-nodeport --image=nginx --replicas 1
+kubectl create deployment nginx-loadbalancer --image=nginx --replicas 1</code></pre>
+<pre class="highlight"><code class="language-shell">kubectl expose deployment nginx-clusterip --type="ClusterIP" --port="80"
+kubectl expose deployment nginx-nodeport --type="NodePort" --port="80"
+kubectl expose deployment nginx-loadbalancer --type="LoadBalancer" --port="80"</code></pre>
+</details>
+<details>
+<summary>Answer - Declarative</summary>
+<p>Apply the following:</p>
+<pre class="highlight"><code class="language-yaml">kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-clusterip
+spec:
+  selector:
+    app: nginx-clusterip
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-clusterip
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-clusterip
+  template:
+    metadata:
+      labels:
+        app: nginx-clusterip
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-nodeport
+spec:
+  selector:
+    app: nginx-nodeport
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-nodeport
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-nodeport
+  template:
+    metadata:
+      labels:
+        app: nginx-nodeport
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-loadbalancer
+spec:
+  selector:
+    app: nginx-loadbalancer
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-loadbalancer
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-loadbalancer
+  template:
+    metadata:
+      labels:
+        app: nginx-loadbalancer
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80</code></pre>
+</details>
+<h2 id="exercise-3-know-how-to-use-ingress-controllers-and-ingress-resources">Exercise 3 - Know how to use Ingress controllers and Ingress resources</h2>
+<ol>
+<li>
+<p>Create an <code>ingress</code> object named <code>myingress</code> with the following specification:</p>
+</li>
+<li>
+<p>Manages the host <code>myingress.mydomain</code></p>
+</li>
+<li>Traffic to the base path <code>/</code> will be forwarded to a <code>service</code> called <code>main</code> on port 80</li>
+<li>Traffic to the path <code>/api</code> will be forwarded to a <code>service</code> called <code>api</code> on port 8080</li>
+</ol>
+<details>
+<summary>Answer - Imperative</summary>
+<pre class="highlight"><code class="language-shell">kubectl create ingress myingress --rule="myingress.mydomain/=main:80" --rule="myingress.mydomain/api=api:8080"</code></pre>
+</details>
+<details>
+<summary>Answer - Declarative</summary>
+<p>Apply the following YAML:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: myingress
+spec:
+  rules:
+  - host: myingress.mydomain
+    http:
+      paths:
+      - backend:
+          service:
+            name: main
+            port:
+              number: 80
+        path: /
+        pathType: Exact
+      - backend:
+          service:
+            name: api
+            port:
+              number: 8080
+        path: /api
+        pathType: Exact</code></pre>
+</details>
+<h2 id="exercise-4-know-how-to-configure-and-use-coredns">Exercise 4 - Know how to configure and use CoreDNS</h2>
+<ol>
+<li>Identify the configuration location of <code>coredns</code></li>
+<li>Modify the coredns config file so DNS queries not resolved by itself are forwarded to the DNS server <code>8.8.8.8</code></li>
+<li>Validate the changes you have made</li>
+<li>Add additional configuration so that all DNS queries for <code>custom.local</code> are forwarded to the resolver <code>10.5.4.223</code></li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<pre class="highlight"><code class="language-shell">kubectl get cm coredns -n kube-system                                                
+NAME      DATA   AGE
+coredns   2      94d</code></pre>
+<pre class="highlight"><code class="language-shell">kubectl edit cm coredns -n kube-system 
+
+replace:
+forward . /etc/resolv.conf
+
+with
+forward . 8.8.8.8</code></pre>
+<p>Add the block:</p>
+<pre class="highlight"><code class="language-shell">custom.local:53 {
+        errors 
+        cache 30
+        forward . 10.5.4.223
+        reload
+    }</code></pre>
+</details>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../02-workloads-and-scheduling/" class="btn btn-neutral float-left" title="Part Two - Workloads & Scheduling"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../04-storage/" class="btn btn-neutral float-right" title="Part Four - Storage">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../02-workloads-and-scheduling/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../04-storage/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

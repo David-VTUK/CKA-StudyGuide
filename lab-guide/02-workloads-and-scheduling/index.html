@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Part Two - Workloads & Scheduling - CKA-Studyguide</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../custom.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Part Two - Workloads \u0026 Scheduling";
+        var mkdocs_page_input_path = "lab-guide/02-workloads-and-scheduling.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CKA-Studyguide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Revision Topics</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lab Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../00-general-advice/">Part Zero - General Advice</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Part Two - Workloads & Scheduling</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-0-setup">Exercise 0 - Setup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-1-understand-deployments-and-how-to-perform-rolling-update-and-rollbacks">Exercise 1 - Understand deployments and how to perform rolling update and rollbacks</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-2-use-configmaps-to-configure-applications">Exercise 2 - Use ConfigMaps to configure applications</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-3-use-secrets-to-configure-applications">Exercise 3 - Use Secrets to configure applications</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-4-know-how-to-scale-applications">Exercise 4 - Know how to scale applications</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#excerise-5-understand-how-resource-limits-can-affect-pod-scheduling">Excerise 5 - Understand how resource limits can affect Pod scheduling</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CKA-Studyguide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Lab Guide</li>
+      <li class="breadcrumb-item active">Part Two - Workloads & Scheduling</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="lab-exercises-for-workloads-scheduling">Lab Exercises for Workloads &amp; Scheduling</h1>
+<h2 id="exercise-0-setup">Exercise 0 - Setup</h2>
+<ul>
+<li>Prepare a cluster (Single node, kubeadm, k3s, etc)</li>
+<li>Open browser tabs to <a href="https://kubernetes.io/docs/">Kubernetes Documentation</a>, <a href="https://github.com/kubernetes/">Kubernetes GitHub</a> and <a href="https://kubernetes.io/blog/">Kubernetes Blog</a> (these are permitted as per <a href="https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed#certified-kubernetes-administrator-cka-and-certified-kubernetes-application-developer-ckad">the current guidelines</a>)</li>
+</ul>
+<h2 id="exercise-1-understand-deployments-and-how-to-perform-rolling-update-and-rollbacks">Exercise 1 - Understand deployments and how to perform rolling update and rollbacks</h2>
+<ol>
+<li>Create a deployment object consisting of 6 pods, each containing a single <code>nginx:1.19.5</code> container</li>
+<li>Identify the update strategy adopted by this deployment</li>
+<li>Modify the update strategy so <code>maxSurge</code> is equal to <code>50%</code> and <code>maxUnavailable</code> is equal to <code>50%</code></li>
+<li>Perform a rolling update to this deployment so that the image gets updated to <code>nginx1.19.6</code></li>
+<li>Undo the most recent change</li>
+</ol>
+<details>
+<summary>Answer - Imperative</summary>
+<pre class="highlight"><code class="language-shell">kubectl create deployment nginx --image=nginx:1.19.5 --replicas=6
+kubectl describe deployment nginx | grep StrategyType
+kubectl patch deployment nginx -p "{\"spec\": {\"strategy\": {\"rollingUpdate\": { \"maxSurge\":\"50%\"}}}}" --record=true
+kubectl patch deployment nginx -p "{\"spec\": {\"strategy\": {\"rollingUpdate\": { \"maxUnavailable\":\"50%\"}}}}" --record=true
+kubectl set image deployment nginx nginx=nginx:1.19.6 --record=true
+kubectl rollout undo deployment/nginx</code></pre>
+</details>
+<details>
+<summary>Answer - Declarative</summary>
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 6
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.19.5
+        ports:
+        - containerPort: 80</code></pre>
+<pre class="highlight"><code class="language-shell">kubectl describe deployment nginx (unless specified, will be listed as "UpdateStrategy")</code></pre>
+<p>patch.yaml contents:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  strategy:
+      rollingUpdate:
+        maxSurge: 50%
+        maxUnavailable: 50%
+  template:
+      spec:
+        containers:
+            - name: nginx
+              image: nginx:1.19.6</code></pre>
+<pre class="highlight"><code class="language-shell">kubectl patch deployment nginx --patch-file=patch.yaml</code></pre>
+<pre class="highlight"><code class="language-shell">kubectl rollout undo deployment/nginx</code></pre>
+</details>
+<h2 id="exercise-2-use-configmaps-to-configure-applications">Exercise 2 - Use ConfigMaps to configure applications</h2>
+<ol>
+<li>Create a configmap named <code>mycm</code> that has the following key=value pair<ol>
+<li><code>key</code> = owner</li>
+<li><code>value</code> = yourname</li>
+</ol>
+</li>
+<li>Create a pod of your choice, such as <code>nginx</code>. Configure this Pod so that the underlying container has the environent varibale <code>OWNER</code> set to the value of this configmap</li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<p>Create configmap:
+<pre class="highlight"><code class="language-shell">kubectl create configmap mycm --from-literal=owner=david</code></pre></p>
+<p>Define Pod:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-configmap
+spec:
+  containers:
+    - name: nginx-configmap
+      image: nginx
+      command: [ "/bin/sh", "-c", "env" ]
+      env:
+        # Define the environment variable
+        - name: OWNER
+          valueFrom:
+            configMapKeyRef:
+              # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+              name: mycm
+              # Specify the key associated with the value
+              key: owner</code></pre>
+<p>Validate:</p>
+<pre class="highlight"><code class="language-shell">kubectl logs nginx-configmap | grep OWNER
+OWNER=david</code></pre>
+</details>
+<h2 id="exercise-3-use-secrets-to-configure-applications">Exercise 3 - Use Secrets to configure applications</h2>
+<ol>
+<li>Create a secret named <code>mysecret</code> that has the following key=value pair</li>
+<li><code>dbuser</code> = MyDatabaseUser</li>
+<li><code>dbpassword</code> = MyDatabasePassword</li>
+<li>Create a pod of your choice, such as <code>nginx</code>. Configure this Pod so that the underlying container has the the following environment variables set:</li>
+<li><code>DBUSER</code> from secret key <code>dbuser</code></li>
+<li><code>DBPASS</code> from secret key <code>dbpassword</code></li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<pre class="highlight"><code class="language-shell">kubectl create secret generic mysecret --from-literal=dbuser="MyDatabaseUser" --from-literal=dbpassword="MyDatabasePassword"</code></pre>
+<p>Apply the following manifest:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-secret
+spec:
+  containers:
+  - name: nginx-secret
+    image: nginx
+    command: [ "/bin/sh", "-c", "env" ]
+    env:
+      - name: dbuser
+        valueFrom:
+          secretKeyRef:
+            name: mysecret
+            key: dbuser
+      - name: dbpassword
+        valueFrom:
+          secretKeyRef:
+            name: mysecret
+            key: dbpassword
+  restartPolicy: Never</code></pre>
+<p>Which can be validated with:</p>
+<pre class="highlight"><code class="language-shell">kubectl logs nginx-secret | grep db                                                  
+dbuser=MyDatabaseUser
+dbpassword=MyDatabasePassword</code></pre>
+</details>
+<h2 id="exercise-4-know-how-to-scale-applications">Exercise 4 - Know how to scale applications</h2>
+<ol>
+<li>Create a deployment object consisting of 3 <code>pods</code> containing a single <code>nginx</code> container</li>
+<li>Increase this deployment size by adding two additional pods.</li>
+<li>Decrease this deployment back to the original size of 3 <code>pods</code></li>
+</ol>
+<details>
+<summary>Answer - Imperative</summary>
+<pre class="highlight"><code class="language-shell">kubectl create deployment nginx --image=nginx --replicas=3
+kubectl scale --replicas=5 deployment nginx
+kubectl scale --replicas=3 deployment nginx</code></pre>
+</details>
+<details>
+<summary>Answer - Declarative</summary>
+<p>Apply initial YAML:
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+      app: nginx
+spec:
+  replicas: 3
+  selector:
+      matchLabels:
+        app: nginx
+  template:
+      metadata:
+        labels:
+            app: nginx
+      spec:
+        containers:
+            - name: nginx
+              image: nginx
+              ports:
+                - containerPort: 80</code></pre></p>
+<p>Apply modified YAML:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1
+        ports:
+        - containerPort: 80</code></pre>
+<p>Apply original YAML:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80</code></pre>
+</details>
+<h2 id="excerise-5-understand-how-resource-limits-can-affect-pod-scheduling">Excerise 5 - Understand how resource limits can affect Pod scheduling</h2>
+<ol>
+<li>Create a new namespace called "tenant-b-100mi"</li>
+<li>Create a memory limit of 100Mi for this namespace</li>
+<li>Create a pod with a memory request of 150Mi, ensure the limit has been set by verifying you get a error message.</li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<pre class="highlight"><code class="language-shell">kubectl create ns tenant-b-100mi</code></pre>
+<p>Deploy the manifest:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: LimitRange
+metadata:
+  name: tenant-b-memlimit
+  namespace: tenant-b-100mi
+spec:
+  limits:
+  - max:
+      memory: 100Mi
+    type: Container</code></pre>
+<p>Test with deploying:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: default-mem-demo
+  namespace: tenant-b-100mi
+spec:
+  containers:
+  - name: default-mem-demo
+    image: nginx
+    resources:
+      requests:
+        memory: 150Mi</code></pre>
+<p>Which should return:</p>
+<pre class="highlight"><code class="language-shell">The Pod "default-mem-demo" is invalid: spec.containers[0].resources.requests: Invalid value: "150Mi": must be less than or equal to memory limit</code></pre>
+</details>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../01-architcture-installation-configuration/" class="btn btn-neutral float-left" title="Part One - Architecture, Installation and Configuration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../03-services-and-networking/" class="btn btn-neutral float-right" title="Part Three - Services & Networking">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../01-architcture-installation-configuration/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../03-services-and-networking/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

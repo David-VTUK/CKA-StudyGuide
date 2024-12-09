@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Part One - Architecture, Installation and Configuration - CKA-Studyguide</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../custom.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Part One - Architecture, Installation and Configuration";
+        var mkdocs_page_input_path = "revision-topics/01-architcture-installation-configuration.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CKA-Studyguide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Revision Topics</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Part One - Architecture, Installation and Configuration</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#manage-role-based-access-control-rbac">Manage Role Based Access Control (RBAC)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#step-1-authentication">Step 1 - Authentication</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-2-authorization">Step 2 - Authorization</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#steps-3-4-admission-control">Steps 3 &amp; 4 - Admission Control</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#role-and-rolebindings">Role and Rolebindings</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#use-kubeadm-to-install-a-basic-cluster">Use Kubeadm to install a basic cluster</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#kubeadm-master-node-install">Kubeadm - Master Node Install</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#kubeadm-install-worker-nodes">Kubeadm - Install worker nodes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#manage-a-highly-available-kubernetes-cluster">Manage a highly-available Kubernetes cluster</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#stacked-etcd">Stacked etcd</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#external-etcd">External etcd</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#assessing-cluster-health">Assessing cluster health</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#provision-underlying-infrastructure-to-deploy-a-kubernetes-cluster">Provision underlying infrastructure to deploy a Kubernetes cluster</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#perform-a-version-upgrade-on-a-kubernetes-cluster-using-kubeadm">Perform a version upgrade on a Kubernetes cluster using Kubeadm</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#implement-etcd-backup-and-restore">Implement etcd backup and restore</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#backing-up-etcd">Backing up etcd</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#restore-to-etcd">Restore to etcd</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lab Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/00-general-advice/">Part Zero - General Advice</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CKA-Studyguide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Revision Topics</li>
+      <li class="breadcrumb-item active">Part One - Architecture, Installation and Configuration</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="cluster-architecture-installation-configuration">Cluster Architecture, Installation &amp; Configuration</h1>
+<h2 id="manage-role-based-access-control-rbac">Manage Role Based Access Control (RBAC)</h2>
+<p>Kubernetes implements an RBAC framework to govern access to resources within a cluster and forms part of the overall Authentication, Authorization and Admission control framework.</p>
+<p><img alt="img.png" src="../images/img.png" /></p>
+<p>To determine who (or what) has access to which resources, a number of steps have to be executed.</p>
+<h3 id="step-1-authentication">Step 1 - Authentication</h3>
+<p>First step is Authentication which is how a user or service account identifies itself. Depending on the source, a corresponding authentication module is used. Authentication modules include the ability to authenticate from the following:</p>
+<ul>
+<li>Client Certificate</li>
+<li>Password</li>
+<li>Plain Tokens</li>
+<li>Bootstrap Tokens</li>
+<li>JWT Tokens (for service accounts)</li>
+</ul>
+<p>All authentication is handled via HTTP over TLS.</p>
+<h3 id="step-2-authorization">Step 2 - Authorization</h3>
+<p>After a user or service account is authenticated, the request must then be authorized. Any authentication request is followed by some kind of action request, and the action defines the object(s) that request needs to apply to, and what the action is. For example, to list the pods in a given namespace.</p>
+<p>Any and all requests are facilitated providing an existing policy gives the user those permissions.</p>
+<h3 id="steps-3-4-admission-control">Steps 3 &amp; 4 - Admission Control</h3>
+<p>Admission Control Modules are software modules that can modify or reject requests. In addition to the attributes available to Authorization Modules, Admission Control Modules can access the contents of the object that is being created or updated. They act on objects being created, deleted, updated or connected (proxy), but not reads.</p>
+<h3 id="role-and-rolebindings"><code>Role</code> and <code>Rolebindings</code></h3>
+<p>Implementing RBAC rules largely involves two object types within Kubernetes - <code>role</code> and <code>rolebindings</code>:</p>
+<p><img alt="img.png" src="../images/roleandrolebindings.png" /></p>
+<p>A <code>role</code> grants access to resources within a single namespace.</p>
+<p>A <code>rolebinding</code> grants the permissions from a role to a user, group or service account within a single namespace.</p>
+<p><code>clusterrole</code> and <code>clusterrolebindings</code> operate similarly, but obviously provide access to non-namespaced resources.</p>
+<p><code>kubectl api-resources --namespaced=false</code> can be used to determine which resource types are not namespaced. Examples include: <code>node</code>, <code>persistentvolume</code>, <code>storageclass</code> and <code>users</code>.</p>
+<p><code>Users</code> can either be <code>serviceaccounts</code> or <code>users</code>. The former is typically used to authenticate applications, the latter for human users.</p>
+<p>To test, the below creates <code>namespace</code>, <code>serviceaccount</code>, <code>role</code> and <code>rolebinding</code></p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: Namespace
+metadata:
+ name: rbac-test</code></pre>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: ServiceAccount
+metadata:
+ name: rbac-test-sa
+ namespace: rbac-test
+ ```
+
+of particular importance is the format of the below.  
+`apiGroup` : Determines which API group to apply this to.
+`resources`: Which resource types to apply this to.
+`verbs`: What we can do to these objects (ie create, delete, watch, etc)
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+ name: rbac-test-role
+ namespace: rbac-test
+rules:
+ - apiGroups: [""]
+   resources: ["pods"]
+   verbs: ["get", "list", "watch"]</code></pre>
+<pre class="highlight"><code class="language-yaml">apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+ name: rbac-test-rolebinding
+ namespace: rbac-test
+roleRef:
+ apiGroup: rbac.authorization.k8s.io
+ kind: Role
+ name: rbac-test-role
+subjects:
+- kind: ServiceAccount
+  name: rbac-test-sa
+  namespace: rbac-test</code></pre>
+<p>We can then validate this with kubectl. The following returns yes as that service account can get pods</p>
+<pre class="highlight"><code class="language-shell">kubectl -n rbac-test --as=system:serviceaccount:rbac-test:rbac-test-sa auth can-i get pods
+yes</code></pre>
+<p>However with <code>secrets</code>, it returns <code>no</code></p>
+<pre class="highlight"><code class="language-shell">kubectl -n rbac-test --as=system:serviceaccount:rbac-test:rbac-test-sa auth can-i get secrets
+no</code></pre>
+<h2 id="use-kubeadm-to-install-a-basic-cluster">Use Kubeadm to install a basic cluster</h2>
+<p>kubeadm is a utility to bootstrap Kubernetes to a number of existing, vanilla nodes. It takes care of the etcd cluster, Kubernetes master and worker nodes including all the required components to instantiate a viable minimum k8s cluster.</p>
+<p>What you get at the end of using kubeadm is a fully working, fully functioning kubernetes cluster.</p>
+<p>It's at the opposite end of the spectrum in terms of difficulty compared to, for example, Kelsey Hightower's "Kubernetes the hard way".</p>
+<p>For the exam, it is recommended that you become familiar with both ways of deploying Kubernetes clusters.</p>
+<p>Kubeadm is a command line utility that performs the following functions:</p>
+<ul>
+<li><strong>kubeadm init</strong> to bootstrap a Kubernetes control-plane node</li>
+<li><strong>kubeadm join</strong> to bootstrap a Kubernetes worker node and join it to the cluster</li>
+<li><strong>kubeadm upgrade</strong> to upgrade a Kubernetes cluster to a newer version</li>
+<li><strong>kubeadm config</strong> if you initialized your cluster using kubeadm v1.7.x or lower, to configure your cluster for kubeadm upgrade</li>
+<li><strong>kubeadm token</strong> to manage tokens for kubeadm join</li>
+<li><strong>kubeadm reset</strong> to revert any changes made to this host by kubeadm init or kubeadm join</li>
+<li><strong>kubeadm version</strong> to print the kubeadm version</li>
+<li><strong>kubeadm alpha</strong> to preview a set of features made available for gathering feedback from the community</li>
+</ul>
+<h3 id="kubeadm-master-node-install">Kubeadm - Master Node Install</h3>
+<p>In the following examples 3x Ubuntu Server VMs were created</p>
+<ul>
+<li>k8s-cl02-ms01</li>
+<li>k8s-cl02-wk01</li>
+<li>k8s-cl02-wk02</li>
+</ul>
+<p>Where appropriate, ensure your nodes have a container runtime installed.</p>
+<p>On the master node install the required binaries</p>
+<pre class="highlight"><code class="language-shell">apt-get update &amp;&amp; apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+cat &lt;&lt;EOF &gt;/etc/apt/sources.list.d/kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+EOF
+apt-get update
+apt-get install -y kubelet kubeadm kubectl
+apt-mark hold kubelet kubeadm kubectl</code></pre>
+<p>Initialise the master node:</p>
+<pre class="highlight"><code class="language-shell">sudo kubeadm init --pod-network-cidr=10.244.0.0/16</code></pre>
+<p>Note, the requirement to pass --pod-network is dependent on the chosen CNI. For Flannel, this is required. Kubeadm will also let you know if any prerequisites are not made.</p>
+<p>Once completed, a message will be displayed:</p>
+<pre class="highlight"><code class="language-shell">Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 172.16.10.80:6443 --token j5nqhd.cnfmnjgc68aato60 \
+    --discovery-token-ca-cert-hash sha256:cbc91031c1ffa47bbea83aa1cf65e99821a1f582c4363e1a4408715bfd66bb60 </code></pre>
+<p>Some important pieces of information to note:</p>
+<ul>
+<li>
+<p>Kubeadm has created the admin kubeconfig file for you, and recommends copying this to the logged on users home directory for ease</p>
+</li>
+<li>
+<p>Kubeadm has <strong>not</strong> deployed a pod networking solution yet. Therefore, this is a post-install activity</p>
+</li>
+<li>
+<p>Kubeadm has provided a join command together with a token to add worker nodes. We can regenerate this token if required.</p>
+</li>
+</ul>
+<p>If we issue a kubectl get nodes command we will see the master node is not ready</p>
+<pre class="highlight"><code class="language-shell">NAME            STATUS     ROLES    AGE     VERSION
+k8s-cl02-ms01   NotReady   master   6m20s   v1.20.2</code></pre>
+<p>As per the output of kubeadm, install a network solution, Ie flannel.</p>
+<p>For flannel to work correctly, you must pass --pod-network-cidr=10.244.0.0/16 to kubeadm init.</p>
+<p>Additionally, set /proc/sys/net/bridge/bridge-nf-call-iptables to 1 by running <code>sysctl net.bridge.bridge-nf-call-iptables=1</code>.</p>
+<p>Install Flannel:</p>
+<pre class="highlight"><code class="language-shell">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</code></pre>
+<p>After a few seconds, the master node will now be ready</p>
+<pre class="highlight"><code class="language-shell">NAME            STATUS   ROLES    AGE   VERSION
+k8s-cl02-ms01   Ready    master   10m   v1.20.2
+</code></pre>
+<h3 id="kubeadm-install-worker-nodes">Kubeadm - Install worker nodes</h3>
+<p>The installation process for worker nodes is similar to master nodes - the only exception is we do <strong>not</strong> execute the "kubeadm init" command, as this is only run on masters. For workers, we use "kubeadm join".</p>
+<p>As prep:</p>
+<ul>
+<li>Install a container runtime</li>
+<li>Install the kubeadm binaries (as above)</li>
+</ul>
+<p>To join a worker node to a cluster created by kubeadm we need to use the kubeadm join command with a token generated on the master. This is shown after we run kubeadm init on the master node. However, we can easily regenerate this on the master node should it not be noted down or expired:</p>
+<p>(on the master node)</p>
+<pre class="highlight"><code class="language-shell">david@k8s-cl02-ms01:~$ kubeadm token create --print-join-command
+kubeadm join 172.16.10.80:6443 --token ht55yv.8lq69q0189xhe2ql     --discovery-token-ca-cert-hash sha256:cbc91031c1ffa47bbea83aa1cf65e99821a1f582c4363e1a4408715bfd66bb60</code></pre>
+<p>Use this command on the worker (as root)</p>
+<pre class="highlight"><code class="language-shell">root@k8s-cl02-wk01:~# kubeadm join 172.16.10.80:6443 --token ht55yv.8lq69q0189xhe2ql     --discovery-token-ca-cert-hash sha256:cbc91031c1ffa47bbea83aa1cf65e99821a1f582c4363e1a4408715bfd66bb60</code></pre>
+<p>After which confirmation will be displayed:</p>
+<pre class="highlight"><code class="language-shell">This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
+
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster.</code></pre>
+<p>To validate, run kubectl get nodes on the master node:</p>
+<pre class="highlight"><code class="language-shell">NAME            STATUS   ROLES    AGE     VERSION
+k8s-cl02-ms01   Ready    master   50m     v1.20.2
+k8s-cl02-wk01   Ready    &lt;none&gt;   2m10s   v1.20.2</code></pre>
+<h2 id="manage-a-highly-available-kubernetes-cluster">Manage a highly-available Kubernetes cluster</h2>
+<p>The previous section demonstrated creating a K8s cluster with one master node and several worker nodes - this does not provide resilience for the control plane. Several topologies exist for doing so:</p>
+<h3 id="stacked-etcd">Stacked etcd</h3>
+<p><img alt="img.png" src="../images/stacked-etcd.png" /></p>
+<ul>
+<li>Multiple worker nodes</li>
+<li>Multiple control plane nodes fronted by a loadbalancer</li>
+<li>Embedded etcd within control plane</li>
+</ul>
+<p>Notes:</p>
+<p>etcd is quorum based. Therefore, if using stacked control plane nodes with etcd, odd numbers must be used.</p>
+<h3 id="external-etcd">External etcd</h3>
+<p><img alt="img.png" src="../images/external-etcd.png" /></p>
+<p>Notes:</p>
+<ul>
+<li>Multiple worker nodes</li>
+<li>Multiple control plane nodes fronted by a loadbalancer</li>
+<li>Etcd is external of the k8s cluster</li>
+</ul>
+<p>Notes:</p>
+<p>Advantage with this setup is etcd and the control plane can be scaled and managed independently of each other. This provides greater flexibility at the expense of operational complexity.</p>
+<h3 id="assessing-cluster-health">Assessing cluster health</h3>
+<p><code>kubectl get componentstatus</code> is deprecated as of 1.20. A suitable replacement includes probing the API server directly, For example, on a master node, run <code>curl -k https://localhost:6443/livez?verbose</code> which returns:</p>
+<pre class="highlight"><code class="language-shell">[+]ping ok
+[+]log ok
+[+]etcd ok
+[+]poststarthook/start-kube-apiserver-admission-initializer ok
+[+]poststarthook/generic-apiserver-start-informers ok
+.....etc</code></pre>
+<p>Three endpoints exist - <code>healthz</code>,<code>livez</code> and <code>readyz</code> to indicate the current status of the API server</p>
+<h2 id="provision-underlying-infrastructure-to-deploy-a-kubernetes-cluster">Provision underlying infrastructure to deploy a Kubernetes cluster</h2>
+<p>The topology choices above will influence the underlying resources that need to be provisioned. How these are provisioned are specific to the underlying cloud provider. Some generic observations:</p>
+<ul>
+<li>Disable swap.</li>
+<li>Leverage cloud capabilities for HA - ie using multiple AZ's.</li>
+<li>Windows can be used for worker nodes, but not control plane.</li>
+</ul>
+<h2 id="perform-a-version-upgrade-on-a-kubernetes-cluster-using-kubeadm">Perform a version upgrade on a Kubernetes cluster using Kubeadm</h2>
+<p>First, install kubeadm to a specific version. This will determine the k8s version that it deploys:</p>
+<pre class="highlight"><code class="language-shell">sudo apt-get update &amp;&amp; sudo apt-get install -y kubeadm=1.19.0-00 kubelet=1.19.0-00 kubectl=1.19.0-00 &amp;&amp; sudo apt-mark hold kubeadm</code></pre>
+<p>Stand up a k8s cluster</p>
+<pre class="highlight"><code class="language-shell">sudo kubeadm init --pod-network-cidr=10.244.0.0/16</code></pre>
+<p>Add CNI</p>
+<pre class="highlight"><code class="language-shell">https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</code></pre>
+<p>To upgrade the underlying k8s cluster, we need to upgrade kubeadm.</p>
+<p>Update kubeadm</p>
+<pre class="highlight"><code class="language-shell">sudo apt-mark unhold kubeadm
+sudo apt-get install --only-upgrade kubeadm</code></pre>
+<p>Next we <code>plan</code> the upgrade - this won't change our cluster but will display what changes can be made:</p>
+<pre class="highlight"><code class="language-shell">sudo kubeadm upgrade plan
+
+Components that must be upgraded manually after you have upgraded the control plane with 'kubeadm upgrade apply':
+COMPONENT   CURRENT       AVAILABLE
+kubelet     1 x v1.19.0   v1.20.2
+
+Upgrade to the latest stable version:
+
+COMPONENT                 CURRENT   AVAILABLE
+kube-apiserver            v1.19.7   v1.20.2
+kube-controller-manager   v1.19.7   v1.20.2
+kube-scheduler            v1.19.7   v1.20.2
+kube-proxy                v1.19.7   v1.20.2
+CoreDNS                   1.7.0     1.7.0
+etcd                      3.4.9-1   3.4.13-0
+
+You can now apply the upgrade by executing the following command:
+
+kubeadm upgrade apply v1.20.2</code></pre>
+<p><strong>Important note:</strong> kubelet must be upgraded manually after this step.</p>
+<p>Upgrade the cluster:</p>
+<pre class="highlight"><code class="language-shell">kubeadm upgrade apply v1.20.2</code></pre>
+<p>upgrade Kubelet:</p>
+<pre class="highlight"><code class="language-shell">sudo apt-get install --only-upgrade kubelet kubectl</code></pre>
+<h2 id="implement-etcd-backup-and-restore">Implement etcd backup and restore</h2>
+<h3 id="backing-up-etcd">Backing up etcd</h3>
+<p>Take a snapshot of the DB, then store it in a safe location:</p>
+<pre class="highlight"><code class="language-bash">ETCDCTL_API=3 etcdctl snapshot save snapshot.db --cacert /etc/kubernetes/pki/etcd/server.crt --cert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/ca.key</code></pre>
+<p>Verify the backup:</p>
+<pre class="highlight"><code class="language-shell">sudo ETCDCTL_API=3 etcdctl --write-out=table snapshot status snapshot.db
++----------+----------+------------+------------+
+|   HASH   | REVISION | TOTAL KEYS | TOTAL SIZE |
++----------+----------+------------+------------+
+| 2125d542 |   364069 |        770 |  3.8 MB    |
++----------+----------+------------+------------+</code></pre>
+<h3 id="restore-to-etcd">Restore to etcd</h3>
+<p>To perform a restore:</p>
+<pre class="highlight"><code class="language-shell">ETCDCTL_API=3 etcdctl snapshot restore snapshot.db</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../.." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../02-workloads-and-scheduling/" class="btn btn-neutral float-right" title="Part Two - Workloads & Scheduling">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../02-workloads-and-scheduling/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

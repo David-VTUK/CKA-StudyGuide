@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Part Four - Storage - CKA-Studyguide</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../custom.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Part Four - Storage";
+        var mkdocs_page_input_path = "lab-guide/04-storage.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CKA-Studyguide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Revision Topics</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lab Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../00-general-advice/">Part Zero - General Advice</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Part Four - Storage</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-0-setup">Exercise 0 - Setup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-1-understand-storage-classes-persistent-volumes">Exercise 1 - Understand storage classes, persistent volumes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-2-know-how-to-configure-applications-with-persistent-storage">Exercise 2 - Know how to configure applications with persistent storage</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CKA-Studyguide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Lab Guide</li>
+      <li class="breadcrumb-item active">Part Four - Storage</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="lab-exercises-for-storage">Lab Exercises for Storage</h1>
+<h2 id="exercise-0-setup">Exercise 0 - Setup</h2>
+<ul>
+<li>Prepare a cluster (Single node, kubeadm, k3s, etc)</li>
+<li>Open browser tabs to <a href="https://kubernetes.io/docs/">Kubernetes Documentation</a>, <a href="https://github.com/kubernetes/">Kubernetes GitHub</a> and <a href="https://kubernetes.io/blog/">Kubernetes Blog</a> (these are permitted as per <a href="https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed#certified-kubernetes-administrator-cka-and-cerified-kubernetes-application-developer-ckad">the current guidelines</a>)</li>
+</ul>
+<h2 id="exercise-1-understand-storage-classes-persistent-volumes">Exercise 1 - Understand storage classes, persistent volumes</h2>
+<p>Note: Leverage the docs to help you. It's unlikely you will need to recall the nuances from memory - <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/">Kubernetes Storage Classes</a></p>
+<ol>
+<li>Create a <code>storageclass</code> object named <code>aws-ebs</code> with the following specification:<ol>
+<li>The <code>provisioner</code> should be <code>kubernetes.io/aws-ebs</code></li>
+<li>The <code>type</code> is <code>io1</code></li>
+<li>The <code>reclaimPolicy</code> is <code>Delete</code></li>
+<li><code>allowVolumeExpansion</code> set to <code>false</code></li>
+</ol>
+</li>
+<li>Create a <code>persistentvolume</code> based on this storage class<ol>
+<li>Note, it will not initialize unless AWS integration is configured, but the objective is to get the YAML correct.</li>
+</ol>
+</li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<p>Apply the following YAML to create the Storage Class</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: aws-ebs
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: io1
+reclaimPolicy: Delete
+allowVolumeExpansion: false
+mountOptions:
+  - debug
+volumeBindingMode: Immediate</code></pre>
+<p>Apply the following YAML to create a Persistent Volume based on the Storage Class</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-test
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: aws-ebs
+  awsElasticBlockStore:
+    fsType: "ext4"
+    volumeID: "vol-id" </code></pre>
+<p>validate with: </p>
+<pre class="highlight"><code class="language-shell">kubectl get pv                                                                         
+NAME      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS   REASON   AGE
+pv-test   5Gi        RWO            Recycle          Available           aws-ebs                 5</code></pre>
+</details>
+<h2 id="exercise-2-know-how-to-configure-applications-with-persistent-storage">Exercise 2 - Know how to configure applications with persistent storage</h2>
+<ol>
+<li>Create a <code>persistentVolume</code> object of type <code>hostPath</code> with the following parameters:<ol>
+<li>1GB Capacity</li>
+<li>Path on the host is /tmp</li>
+<li><code>storageClassName</code> is Manual</li>
+<li><code>accessModes</code> is <code>ReadWriteOnce</code></li>
+</ol>
+</li>
+<li>Create a <code>persistentVolumeClaim</code> to the aforementioned <code>persistentVolume</code></li>
+<li>Create a <code>pod</code> workload to leverage this `persistentVolumeClaim</li>
+</ol>
+<p>To create the StorageClass <code>manual</code> apply the following:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: manual
+provisioner: kubernetes.io/no-provisioner</code></pre>
+<details class="answer">
+<summary>Answer</summary>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-hostpath-1gb
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: manual
+  hostPath:
+    path: /tmp
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-hostpath-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 512Mi
+  storageClassName: manual
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-pvc
+spec:
+  volumes:
+    - name: myvol
+      persistentVolumeClaim:
+        claimName: pvc-hostpath-claim
+  containers:
+    - name: busybox
+      image: busybox
+      args:
+        - sleep
+        - "1000000"
+      volumeMounts:
+        - mountPath: "/mnt/readonly"
+          name: myvol</code></pre>
+<p>Validate with:</p>
+<pre class="highlight"><code class="language-shell">kubectl get po,pv,pvc
+NAME               READY   STATUS    RESTARTS   AGE
+pod/pod-with-pvc   1/1     Running   0          2m7s
+
+NAME                               CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                        STORAGECLASS   REASON   AGE
+persistentvolume/pv-hostpath-1gb   1Gi        RWO            Recycle          Bound    default/pvc-hostpath-claim   manual                  2m7s
+
+NAME                                       STATUS   VOLUME            CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/pvc-hostpath-claim   Bound    pv-hostpath-1gb   1Gi        RWO            manual         2m7s</code></pre>
+</details>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../03-services-and-networking/" class="btn btn-neutral float-left" title="Part Three - Services & Networking"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../05-troubleshooting/" class="btn btn-neutral float-right" title="Part Five - Troubleshooting">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../03-services-and-networking/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../05-troubleshooting/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Part Three - Services & Networking - CKA-Studyguide</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../custom.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Part Three - Services \u0026 Networking";
+        var mkdocs_page_input_path = "revision-topics/03-services-and-networking.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CKA-Studyguide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Revision Topics</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Part Three - Services & Networking</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#understand-host-networking-configuration-on-the-cluster-nodes">Understand host networking configuration on the cluster nodes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#understand-connectivity-between-pods">Understand connectivity between Pods</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#understand-clusterip-nodeport-loadbalancer-service-types-and-endpoints">Understand ClusterIP, NodePort, LoadBalancer service types and endpoints</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#know-how-to-use-ingress-controllers-and-ingress-resources">Know how to use Ingress controllers and Ingress resources</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#know-how-to-configure-and-use-coredns">Know how to configure and use CoreDNS</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#choose-an-appropriate-container-network-interface-plugin">Choose an appropriate container network interface plugin</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lab Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/00-general-advice/">Part Zero - General Advice</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CKA-Studyguide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Revision Topics</li>
+      <li class="breadcrumb-item active">Part Three - Services & Networking</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="services-networking">Services &amp; Networking</h1>
+<h2 id="understand-host-networking-configuration-on-the-cluster-nodes">Understand host networking configuration on the cluster nodes</h2>
+<p><img alt="img.png" src="../images/networking.png" /></p>
+<p>At the host level, we have an interface (typically something like <code>eth0</code> or <code>ens192</code> etc) that acts as the primary network adapter.  </p>
+<p>Each host is responsible for one subnet of the CNI range. In this example, the left host is responsible for 10.1.1.0/24, and the right host 10.1.2.0/24. The overall pod CIDR block may be something like 10.1.0.0/16.</p>
+<p>Virtual ethernet adapters are paired with a corresponding Pod network adapter. Kernel routing is used to enable Pods to communicate outside the host it resides in.</p>
+<h2 id="understand-connectivity-between-pods">Understand connectivity between Pods</h2>
+<p>Every Pod gets its own IP address. This means you do not need to explicitly create links between Pods, and you almost never need to deal with mapping container ports to host ports. This creates a clean, backwards-compatible model where Pods can be treated much like VMs or physical hosts from the perspectives of port allocation, naming, service discovery, load balancing, application configuration, and migration.</p>
+<p>Kubernetes imposes the following fundamental requirements on any networking implementation (barring any intentional network segmentation policies):</p>
+<ul>
+<li>Pods on a node can communicate with all pods on all nodes without NAT</li>
+<li>Agents on a node (e.g. system daemons, Kubelet) can communicate with all pods on that node</li>
+</ul>
+<p>Note: When running workloads that leverage <code>hostNetwork</code>:</p>
+<ul>
+<li>Pods in the host network of a node can communicate with all pods on all nodes without NAT</li>
+</ul>
+<h2 id="understand-clusterip-nodeport-loadbalancer-service-types-and-endpoints">Understand ClusterIP, NodePort, LoadBalancer service types and endpoints</h2>
+<p>Pods are ephemeral. Therefore, placing these behind a service which provides a stable, static entrypoint is a fundamental use of the kubernetes service object. To reiterate, services take the form of the following:</p>
+<ul>
+<li>ClusterIP - Internal only</li>
+<li>LoadBalancer - External, requires cloud provider, or software implementation to provide one</li>
+<li>NodePort - External, requires access the nodes directly</li>
+<li>Ingress resource - L7 An Ingress can be configured to give services externally-reachable URLs, load balance traffic, terminate SSL, and offer name based virtual hosting. An Ingress controller is responsible for fulfilling the Ingress, usually with a loadbalancer, though it may also configure your edge router or additional frontends to help handle the traffic.</li>
+</ul>
+<h2 id="know-how-to-use-ingress-controllers-and-ingress-resources">Know how to use Ingress controllers and Ingress resources</h2>
+<p>Ingress exposes HTTP and HTTPS routes from outside the cluster to services within a cluster. Ingress consists of two components. Ingress Resource is a collection of rules for the inbound traffic to reach Services. These are Layer 7 (L7) rules that allow hostnames (and optionally paths) to be directed to specific Services in Kubernetes. The second component is the Ingress Controller which acts upon the rules set by the Ingress Resource, typically via an HTTP or L7 load balancer. It is vital that both pieces are properly configured to route traffic from an outside client to a Kubernetes Service.</p>
+<p><img alt="img.png" src="../images/ingress.png" /></p>
+<p>The following yaml creates two ingress rules for the website foo.bar.com</p>
+<p>The default path will direct traffic to the service “default-service” which listens on port 80</p>
+<p>Paths ending in /foo will direct traffic to the service “service1” which listens on port 4200</p>
+<p>Paths ending in /bar will direct traffic to the service “service2” which listens on port 8080</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: simple-fanout-example
+spec:
+  rules:
+    - host: foo.bar.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: default-service
+                port:
+                  number: 80
+          - path: /foo
+            pathType: Prefix
+            backend:
+              service:
+                name: service1
+                port:
+                  number: 4200
+          - path: /bar
+            pathType: Prefix
+            backend:
+              service:
+                name: service2
+                port:
+                  number: 8080</code></pre>
+<p>In order for the Ingress resource to work, the cluster must have an ingress controller running. Ingress controllers are deployed into the Kubernetes cluster as a workload:</p>
+<pre class="highlight"><code class="language-shell">&gt; kubectl get po -A | grep nginx-ingress
+ingress-nginx              nginx-ingress-controller-2gxtd                            1/1     Running     0          14d
+ingress-nginx              nginx-ingress-controller-9lrzh                            1/1     Running     0          14d
+ingress-nginx              nginx-ingress-controller-r2ksq                            1/1     Running     0          14d</code></pre>
+<h2 id="know-how-to-configure-and-use-coredns">Know how to configure and use CoreDNS</h2>
+<p>As of 1.13, coredns has replaced kube-dns as the facilitator of cluster DNS and runs as pods.</p>
+<pre class="highlight"><code class="language-shell">kubectl get pods -n kube-system
+NAME                                    READY   STATUS    RESTARTS   AGE
+coredns-fb8b8dccf-hxbhn                 1/1     Running   9          10d
+coredns-fb8b8dccf-jks6g                 1/1     Running   4          8d</code></pre>
+<p>To view the DNS configuration of a pod, spin one up and inspect the /etc/resolv.conf:</p>
+<pre class="highlight"><code class="language-shell">kubectl run busybox --image=busybox -- sleep 9000
+kubectl exec -it busybox sh
+/ # cat /etc/resolv.conf  
+nameserver 10.96.0.10
+search default.svc.cluster.local svc.cluster.local cluster.local virtualthoughts.co.uk
+options ndots:5</code></pre>
+<p>“10.96.0.10” references the <code>Kube-DNS</code> service</p>
+<p>“Default.svc.cluster.local” References the namespace with the suffix svc.cluster.local.</p>
+<p>All pods are provisioned a DNS record and are in the format of</p>
+<p><strong>[Pod IP separated by dashes].[Namespace].[type].[Base Domain Name]</strong></p>
+<p>Where <code>[type]</code> is <code>pod</code> in this example, put services can be resolved by the same convention.</p>
+<p>For example:</p>
+<pre class="highlight"><code class="language-shell">/ # nslookup 10-42-2-68.default.pod.cluster.local
+Server: 10.43.0.10
+Address: 10.43.0.10:53
+
+Name: 10-42-2-68.default.pod.cluster.local
+Address: 10.42.2.68
+</code></pre>
+<p>Services follow a similar pattern</p>
+<p><strong>[Service Name].[Namespace].[type].[Base Domain Name]</strong></p>
+<p>For example:</p>
+<pre class="highlight"><code class="language-shell">my-svc.my-namespace.svc.cluster-domain.example</code></pre>
+<p>Headless services are those without a cluster ip, but will respond with a list of IP’s of pods that are applicable at that particular moment in time.</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: test-headless
+spec:
+  clusterIP: None
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: web-headless</code></pre>
+<p>We can modify the default behavior of the pod dns configuration in the yaml file:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  namespace: default
+  name: dns-example
+spec:
+  containers:
+    - name: test
+      image: nginx
+  dnsPolicy: "None"
+  dnsConfig:
+    nameservers:
+      - 8.8.8.8
+    searches:
+      - ns1.svc.cluster.local
+      - my.dns.search.suffix
+    options:
+      - name: ndots
+        value: "2"
+      - name: edns0</code></pre>
+<p>CoreDNS also has a configmap that can be modified:</p>
+<pre class="highlight"><code class="language-shell">kubectl get cm coredns -n kube-system -o yaml                                                            
+apiVersion: v1
+data:
+  Corefile: |
+    .:53 {
+        errors
+        health
+        ready
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+          pods insecure
+          upstream
+          fallthrough in-addr.arpa ip6.arpa
+        }
+        hosts /etc/coredns/NodeHosts {
+          reload 1s
+          fallthrough
+        }
+        prometheus :9153
+        forward . /etc/resolv.conf
+        cache 30
+        loop
+        reload
+        loadbalance
+    }
+  NodeHosts: |
+    172.16.10.100 k3s-ranch-node-1
+    172.16.10.101 k3s-ranch-node-2
+    172.16.10.102 k3s-ranch-node-3
+</code></pre>
+<p>The Corefile configuration includes the following plugins of CoreDNS:</p>
+<ul>
+<li><code>errors</code>: Errors are logged to stdout.</li>
+<li><code>health</code>: Health of CoreDNS is reported to <code>http://localhost:8080/health</code>. In this extended syntax lameduck will make the process unhealthy then wait for 5 seconds before the process is shut down.</li>
+<li><code>ready</code>: An HTTP endpoint on port 8181 will return 200 OK, when all plugins that are able to signal readiness have done so.</li>
+<li><code>kubernetes</code>: CoreDNS will reply to DNS queries based on IP of the services and pods of Kubernetes. You can find more details about that plugin on the CoreDNS website. ttl allows you to set a custom TTL for responses. The default is 5 seconds. The minimum TTL allowed is 0 seconds, and the maximum is capped at 3600 seconds. Setting TTL to 0 will prevent records from being cached. The pods insecure option is provided for backward compatibility with kube-dns. You can use the pods verified option, which returns an A record only if there exists a pod in same namespace with matching IP. The pods disabled option can be used if you don't use pod records.</li>
+<li><code>prometheus</code>: Metrics of CoreDNS are available at <code>http://localhost:9153/metrics</code> in Prometheus format (also known as OpenMetrics).</li>
+<li><code>forward</code>: Any queries that are not within the cluster domain of Kubernetes will be forwarded to predefined resolvers (/etc/resolv.conf). cache: This enables a frontend cache.</li>
+<li><code>loop</code>: Detects simple forwarding loops and halts the CoreDNS process if a loop is found.</li>
+<li><code>reload</code>: Allows automatic reload of a changed Corefile. After you edit the ConfigMap configuration, allow two minutes for your changes to take effect.</li>
+</ul>
+<p>You can modify the default CoreDNS behavior by modifying the ConfigMap.</p>
+<h2 id="choose-an-appropriate-container-network-interface-plugin">Choose an appropriate container network interface plugin</h2>
+<p>You must deploy a Container Network Interface (CNI) based Pod network add-on so that your Pods can communicate with each other. Cluster DNS (CoreDNS) will not start up before a network is installed.</p>
+<p><a href="https://kubernetes.io/docs/concepts/cluster-administration/addons/#networking-and-network-policy">https://kubernetes.io/docs/concepts/cluster-administration/addons/#networking-and-network-policy</a></p>
+<p>As a generalisation, CNI’s provide some kind of network overlay. But each have their own features, limitations and considerations.</p>
+<p>CNI's manifest and Kubernetes pods in your cluster. A typical workflow would involve standing up your k8s cluster and applying a network cni with:</p>
+<pre class="highlight"><code class="language-shell">kubectl apply -f &lt;add-on.yaml&gt;</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../02-workloads-and-scheduling/" class="btn btn-neutral float-left" title="Part Two - Workloads & Scheduling"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../04-storage/" class="btn btn-neutral float-right" title="Part Four - Storage">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../02-workloads-and-scheduling/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../04-storage/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

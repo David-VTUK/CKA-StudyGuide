@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Part Two - Workloads & Scheduling - CKA-Studyguide</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../custom.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Part Two - Workloads \u0026 Scheduling";
+        var mkdocs_page_input_path = "revision-topics/02-workloads-and-scheduling.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CKA-Studyguide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Revision Topics</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Part Two - Workloads & Scheduling</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#understand-deployments-and-how-to-perform-rolling-update-and-rollbacks">Understand deployments and how to perform rolling update and rollbacks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#update">Update</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rollback">Rollback</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#use-configmaps-and-secrets-to-configure-applications">Use ConfigMaps and Secrets to configure applications</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#know-how-to-scale-applications">Know how to scale applications</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#understand-the-primitives-used-to-create-robust-self-healing-application-deployments">Understand the primitives used to create robust, self-healing, application deployments</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#understand-how-resource-limits-can-affect-pod-scheduling">Understand how resource limits can affect Pod scheduling</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#default-requests-and-limits">Default Requests and Limits</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#minimum-maximum-constraints">Minimum / Maximum Constraints</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#quotas">Quotas</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#awareness-of-manifest-management-and-common-templating-tools">Awareness of manifest management and common templating tools</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#kustomize">Kustomize</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#variants-and-overlays">Variants and Overlays</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#helm">Helm</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#helm-repos">Helm Repos</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lab Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/00-general-advice/">Part Zero - General Advice</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CKA-Studyguide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Revision Topics</li>
+      <li class="breadcrumb-item active">Part Two - Workloads & Scheduling</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="workloads-and-scheduling">Workloads and Scheduling</h1>
+<h2 id="understand-deployments-and-how-to-perform-rolling-update-and-rollbacks">Understand deployments and how to perform rolling update and rollbacks</h2>
+<p>Deployments are intended to replace Replication Controllers.  They provide the same replication functions (through Replica Sets) and also the ability to rollout changes and roll them back if necessary. An example configuration is shown below:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: nginx-frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14
+        ports:
+        - containerPort: 80</code></pre>
+<p>The main reason why leverage <code>deployments</code> is to manage a number of identical pods via one administrative unit - the <code>deployment</code> object. Should we need to make changes, we apply this to the <code>deployment</code> object, not individual pods. Because of the declarative nature of <code>deployments</code>, Kubernetes will rectify any changes between desired and running state, and rectify accordingly. For example, if we manually deleted.</p>
+<p>We can then describe it with <code>kubectl describe deployment nginx-deployment</code></p>
+<h3 id="update">Update</h3>
+<p>To update an existing deployment, we have two main options:</p>
+<ul>
+<li>Rolling Update</li>
+<li>Recreate</li>
+</ul>
+<p>A rolling update, as the name implies, will swap out containers in a deployment with one created by a new image.</p>
+<p>Use a rolling update when the application supports having a mix of different pods (aka application versions). This method will also involve no downtime of the service, but will take longer to bring up the deployment to the requested version. Old and new versions of the pod spec will coexist until they're all rotated.</p>
+<p>A recreation will delete all the existing pods and then spin up new ones. This method will involve downtime. Consider this a “bing bang” approach</p>
+<p>Examples listed in the Kubernetes documentation are largely imperative, but I prefer to be declarative. As an example, create a new yaml file and make the required changes, in this example, the version of the nginx container is incremented.</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: nginx-frontend
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.15
+        ports:
+        - containerPort: 80</code></pre>
+<p>We can then apply this file <code>kubectl apply -f updateddeployment.yaml --record=true</code></p>
+<p>Followed by the following:</p>
+<pre class="highlight"><code class="language-shell">kubectl rollout status deployment/nginx-deployment
+
+Waiting for deployment "nginx-deployment" rollout to finish: 2 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 2 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 2 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 2 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 3 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 3 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 3 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 3 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 4 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 4 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 4 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 4 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 4 out of 5 new replicas have been updated...
+Waiting for deployment "nginx-deployment" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "nginx-deployment" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "nginx-deployment" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "nginx-deployment" rollout to finish: 4 of 5 updated replicas are available...
+deployment "nginx-deployment" successfully rolled out</code></pre>
+<p>We can also use the kubectl rollout history to look at the revision history of a deployment</p>
+<pre class="highlight"><code class="language-shell">kubectl rollout history deployment/nginx-deployment
+
+deployment.extensions/nginx-deployment
+REVISION  CHANGE-CAUSE
+1     &lt;none&gt;
+2     &lt;none&gt;
+4     &lt;none&gt;
+5     kubectl apply --filename=updateddeployment.yaml --record=true</code></pre>
+<p>Alternatively, we can also do this imperatively:</p>
+<pre class="highlight"><code class="language-shell">kubectl --record deployments/nginx-deployment set image deployments/nginx-deployment nginx=nginx:1.9.1
+
+deployment.extensions/nginx-deployment image updated
+deployment.extensions/nginx-deployment image updated</code></pre>
+<h3 id="rollback">Rollback</h3>
+<p>To rollback to the previous version:</p>
+<pre class="highlight"><code class="language-shell">kubectl rollout undo deployment/nginx-deployment </code></pre>
+<p>To rollback to a specific version:</p>
+<pre class="highlight"><code class="language-shell">kubectl rollout undo deployment/nginx-deployment --to-revision 5</code></pre>
+<p>Source of <code>revision</code>: <code>kubectl rollout history deployment/nginx-deployment</code></p>
+<h2 id="use-configmaps-and-secrets-to-configure-applications">Use ConfigMaps and Secrets to configure applications</h2>
+<p>Configmaps are a way to decouple configuration from a pod manifest. Obviously, the first step is to create a config map before we can get pods to use them:</p>
+<pre class="highlight"><code class="language-shell">kubectl create configmap &lt;map-name&gt; &lt;data-source&gt;</code></pre>
+<p>“Map-name” is an arbitrary name we give to this particular map, and “data-source” corresponds to a key-value pair that resides in the config map.</p>
+<pre class="highlight"><code class="language-shell">kubectl create configmap vt-cm --from-literal=blog=virtualthoughts.co.uk</code></pre>
+<p>At which point we can then describe it:</p>
+<pre class="highlight"><code class="language-shell">kubectl describe configmap vt-cm
+Name:         vt-cm
+Namespace:    default
+Labels:       &lt;none&gt;
+Annotations:  &lt;none&gt;
+
+Data
+====
+blog:
+----
+virtualthoughts.co.uk</code></pre>
+<p>To reference this config map in a pod, we declare it in the respective yaml:</p>
+<p>Configmaps can be mounted as <code>volumes</code> or <code>environment variables</code>. The below example leverages the latter.</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+ name: config-test-pod
+spec:
+ containers:
+ - name: test-container
+   image: busybox
+   command: [ "/bin/sh", "-c", "env" ]
+   env:
+     - name: BLOG_NAME
+       valueFrom:
+         configMapKeyRef:
+           name: vt-cm
+           key: blog
+ restartPolicy: Never</code></pre>
+<p>The pod above will output the environment variables, so we can validate it’s leveraged the config map by extracting the logs from the pod:</p>
+<pre class="highlight"><code class="language-shell">kubectl logs config-test-pod | grep "BLOG_NAME="
+...
+BLOG_NAME=virtualthoughts.co.uk
+...</code></pre>
+<h2 id="know-how-to-scale-applications">Know how to scale applications</h2>
+<p>Constantly adding more, individual pods is not a sustainable model for scaling an application. To facilitate applications at scale, we need to leverage higher level constructs such as replicasets or deployments. As mentioned previously, <code>deployments</code> provide us with a single administrative unit to manage the underlying pods. We can scale a <code>deployment</code> object to increase the number of <code>pods</code>.</p>
+<p>As an example, if the following is deployed:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: nginx-deployment
+spec:
+ replicas: 5
+ template:
+   metadata:
+     labels:
+       app: nginx-frontend
+   spec:
+     containers:
+     - name: nginx
+       image: nginx:1.14
+       ports:
+       - containerPort: 80</code></pre>
+<p>If we wanted to scale this, we can simply modify the yaml file and scale up/down the deployment by modifying the “replicas” field, or modify it in the fly:</p>
+<pre class="highlight"><code class="language-shell">kubectl scale deployment nginx-deployment --replicas 10</code></pre>
+<h2 id="understand-the-primitives-used-to-create-robust-self-healing-application-deployments">Understand the primitives used to create robust, self-healing, application deployments</h2>
+<p>Deployments facilitate this by employing a reconciliation loop to check the number of deployed pods matches what’s defined in the manifest. Under the hood, deployments leverage ReplicaSets, which are primarily responsible for this feature.</p>
+<p>Stateful Sets are similar to deployments, for example they manage the deployment and scaling of a series of pods. However, in addition to deployments they also provide guarantees about the ordering and uniqueness of Pods. A StatefulSet maintains a sticky identity for each of their Pods. These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that it maintains across any rescheduling.</p>
+<p>StatefulSets are valuable for applications that require one or more of the following.</p>
+<ul>
+<li>Stable, unique network identifiers.</li>
+<li>Stable, persistent storage.</li>
+<li>Ordered, graceful deployment and scaling.</li>
+<li>Ordered, automated rolling updates.</li>
+</ul>
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+ name: nginx-statefulset
+spec:
+ selector:
+   matchLabels:
+     app: vt-nginx
+ serviceName: "nginx"
+ replicas: 2
+ template:
+   metadata:
+     labels:
+       app: vt-nginx
+   spec:
+     containers:
+     - name: vt-nginx
+       image: nginx:1.7.9
+       ports:
+       - containerPort: 80</code></pre>
+<h2 id="understand-how-resource-limits-can-affect-pod-scheduling">Understand how resource limits can affect Pod scheduling</h2>
+<p>At a namespace level, we can define resource limits. This enables a restriction in resources, especially helpful in multi-tenancy environments and provides a mechanism to prevent pods from consuming more resources than permitted, which may have a detrimental effect on the environment as a whole.</p>
+<p>We can define the following:</p>
+<p>Default memory / CPU <strong>requests &amp; limits</strong> for a namespace</p>
+<p>Minimum and Maximum memory / CPU <strong>constraints</strong> for a namespace</p>
+<p>Memory/CPU <strong>Quotas</strong> for a namespace</p>
+<h3 id="default-requests-and-limits">Default Requests and Limits</h3>
+<p>If a container is created in a namespace with a default request/limit value and doesn't explicitly define these in the manifest, it inherits these values from the namespace</p>
+<p>Note, if you define a container with a memory/CPU limit, but not a request, Kubernetes will define the limit the same as the request.</p>
+<h3 id="minimum-maximum-constraints">Minimum / Maximum Constraints</h3>
+<p>If a pod does not meet the range in which the constraints are valued at, it will not be scheduled.</p>
+<h3 id="quotas">Quotas</h3>
+<p>Control the <em>total</em> amount of CPU/memory that can be consumed in the <em>namespace</em> as a whole.</p>
+<p>Example: Attempt to schedule a pod that request more memory than defined in the namespace</p>
+<p>Create a namespace:</p>
+<pre class="highlight"><code class="language-shell">kubectl create namespace tenant-mem-limited</code></pre>
+<p>Create a YAML manifest to limit resources:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: LimitRange
+metadata:
+  name: tenant-max-mem
+  namespace: tenant-mem-limited
+spec:
+  limits:
+  - max:
+      memory: 250Mi
+    type: Container</code></pre>
+<p>Apply this to the aforementioned namespace:</p>
+<pre class="highlight"><code class="language-shell">kubectl apply -f maxmem.yaml</code></pre>
+<p>To create a pod with a memory request that exceeds the limit:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: too-much-memory
+  namespace: tenant-mem-limited 
+spec:
+  containers:
+  - name: too-much-mem
+    image: nginx
+    resources:
+      requests:
+        memory: "300Mi"</code></pre>
+<p>Executing the above will yield the following result:</p>
+<pre class="highlight"><code class="language-shell">The Pod "too-much-memory" is invalid: spec.containers[0].resources.requests: Invalid value: "300Mi": must be less than or equal to memory limit</code></pre>
+<p>As we have defined the pod limit of the namespace to 250MiB, a request for 300MiB will fail.</p>
+<h2 id="awareness-of-manifest-management-and-common-templating-tools">Awareness of manifest management and common templating tools</h2>
+<h3 id="kustomize">Kustomize</h3>
+<p>Kustomize is a templating tool for Kubernetes manifests in its native form (Yaml). When working with raw YAML files you will typically have a directory containing several files identifying the resources it creates. To begin, a directory containing our manifests needs to exist:</p>
+<pre class="highlight"><code class="language-shell">/home/david/app/base
+total 16
+drwxrwxr-x  2 david david 4096 Feb  9 11:44 .
+drwxr-xr-x 27 david david 4096 Feb  9 11:44 ..
+-rw-rw-r--  1 david david  340 Feb  9 11:09 deployment.yaml
+-rw-rw-r--  1 david david  153 Feb  9 11:09 service.yaml</code></pre>
+<p>This will form our <code>base</code> - we will build on this but adding customisations in the form of overlays. First, we need a <code>kustomize</code> file. which can be created with <code>kustomize create --autodetect</code></p>
+<p>This will create kustomization.yaml in the current directory:</p>
+<pre class="highlight"><code class="language-shell">total 20
+drwxrwxr-x  2 david david 4096 Feb  9 11:47 .
+drwxr-xr-x 27 david david 4096 Feb  9 11:47 ..
+-rw-rw-r--  1 david david  340 Feb  9 11:09 deployment.yaml
+-rw-rw-r--  1 david david  108 Feb  9 11:47 kustomization.yaml
+-rw-rw-r--  1 david david  153 Feb  9 11:09 service.yaml</code></pre>
+<p>The contents being:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- deployment.yaml
+- service.yaml</code></pre>
+<h4 id="variants-and-overlays">Variants and Overlays</h4>
+<ul>
+<li>variant - Divergence in configuration from the <code>base</code></li>
+<li>overlay - Composes variants together</li>
+</ul>
+<p>Say, for example, we wanted to generate manifests for different environments (prod and dev) that are based from this config, but have additional customisations. In this example we will create a <code>dev</code> variant encapsulated in a single Overlay</p>
+<pre class="highlight"><code class="language-shell">mkdir -p overlays/{dev,prod}
+cd overlays/dev </code></pre>
+<p>Begin by creating a Kustomization object specifying the base (this will create <code>kustomization.yaml</code>) :</p>
+<pre class="highlight"><code class="language-shell">kustomize create --resources ../../base</code></pre>
+<p>In this example, I want to change the replica count to 1, as it's a dev environment. In the <code>dev</code> directory, create a new file <code>deployment.yaml</code> containing:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx-deployment
+spec:
+  replicas: 1</code></pre>
+<p>The <code>kustomization.yaml</code> file needs modifying to include a <code>patchesStrategicMerge</code> block:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+  - ../../base
+patchesStrategicMerge:
+  - deployment.yaml</code></pre>
+<p>Patches can be used to apply different customizations to Resources. Kustomize supports different patching mechanisms through <code>patchesStrategicMerge</code> and <code>patchesJson6902</code>. <code>patchesStrategicMerge</code> is a list of file paths.</p>
+<p>We can generate the manifests and apply to the cluster by executing (from the base folder):</p>
+<pre class="highlight"><code class="language-shell">kustomize build ./overlay/dev | kubectl apply -f -</code></pre>
+<p>By running this, only 1 pod will be created in the deployment object, instead of what's defined in the <code>base</code> because of the customisation we've applied. We can do the same with prod, or any arbitrary number of environments.</p>
+<h3 id="helm">Helm</h3>
+<p>Helm is synonymous to what <code>apt</code> or <code>yum</code> are in the Linux world. It's effectively a package manager for Kubernetes. "Packages" in Helm are called <code>charts</code> to which you can customise with your own values.</p>
+<p>It's unlikely the exam will require anyone to create a helm chart from scratch, but an understanding of how it works is a good idea.</p>
+<h4 id="helm-repos">Helm Repos</h4>
+<p>Repos are where helm charts are stored. Typically, a repo will contain a number of charts to choose from. Helm can be managed by a CLI client, and a repo can be added by running:</p>
+<pre class="highlight"><code class="language-shell">helm repo add bitnami https://charts.bitnami.com/bitnami</code></pre>
+<p>To list the packages from this repo:</p>
+<pre class="highlight"><code class="language-shell">helm search repo bitnami</code></pre>
+<p>To install a package from this repo:</p>
+<pre class="highlight"><code class="language-shell">helm install my-release bitnami/mariadb</code></pre>
+<p>Where <code>my-release</code> is a string identifying an installed instance of this application</p>
+<p>Parameters that can be customised - are dependent on how the chart is configured. For the aforementioned MariaDB chart, they are listed at <a href="https://github.com/bitnami/charts/tree/master/bitnami/mariadb/#parameters">https://github.com/bitnami/charts/tree/master/bitnami/mariadb/#parameters</a></p>
+<p>These values are encapsulated in the corresponding <code>values.yaml</code> file in the repo. You can populate an instance of it and apply it with:</p>
+<pre class="highlight"><code class="language-shell">helm install -f https://raw.githubusercontent.com/bitnami/charts/master/bitnami/mariadb/values.yaml my-release bitnami/mariadb</code></pre>
+<p>Alternatively, variables can be declared by using <code>--set</code>, such as:</p>
+<pre class="highlight"><code class="language-shell">helm install my-release --set auth.rootPassword=secretpassword bitnami/mariadb</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../01-architcture-installation-configuration/" class="btn btn-neutral float-left" title="Part One - Architecture, Installation and Configuration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../03-services-and-networking/" class="btn btn-neutral float-right" title="Part Three - Services & Networking">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../01-architcture-installation-configuration/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../03-services-and-networking/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

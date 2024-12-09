@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Part Four - Storage - CKA-Studyguide</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../custom.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Part Four - Storage";
+        var mkdocs_page_input_path = "revision-topics/04-storage.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CKA-Studyguide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Revision Topics</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Part Four - Storage</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#understand-storage-classes-persistent-volumes">Understand storage classes, persistent volumes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#understand-volume-mode-access-modes-and-reclaim-policies-for-volumes">Understand volume mode, access modes and reclaim policies for volumes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#volume-modes">Volume modes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#access-modes">Access Modes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#understand-persistent-volume-claims-primitive">Understand persistent volume claims primitive</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#know-how-to-configure-applications-with-persistent-storage">Know how to configure applications with persistent storage</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lab Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/00-general-advice/">Part Zero - General Advice</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../lab-guide/05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CKA-Studyguide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Revision Topics</li>
+      <li class="breadcrumb-item active">Part Four - Storage</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="storage">Storage</h1>
+<h2 id="understand-storage-classes-persistent-volumes">Understand storage classes, persistent volumes</h2>
+<p>A <code>StorageClass</code> provides a way for administrators to describe the "classes" of storage they offer. Different classes might map to quality-of-service levels, or to backup policies, or to arbitrary policies determined by the cluster administrators. Kubernetes itself is un-opinionated about what classes represent. This concept is sometimes called "profiles" in other storage systems.</p>
+<p>An example of a storage class is below:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: standard
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+reclaimPolicy: Retain
+allowVolumeExpansion: true
+mountOptions:
+  - debug
+volumeBindingMode: Immediate</code></pre>
+<p>Key declarations are:</p>
+<ul>
+<li>
+<p><code>provisioner</code> : Determine which volume plugin to use. This usually matches to a cloud provider, and a specific storage service that it offers. In this example AWS Elastic Block Store</p>
+</li>
+<li>
+<p><code>parameters</code> : Describe characteristics of this storage class in context of the underlying provisioner. In this example, the <code>type</code> is <code>gp2</code> which, in AWS lingo means General Purpose SSD. Other types include <code>IO1</code> (Provisioned IOPS), <code>ST1</code> (Throughput Optimised) and <code>STC</code> (Cold Storage).</p>
+</li>
+</ul>
+<p>A <code>storageclass</code> object by itself defines what storage is provisioned <em>when it is invoked</em>. By itself, it does nothing.</p>
+<p>A <code>persistentvolume</code> object can be used to request storage from a <code>storageclass</code> and is typically part of a pod manifest</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0003
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: standard</code></pre>
+<h2 id="understand-volume-mode-access-modes-and-reclaim-policies-for-volumes">Understand volume mode, access modes and reclaim policies for volumes</h2>
+<h3 id="volume-modes">Volume modes</h3>
+<p>Only two exist:</p>
+<ul>
+<li>
+<p><code>block</code> - Mounted to a pod as a raw block device <em>without</em> a filesystem. The Pod / application needs to understand how to deal with raw block devices. Presenting it in this way can yield better performance, at the expense of complexity.</p>
+</li>
+<li>
+<p><code>filesystem</code> - Mounted inside a pods' filesystem inside a directory. If the volume is backed by a block device with no filesystem, Kubernetes will create one. Compared to <code>block</code> devices, this method offers the highest compatibility, at the expense of performance.</p>
+</li>
+</ul>
+<h3 id="access-modes">Access Modes</h3>
+<p>Three options exist:</p>
+<ul>
+<li><code>ReadWriteOnce</code> – The volume can be mounted as read-write by a single node</li>
+<li><code>ReadOnlyMany</code> – The volume can be mounted read-only by many nodes</li>
+<li><code>ReadWriteMany</code> – The volume can be mounted as read-write by many nodes</li>
+</ul>
+<h2 id="understand-persistent-volume-claims-primitive">Understand persistent volume claims primitive</h2>
+<p>A <code>PersistentVolume</code> can be thought of as storage provisioned by an administrator. Think of this as pre-allocation</p>
+<p>A <code>PersistentVolumeClaim</code> can be thought of as storage requested by a user/workload.</p>
+<p>When the user creates PVC to request storage, Kubernetes will try to match that PVC with a pre-allocated PV. If a match can be found, the PVC will be bound to the PV, and the user will start to use that pre-allocated piece of storage.</p>
+<h2 id="know-how-to-configure-applications-with-persistent-storage">Know how to configure applications with persistent storage</h2>
+<p>When not using storageclasses there are a number of steps:</p>
+<p>Create the PV:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: task-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"</code></pre>
+<p>Create the workload to leverage this:</p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: task-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task-pv-pod
+spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+        claimName: task-pv-claim
+  containers:
+    - name: task-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: task-pv-storage</code></pre>
+<p>If leveraging a storageclass, a <code>persistentvolume</code> object is not required, we just need a <code>persistentvolumeclaim</code></p>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: task-pv-claim
+spec:
+  storageClassName: myStorageClass
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task-pv-pod
+spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+        claimName: task-pv-claim
+  containers:
+    - name: task-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: task-pv-storage</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../03-services-and-networking/" class="btn btn-neutral float-left" title="Part Three - Services & Networking"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../05-troubleshooting/" class="btn btn-neutral float-right" title="Part Five - Troubleshooting">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../03-services-and-networking/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../05-troubleshooting/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

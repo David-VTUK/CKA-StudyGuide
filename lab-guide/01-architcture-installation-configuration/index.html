@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Part One - Architecture, Installation and Configuration - CKA-Studyguide</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../custom.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Part One - Architecture, Installation and Configuration";
+        var mkdocs_page_input_path = "lab-guide/01-architcture-installation-configuration.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CKA-Studyguide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Revision Topics</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lab Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../00-general-advice/">Part Zero - General Advice</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Part One - Architecture, Installation and Configuration</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-0-setup">Exercise 0 - Setup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-1-rbac">Exercise 1 - RBAC</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-2-use-kubeadm-to-install-a-basic-cluster">Exercise 2 - Use Kubeadm to install a basic cluster</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-3-manage-a-highly-available-kubernetes-cluster">Exercise 3 - Manage a highly-available Kubernetes cluster</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-4-perform-a-version-upgrade-on-a-kubernetes-cluster-using-kubeadm">Exercise 4 - Perform a version upgrade on a Kubernetes cluster using Kubeadm</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-5-implement-etcd-backup-and-restore">Exercise 5 - Implement etcd backup and restore</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CKA-Studyguide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Lab Guide</li>
+      <li class="breadcrumb-item active">Part One - Architecture, Installation and Configuration</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="lab-exercises-for-cluster-architecture-installation-and-configuration">Lab Exercises for Cluster Architecture, Installation and Configuration</h1>
+<h2 id="exercise-0-setup">Exercise 0 - Setup</h2>
+<ul>
+<li>Prepare a cluster (Single node, kubeadm, k3s, etc)</li>
+<li>Prepare two vanilla VM's (No Kubernetes components installed) with the kubeadm binary installed (feel free to do this beforehand, I doubt it will be a requirement to add apt sources to get it)</li>
+<li>Open browser tabs to <a href="https://kubernetes.io/docs/">Kubernetes Documentation</a>, <a href="https://github.com/kubernetes/">Kubernetes GitHub</a> and <a href="https://kubernetes.io/blog/">Kubernetes Blog</a> (these are permitted as per <a href="https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed#certified-kubernetes-administrator-cka-and-certified-kubernetes-application-developer-ckad">the current guidelines</a>)</li>
+</ul>
+<h2 id="exercise-1-rbac">Exercise 1 - RBAC</h2>
+<p>A third party application requires access to describe <code>job</code> objects that reside in a namespace called <code>rbac</code>. Perform the following:</p>
+<ol>
+<li>Create a namespace called <code>rbac</code></li>
+<li>Create a service account called <code>job-inspector</code> for the <code>rbac</code> namespace</li>
+<li>Create a role that has rules to <code>get</code> and <code>list</code> job objects</li>
+<li>Create a rolebinding that binds the service account <code>job-inspector</code> to the role created in step 3</li>
+<li>Prove the <code>job-inspector</code> service account can "get" <code>job</code> objects but not <code>deployment</code> objects</li>
+</ol>
+<details>
+<summary>Answer - Imperative</summary>
+<pre class="highlight"><code class="language-shell">kubectl create namespace rbac
+kubectl create sa job-inspector -n rbac
+kubectl create role job-inspector --verb=get --verb=list --resource=jobs -n rbac
+kubectl create rolebinding permit-job-inspector --role=job-inspector --serviceaccount=rbac:job-inspector -n rbac
+kubectl --as=system:serviceaccount:rbac:job-inspector auth can-i get job -n rbac 
+kubectl --as=system:serviceaccount:rbac:job-inspector auth can-i get deployment -n rbac</code></pre>
+</details>
+<details>
+<summary>Answer - Declarative</summary>
+<pre class="highlight"><code class="language-yaml">apiVersion: v1
+kind: Namespace
+metadata:
+  name: rbac
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: job-inspector
+  namespace: rbac
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: job-inspector
+  namespace: rbac
+rules:
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: permit-job-inspector
+  namespace: rbac
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: job-inspector
+subjects:
+  - kind: ServiceAccount
+    name: job-inspector
+    namespace: rbac</code></pre>
+</details>
+<h2 id="exercise-2-use-kubeadm-to-install-a-basic-cluster">Exercise 2 - Use Kubeadm to install a basic cluster</h2>
+<ol>
+<li>On a node, install kubeadm and stand up the control plane, using <code>10.244.0.0/16</code> as the pod network CIDR, and <a href="https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml">kube-flannel.yml</a> as the CNI</li>
+<li>On a node, install kubeadm and join it to the cluster as a worker node</li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<p>Node 1</p>
+<p>Prep kubeadm (as mentioned above, I doubt we will need to do this part in the exam)</p>
+<pre class="highlight"><code class="language-shell"># Install a container runtime, IE https://github.com/containerd/containerd/blob/main/docs/getting-started.md
+
+sudo apt update &amp;&amp; apt install containerd -y
+
+sudo apt-get update
+# apt-transport-https may be a dummy package; if so, you can skip that package
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+
+# If the directory `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below.
+# sudo mkdir -p -m 755 /etc/apt/keyrings
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+
+# This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl</code></pre>
+<p>You may need to execute the following depending on the underlying OS:</p>
+<pre class="highlight"><code class="language-shell">modprobe br_netfilter
+echo 1 &gt; /proc/sys/net/bridge/bridge-nf-call-iptables
+echo 1 &gt; /proc/sys/net/ipv4/ip_forward</code></pre>
+<p>Turn this node into a master</p>
+<p><pre class="highlight"><code class="language-shell">sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+...
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+...
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+...
+Note the join command, ie:
+kubeadm join 172.16.10.210:6443 --token 9tjntl.10plpxqy85g8a0ui \
+    --discovery-token-ca-cert-hash sha256:381165c9a9f19a123bd0fee36fe36d15e918062dcc94711ff5b286ee1f86b92b </code></pre>
+Node 2:</p>
+<p>Run the join command taken from the previous step</p>
+<pre class="highlight"><code class="language-shell">kubeadm join 172.16.10.210:6443 --token 9tjntl.10plpxqy85g8a0ui \
+    --discovery-token-ca-cert-hash sha256:381165c9a9f19a123bd0fee36fe36d15e918062dcc94711ff5b286ee1f86b92b </code></pre>
+<p>Validate by running <code>kubectl get no</code> on the master node:</p>
+<pre class="highlight"><code class="language-shell">kubectl get no
+NAME      STATUS   ROLES                  AGE     VERSION
+ubuntu    Ready    control-plane,master   9m53s   v1.31.3
+ubuntu2   Ready    &lt;none&gt;                 50s     v1.31.3</code></pre>
+</details>
+<h2 id="exercise-3-manage-a-highly-available-kubernetes-cluster">Exercise 3 - Manage a highly-available Kubernetes cluster</h2>
+<ol>
+<li>Using <code>etcdctl</code>, determine the health of the etcd cluster</li>
+<li>Using <code>etcdctl</code>, identify the list of members</li>
+<li>On the master node, determine the health of the cluster by probing the API endpoint</li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<pre class="highlight"><code class="language-shell">root@ip-172-31-31-80:~# ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 \
+    --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+    --cert=/etc/kubernetes/pki/etcd/server.crt \
+    --key=/etc/kubernetes/pki/etcd/server.key \
+    endpoint health
+https://127.0.0.1:2379 is healthy: successfully committed proposal: took = 6.852757ms
+
+root@ip-172-31-31-80:~# ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 \
+    --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+    --cert=/etc/kubernetes/pki/etcd/server.crt \
+    --key=/etc/kubernetes/pki/etcd/server.key \
+    member list
+f90d942cc570125d, started, ip-172-31-31-80, https://172.31.31.80:2380, https://172.31.31.80:2379, false
+
+
+curl -k https://localhost:6443/healthz?verbose
+[+]ping ok
+[+]log ok
+[+]etcd ok
+[+]poststarthook/start-kube-apiserver-admission-initializer ok
+...</code></pre>
+</details>
+<h2 id="exercise-4-perform-a-version-upgrade-on-a-kubernetes-cluster-using-kubeadm">Exercise 4 - Perform a version upgrade on a Kubernetes cluster using Kubeadm</h2>
+<ol>
+<li>Using <code>kubeadm</code>, upgrade a cluster to the lastest version</li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<p>If held, unhold the kubeadm version</p>
+<pre class="highlight"><code class="language-shell">sudo apt-mark unhold kubeadm</code></pre>
+<p>Upgrade the <code>kubeadm</code> version:</p>
+<pre class="highlight"><code class="language-shell">sudo apt-get install --only-upgrade kubeadm</code></pre>
+<p><code>plan</code> the upgrade:</p>
+<pre class="highlight"><code class="language-shell">sudo kubeadm upgrade plan
+
+Components that must be upgraded manually after you have upgraded the control plane with 'kubeadm upgrade apply':
+COMPONENT   CURRENT       AVAILABLE
+kubelet     1 x v1.29.10   v1.31.3
+
+Upgrade to the latest stable version:
+
+COMPONENT                 CURRENT   AVAILABLE
+kube-apiserver            v1.29.10   v1.31.3
+kube-controller-manager   v1.29.10   v1.31.3
+kube-scheduler            v1.29.10   v1.31.3
+kube-proxy                v1.29.10   v1.31.3
+CoreDNS                   1.7.0      1.11.3
+etcd                      3.4.9-1    3.5.15-0</code></pre>
+<p>Upgrade the cluster</p>
+<pre class="highlight"><code class="language-shell">kubeadm upgrade apply v1.20.2</code></pre>
+<p>Upgrade Kubelet:</p>
+<pre class="highlight"><code class="language-shell">sudo apt-get install --only-upgrade kubelet</code></pre>
+</details>
+<h2 id="exercise-5-implement-etcd-backup-and-restore">Exercise 5 - Implement etcd backup and restore</h2>
+<ol>
+<li>Take a backup of etcd</li>
+<li>Verify the etcd backup has been successful</li>
+<li>Restore the backup back to the cluster</li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<p>Take a snapshot of etcd:</p>
+<pre class="highlight"><code class="language-shell">ETCDCTL_API=3 etcdctl snapshot save snapshot.db --cacert /etc/kubernetes/pki/etcd/server.crt --cert /etc/kubernetes/pki/etcd/ca.crt --key /etc/kubernetes/pki/etcd/ca.key</code></pre>
+<p>Verify the snapshot:</p>
+<pre class="highlight"><code class="language-shell">sudo ETCDCTL_API=3 etcdctl --write-out=table snapshot status snapshot.db</code></pre>
+<p>Perform a restore:</p>
+<pre class="highlight"><code class="language-shell">ETCDCTL_API=3 etcdctl snapshot restore snapshot.db</code></pre>
+</details>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../00-general-advice/" class="btn btn-neutral float-left" title="Part Zero - General Advice"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../02-workloads-and-scheduling/" class="btn btn-neutral float-right" title="Part Two - Workloads & Scheduling">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../00-general-advice/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../02-workloads-and-scheduling/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

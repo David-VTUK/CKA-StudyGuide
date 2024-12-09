@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Part Five - Troubleshooting - CKA-Studyguide</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../custom.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Part Five - Troubleshooting";
+        var mkdocs_page_input_path = "lab-guide/05-troubleshooting.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> CKA-Studyguide
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Revision Topics</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/05-troubleshooting/">Part Five - Troubleshooting</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Lab Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../00-general-advice/">Part Zero - General Advice</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-services-and-networking/">Part Three - Services & Networking</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-storage/">Part Four - Storage</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Part Five - Troubleshooting</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-0-setup">Exercise 0 - Setup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-1-evaluate-cluster-and-node-logging">Exercise 1 - Evaluate cluster and node logging</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-2-understand-how-to-monitor-applications">Exercise 2 - Understand how to monitor applications</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-3-troubleshoot-application-failure">Exercise 3 - Troubleshoot application failure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exercise-4-troubleshoot-networking">Exercise 4 - Troubleshoot networking</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">CKA-Studyguide</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Lab Guide</li>
+      <li class="breadcrumb-item active">Part Five - Troubleshooting</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="lab-exercises-for-troubleshooting">Lab Exercises for Troubleshooting</h1>
+<h2 id="exercise-0-setup">Exercise 0 - Setup</h2>
+<ul>
+<li>Prepare a cluster (Single node, kubeadm, k3s, etc)</li>
+<li>Open browser tabs to <a href="https://kubernetes.io/docs/">Kubernetes Documentation</a>, <a href="https://github.com/kubernetes/">Kubernetes GitHub</a> and <a href="https://kubernetes.io/blog/">Kubernetes Blog</a> (these are permitted as per <a href="https://docs.linuxfoundation.org/tc-docs/certification/certification-resources-allowed#certified-kubernetes-administrator-cka-and-cerified-kubernetes-application-developer-ckad">the current guidelines</a>)</li>
+<li>Ensure your etcd nodes have <code>etcdctl</code> installed</li>
+</ul>
+<h2 id="exercise-1-evaluate-cluster-and-node-logging">Exercise 1 - Evaluate cluster and node logging</h2>
+<ol>
+<li>For your cluster type, determine how to acquire logs for your master nodes. They could be in the form of:<ol>
+<li>Services</li>
+<li>Static Pods</li>
+<li>Kubernetes Pods</li>
+</ol>
+</li>
+<li>Using <code>kubectl</code> get a list of <code>events</code> from your cluster</li>
+<li>Using <code>etcdctl</code> determine the health of the etcd cluster</li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<ol>
+<li>1 Is dependent on how the cluster was made and potentially which OS's were used. For example, if K8S components manifest as Kubernetes Pods:</li>
+</ol>
+<pre class="highlight"><code class="language-shell">kubectl logs &lt;podname&gt; &lt;namespace&gt;</code></pre>
+<pre class="highlight"><code class="language-shell">kubectl get events</code></pre>
+<pre class="highlight"><code class="language-shell">etcdctl --write-out=table --endpoints=$ENDPOINTS endpoint status
++------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+|        ENDPOINT        |        ID        | VERSION | DB SIZE | IS LEADER | IS LEARNER | RAFT TERM | RAFT INDEX | RAFT APPLIED INDEX | ERRORS |
++------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+| https://127.0.0.1:2379 | 4e30a295f2c3c1a4 |   3.5.0 |  8.1 MB |      true |      false |         3 |       7903 |               7903 |        |
++------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+</code></pre>
+</details>
+<h2 id="exercise-2-understand-how-to-monitor-applications">Exercise 2 - Understand how to monitor applications</h2>
+<ol>
+<li>Deploy the following manifest: <a href="https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/debug/counter-pod.yaml">counter-pod.yaml</a></li>
+<li>Acquire the logs from this pod - what do they mention?</li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<pre class="highlight"><code class="language-shell">kubectl logs counter
+0: Mon Dec  9 13:15:08 UTC 2024
+1: Mon Dec  9 13:15:09 UTC 2024
+2: Mon Dec  9 13:15:10 UTC 2024
+3: Mon Dec  9 13:15:11 UTC 2024
+4: Mon Dec  9 13:15:12 UTC 2024
+5: Mon Dec  9 13:15:13 UTC 2024
+6: Mon Dec  9 13:15:14 UTC 2024
+7: Mon Dec  9 13:15:15 UTC 2024
+8: Mon Dec  9 13:15:16 UTC 2024
+9: Mon Dec  9 13:15:17 UTC 2024</code></pre>
+</details>
+<h2 id="exercise-3-troubleshoot-application-failure">Exercise 3 - Troubleshoot application failure</h2>
+<ol>
+<li>Deploy the following manifest: <a href="https://raw.githubusercontent.com/David-VTUK/CKAExampleYaml/master/brokenpod.yaml">brokenpod.yaml</a>. It will create a Pod named <code>nginx-pod</code>. Determine why this Pod will not enter <code>running</code> state by using <code>kubectl</code></li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<pre class="highlight"><code class="language-shell">kubectl describe pod nginx-pod
+..
+  Normal   BackOff    4m55s (x7 over 6m56s)  kubelet            Back-off pulling image "nginx:invalidversion"
+..</code></pre>
+</details>
+<h2 id="exercise-4-troubleshoot-networking">Exercise 4 - Troubleshoot networking</h2>
+<ol>
+<li>Deploy the following manifest: <code>https://raw.githubusercontent.com/David-VTUK/CKAExampleYaml/master/nginx-svc-and-deployment-broken.yaml</code>, It will create <code>deployment</code> and <code>service</code> objects. Identify the DNS name of this service.</li>
+<li>Test resolution of this DNS record:</li>
+<li>Create a Pod that has <code>nslookup</code> installed. ie: <code>kubectl apply -f https://k8s.io/examples/admin/dns/dnsutils.yaml</code></li>
+<li>Test sending traffic to this service</li>
+<li>Create a Pod that has <code>curl</code> installed. ie: <code>kubectl run curl --image=radial/busyboxplus:curl -i --tty</code> - Why does it fail?</li>
+<li>Rectify the identified error in step 3</li>
+</ol>
+<details class="answer">
+<summary>Answer</summary>
+<pre class="highlight"><code class="language-shell">nginx-service.default.svc.cluster.local</code></pre>
+<pre class="highlight"><code class="language-shell">kubectl apply -f https://k8s.io/examples/admin/dns/dnsutils.yaml
+kubectl exec -it dnsutils sh
+/ # nslookup nginx-service.default.svc.cluster.local
+Server: 10.96.0.10
+Address: 10.96.0.10#53
+
+Name: nginx-service.default.svc.cluster.local
+Address: 10.99.41.254</code></pre>
+<pre class="highlight"><code class="language-shell">kubectl run curl --image=radial/busyboxplus:curl -i --tty
+If you don't see a command prompt, try pressing enter.
+[ root@curl:/ ]$ curl nginx-service.default.svc.cluster.local
+curl: (7) Failed to connect to nginx-service.default.svc.cluster.local port 80: Connection refused</code></pre>
+<p>Check service:</p>
+<pre class="highlight"><code class="language-shell">kubectl describe service nginx-service
+Name:              nginx-service
+Namespace:         default
+Labels:            &lt;none&gt;
+Annotations:       &lt;none&gt;
+Selector:          app=nginx
+Type:              ClusterIP
+IP Families:       &lt;none&gt;
+IP:                10.99.41.254
+IPs:               10.99.41.254
+Port:              &lt;unset&gt;  80/TCP
+TargetPort:        8080/TCP
+Endpoints:         10.244.1.18:8080,10.244.1.19:8080,10.244.1.20:8080
+Session Affinity:  None
+Events:            &lt;none&gt;</code></pre>
+<p>Note:</p>
+<ul>
+<li>Service is listening on port 80</li>
+<li>Service has a endpoint list, with target port of 8080</li>
+<li>Test <code>curl</code> directly against pod:</li>
+</ul>
+<pre class="highlight"><code class="language-shell">curl 10.244.1.18:8080
+curl: (7) Failed to connect to 10.244.1.18 port 8080: Connection refused</code></pre>
+<p>Port 8080 isn't listening, check the pod config:</p>
+<p><pre class="highlight"><code class="language-shell">kubectl describe po nginx-deployment-5d59d67564-bk9xb | grep -i "port:"
+    Port:           80/TCP</code></pre>
+The service is trying to forward traffic to port 8080 on the container, but the container is only listening on port 80. Reconfigure the <code>service</code> object, ie:</p>
+<pre class="highlight"><code class="language-shell">kubectl edit service nginx-service
+Replace targetPort: 8080 with targetPort: 80</code></pre>
+<p>Retest:</p>
+<pre class="highlight"><code class="language-shell">curl nginx-service.default.svc.cluster.local
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Welcome to nginx!&lt;/title&gt;</code></pre>
+</details>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../04-storage/" class="btn btn-neutral float-left" title="Part Four - Storage"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../04-storage/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
