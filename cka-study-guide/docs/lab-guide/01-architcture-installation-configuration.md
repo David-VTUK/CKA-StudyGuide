@@ -73,7 +73,7 @@ A third party application requires access to describe `job` objects that reside 
 
 ??? Answer
 
-    Node 1:
+    Node 1
 
     Prep kubeadm (as mentioned above, I doubt we will need to do this part in the exam)
 
@@ -99,8 +99,9 @@ A third party application requires access to describe `job` objects that reside 
     sudo apt-mark hold kubelet kubeadm kubectl
     ```
 
+    You may need to execute the following depending on the underlying OS:
+
     ```shell
-    You may need to execute the following:
     modprobe br_netfilter
     echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
     echo 1 > /proc/sys/net/ipv4/ip_forward
@@ -148,17 +149,20 @@ A third party application requires access to describe `job` objects that reside 
 ??? Answer
 
     ```shell
-    etcdctl cluster-health
+    root@ip-172-31-31-80:~# ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 \
+        --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+        --cert=/etc/kubernetes/pki/etcd/server.crt \
+        --key=/etc/kubernetes/pki/etcd/server.key \
+        endpoint health
+    https://127.0.0.1:2379 is healthy: successfully committed proposal: took = 6.852757ms
 
-    cluster is healthy
-    member <id> is healthy
-    member <id> is healthy
-    member <id> is healthy
+    root@ip-172-31-31-80:~# ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 \
+        --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+        --cert=/etc/kubernetes/pki/etcd/server.crt \
+        --key=/etc/kubernetes/pki/etcd/server.key \
+        member list
+    f90d942cc570125d, started, ip-172-31-31-80, https://172.31.31.80:2380, https://172.31.31.80:2379, false
 
-    etcdctl member list
-    <id>: name=etcd1 peerURLs=http://<ip>:2380 clientURLs=<ip>:2379
-    <id>: name=etcd0 peerURLs=http://<ip>:2380 clientURLs=<ip>:2379
-    <id>: name=etcd2 peerURLs=http://<ip>:2380 clientURLs=<ip>:2379
 
     curl -k https://localhost:6443/healthz?verbose
     [+]ping ok
@@ -193,17 +197,17 @@ A third party application requires access to describe `job` objects that reside 
 
     Components that must be upgraded manually after you have upgraded the control plane with 'kubeadm upgrade apply':
     COMPONENT   CURRENT       AVAILABLE
-    kubelet     1 x v1.19.0   v1.20.2
+    kubelet     1 x v1.29.10   v1.31.3
 
     Upgrade to the latest stable version:
 
     COMPONENT                 CURRENT   AVAILABLE
-    kube-apiserver            v1.19.7   v1.20.2
-    kube-controller-manager   v1.19.7   v1.20.2
-    kube-scheduler            v1.19.7   v1.20.2
-    kube-proxy                v1.19.7   v1.20.2
-    CoreDNS                   1.7.0     1.7.0
-    etcd                      3.4.9-1   3.4.13-0
+    kube-apiserver            v1.29.10   v1.31.3
+    kube-controller-manager   v1.29.10   v1.31.3
+    kube-scheduler            v1.29.10   v1.31.3
+    kube-proxy                v1.29.10   v1.31.3
+    CoreDNS                   1.7.0      1.11.3
+    etcd                      3.4.9-1    3.5.15-0
     ```
 
     Upgrade the cluster

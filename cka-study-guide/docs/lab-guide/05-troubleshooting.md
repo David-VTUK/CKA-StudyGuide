@@ -46,10 +46,16 @@
 
     ```shell
     kubectl logs counter
-    0: Sun Feb 14 19:09:01 UTC 2021
-    1: Sun Feb 14 19:09:02 UTC 2021
-    2: Sun Feb 14 19:09:03 UTC 2021
-    3: Sun Feb 14 19:09:04 UTC 2021
+    0: Mon Dec  9 13:15:08 UTC 2024
+    1: Mon Dec  9 13:15:09 UTC 2024
+    2: Mon Dec  9 13:15:10 UTC 2024
+    3: Mon Dec  9 13:15:11 UTC 2024
+    4: Mon Dec  9 13:15:12 UTC 2024
+    5: Mon Dec  9 13:15:13 UTC 2024
+    6: Mon Dec  9 13:15:14 UTC 2024
+    7: Mon Dec  9 13:15:15 UTC 2024
+    8: Mon Dec  9 13:15:16 UTC 2024
+    9: Mon Dec  9 13:15:17 UTC 2024
     ```
 
 ## Exercise 3 - Troubleshoot application failure

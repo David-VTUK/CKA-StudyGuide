@@ -58,7 +58,7 @@
     kubectl describe deployment nginx (unless specified, will be listed as "UpdateStrategy")
     ```
 
-    `patch.yaml:`
+    patch.yaml contents:
 
     ```yaml
     apiVersion: apps/v1
@@ -75,8 +75,6 @@
             containers:
                 - name: nginx
                   image: nginx:1.19.6
-                  ports:
-                    - containerPort: 80
     ```
 
     ```shell
@@ -103,7 +101,7 @@
 
     Define Pod:
 
-    ```shell
+    ```yaml
     apiVersion: v1
     kind: Pod
     metadata:

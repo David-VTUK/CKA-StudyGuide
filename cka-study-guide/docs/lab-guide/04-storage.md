@@ -66,8 +66,6 @@ Note: Leverage the docs to help you. It's unlikely you will need to recall the n
 
 ## Exercise 2 - Know how to configure applications with persistent storage
 
-In this exercise, we will **not** be using `storageClass` objects
-
 1. Create a `persistentVolume` object of type `hostPath` with the following parameters:
     1. 1GB Capacity
     2. Path on the host is /tmp
@@ -76,55 +74,65 @@ In this exercise, we will **not** be using `storageClass` objects
 2. Create a `persistentVolumeClaim` to the aforementioned `persistentVolume`
 3. Create a `pod` workload to leverage this `persistentVolumeClaim
 
+To create the StorageClass `manual` apply the following:
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: manual
+provisioner: kubernetes.io/no-provisioner
+```
+
 ??? Answer
 
     ```yaml
     apiVersion: v1
     kind: PersistentVolume
     metadata:
-    name: pv-hostpath-1gb
+      name: pv-hostpath-1gb
     spec:
-    capacity:
-      storage: 1Gi
-    volumeMode: Filesystem
-    accessModes:
-      - ReadWriteOnce
-    persistentVolumeReclaimPolicy: Recycle
-    storageClassName: manual
-    hostPath:
-      path: /tmp
+      capacity:
+        storage: 1Gi
+      volumeMode: Filesystem
+      accessModes:
+        - ReadWriteOnce
+      persistentVolumeReclaimPolicy: Recycle
+      storageClassName: manual
+      hostPath:
+        path: /tmp
     ---
-    kind: PersistentVolumeClaim
     apiVersion: v1
+    kind: PersistentVolumeClaim
     metadata:
-    name: pvc-hostpath-claim
+      name: pvc-hostpath-claim
     spec:
-    accessModes:
-      - ReadWriteOnce
-    volumeMode: Filesystem
-    resources:
-      requests:
-        storage: 512Mi
-    storageClassName: manual
+      accessModes:
+        - ReadWriteOnce
+      volumeMode: Filesystem
+      resources:
+        requests:
+          storage: 512Mi
+      storageClassName: manual
     ---
     apiVersion: v1
     kind: Pod
     metadata:
-    name: pod-with-pvc
+      name: pod-with-pvc
     spec:
-    volumes:
-      - name: myvol
-        persistentVolumeClaim:
-          claimName: pvc-hostpath-claim
-    containers:
-    - name: busybox
-      image: busybox
-      args:
-      - sleep
-      - "1000000"
-      volumeMounts:
-        - mountPath: "/mnt/readonly"
-          name: myvol
+      volumes:
+        - name: myvol
+          persistentVolumeClaim:
+            claimName: pvc-hostpath-claim
+      containers:
+        - name: busybox
+          image: busybox
+          args:
+            - sleep
+            - "1000000"
+          volumeMounts:
+            - mountPath: "/mnt/readonly"
+              name: myvol
     ```
 
     Validate with:
@@ -139,5 +147,4 @@ In this exercise, we will **not** be using `storageClass` objects
 
     NAME                                       STATUS   VOLUME            CAPACITY   ACCESS MODES   STORAGECLASS   AGE
     persistentvolumeclaim/pvc-hostpath-claim   Bound    pv-hostpath-1gb   1Gi        RWO            manual         2m7s
-
     ```
