@@ -1,8 +1,10 @@
-# Evaluate cluster and node logging
+# Troubleshooting
 
-## Master Node(s)
+## Evaluate cluster and node logging
 
-### ETCD
+### Master Node(s)
+
+#### ETCD
 
 Usually, most etcd implementations also include etcdctl, which can aid in monitoring the state of the cluster. If you’re unsure where to find it, execute the following:
 
@@ -41,14 +43,14 @@ Etcd may also be running as a Pod:
 kubectl logs etcd-ubuntu -n kube-system
 ```
 
-
-### Kube-apiserver
+#### Kube-apiserver
 
 This is dependent on the environment for which the Kubernetes platform has been installed on. For systemd based systems:
 
 ```bash
 journalctl -u kube-apiserver
 ```
+
 Or
 
 ```bash
@@ -61,8 +63,7 @@ Or for instances where Kube-API server is running as a static pod:
 kubectl logs kube-apiserver-k8s-master-03 -n kube-system
 ```
 
-
-### Kube-Scheduler
+#### Kube-Scheduler
 
 For systemd-based systems
 
@@ -82,8 +83,7 @@ Or for instances where Kube-Scheduler is running as a static pod:
 kubectl logs kube-scheduler-k8s-master-03 -n kube-system
 ```
 
-
-### Kube-Controller-Manager
+#### Kube-Controller-Manager
 
 For systemd-based systems
 
@@ -103,10 +103,9 @@ Or for instances where Kube-controller manager is running as a static pod:
 kubectl logs kube-controller-manager-k8s-master-03 -n kube-system
 ```
 
+### Worker Node(s)
 
-## Worker Node(s)
-
-## CNI
+#### CNI
 
 Obviously this is dependent on the CNI in use for the cluster you’re working on. However, using Flannel as an example:
 
@@ -121,8 +120,7 @@ Kubectl logs --namespace kube-system <POD-ID> -c kube-flannel
 kubectl logs --namespace kube-system weave-net-pwjkj -c weave
 ```
 
-
-### Kube-Proxy
+#### Kube-Proxy
 
 For systemd-based systems
 
@@ -142,7 +140,7 @@ Or for instances where Kube-proxy manager is running as a static pod:
 kubectl logs kube-proxy -n kube-system
 ```
 
-### Kubelet
+#### Kubelet
 
 ```shell
 journalctl -u kubelet
@@ -154,7 +152,7 @@ Or
 cat /var/log/kubelet.log
 ```
 
-### Container Runtime
+#### Container Runtime
 
 Similarly to the CNI, this depends on which container runtime has been deployed, but using Docker as an example:
 
@@ -170,18 +168,18 @@ Or
 cat /var/log/docker.log
 ```
 
-Hint : list the contents of `etc/systemd/system `if it’s a systemd-based service (containerd.service may be here)
+Hint : list the contents of `etc/systemd/system` if it’s a systemd-based service (containerd.service may be here)
 
-## Cluster Logging
+#### Cluster Logging
 
 At a cluster level, `kubectl get events` provides a good overview.
 
-#  Understand how to monitor applications
+## Understand how to monitor applications
 
 This section is a bit open-ended as it highly depends on what you have deployed and the topology of an application. Typically, however, we have an application that runs as a number of inter-connected **microservices**, consequently we monitor our applications by monitoring the underlying objects that comprise it, such as:
 
 * Pods
-* Deployments 
+* Deployments
 * Services
 * etc
 
@@ -214,7 +212,7 @@ lrwxrwxrwx  1 root root     96 Feb  8 19:17 kube-proxy-l52f9_kube-system_kube-pr
 lrwxrwxrwx  1 root root    101 Feb  8 19:17 kube-scheduler-ubuntu_kube-system_kube-scheduler-4a695e53684f4591ec9385d6944f7841c0329aa49be220e5af6304da281cb41a.log -> /var/log/pods/kube-system_kube-scheduler-ubuntu_69cd289b4ed80ced4f95a59ff60fa102/kube-scheduler/0.log
 ```
 
-# Troubleshoot application failure
+## Troubleshoot application failure
 
 This is a somewhat ambitious topic to cover as how we approach troubleshooting application failures varies by the architecture of that application, which resources/API objects we're leveraging, if the application contains logs. However, good starting points would include running things like:
 
@@ -222,13 +220,13 @@ This is a somewhat ambitious topic to cover as how we approach troubleshooting a
 * `kubectl logs <podname>`
 * `kubectl get events`
 
-# Troubleshoot cluster component failure
+## Troubleshoot cluster component failure
 
 Covered in "Evaluate cluster and node logging"
 
-# Troubleshoot networking
+## Troubleshoot networking
 
-## DNS Resolution
+### DNS Resolution
 
 `Pods` and `Services` will automatically have a DNS record registered against `coredns` in the cluster, aka "A" records for IPv4 and "AAAA" for IPv6. The format of which is:
 
@@ -265,6 +263,7 @@ To test resolution, we can run a pod with `nslookup` to test. For the pod below:
 NAME         READY   STATUS    RESTARTS   AGE     IP           NODE              NOMINATED NODE   READINESS GATES
 web-server   1/1     Running   0          2d20h   10.42.1.31   ip-172-31-36-67   <none>           <none>
 ```
+
 Knowing the format of the A record:
 
 `pod-ip-address.my-namespace.pod.cluster-domain.example`
@@ -308,8 +307,6 @@ Address: 10.42.1.31
 
 Similarly, for a service, in this case a service called `nginx-service` that resides in the default namespace:
 
-
-
 ```shell
 > kubectl exec -i -t dnsutils -- nslookup nginx-service.default.svc.cluster.local
 Server:         10.43.0.10
@@ -325,10 +322,9 @@ NAME            TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
 nginx-service   ClusterIP   10.43.0.223   <none>        80/TCP    9m15s
 ```
 
-## CNI Issues
+### CNI Issues
 
 Mainly covered earlier in acquiring logs for the CNI. However, one issue that might occur is when a CNI is incorrectly, or not initialised. This may cause workloads to enter a `pending` status:
-
 
 ```shell
 kubectl get po -o wide
@@ -338,6 +334,6 @@ nginx   0/1     Pending   0          57s   <none>   <none>   <none>           <n
 
 `kubectl describe <pod>` can help identify issues with assigning IP addresses to nodes from the CNI
 
-## Port Checking
+### Port Checking
 
 Similarly, with leveraging `nslookup` to validate DNS resolution in our cluster, we can lean on other tools to perform other diagnostic. All we need is a pod that has a utility like `netcat`, `telnet` etc.
