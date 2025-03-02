@@ -61,7 +61,7 @@ kind: ServiceAccount
 metadata:
  name: rbac-test-sa
  namespace: rbac-test
- ```
+```
 
 of particular importance is the format of the below.  
 `apiGroup` : Determines which API group to apply this to.
