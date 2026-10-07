@@ -35,6 +35,13 @@ nav:
           - "Implement storage classes and dynamic volume provisioning": "revision-topics/01-storage/part-1.md"
           - "Configure volume types, access modes and reclaim policies": "revision-topics/01-storage/part-2.md"
           - "Manage persistent volumes and persistent volume claims": "revision-topics/01-storage/part-3.md"
+      - 'Part Two - Troubleshooting':
+          - "Overview": "revision-topics/02-troubleshooting/overview.md"
+          - "Troubleshoot clusters and nodes": "revision-topics/02-troubleshooting/part-1.md"
+          - "Troubleshoot cluster components": "revision-topics/02-troubleshooting/part-2.md"
+          - "Monitor cluster and application resource usage": "revision-topics/02-troubleshooting/part-3.md"
+          - "Manage and evaluate container output streams": "revision-topics/02-troubleshooting/part-4.md"
+          - "Troubleshoot services and networking": "revision-topics/02-troubleshooting/part-5.md"
 
 markdown_extensions:
   - admonition
