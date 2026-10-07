@@ -42,6 +42,10 @@ nav:
           - "Monitor cluster and application resource usage": "revision-topics/02-troubleshooting/part-3.md"
           - "Manage and evaluate container output streams": "revision-topics/02-troubleshooting/part-4.md"
           - "Troubleshoot services and networking": "revision-topics/02-troubleshooting/part-5.md"
+      - 'Part Three - Workloads and Scheduling': 
+          - "Overview": "revision-topics/03-workloads-and-scheduling/overview.md"
+          - "Understand application deployments and how to perform rolling update and rollbacks": "revision-topics/03-workloads-and-scheduling/part-1.md"
+          - "Use ConfigMaps and Secrets to configure applications": "revision-topics/03-workloads-and-scheduling/part-2.md"
 
 markdown_extensions:
   - admonition
