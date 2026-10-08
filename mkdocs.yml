@@ -58,6 +58,14 @@ nav:
           - "Use Helm and Kustomize to install cluster components": "revision-topics/04-architecture/part-6.md"
           - "Understand extension interfaces (CNI, CSI,CRI, etc.)": "revision-topics/04-architecture/part-7.md"
           - "Understand CRDs, install and configure operators": "revision-topics/04-architecture/part-8.md"
+      - 'Part Five - Servicing and Networking':
+          - Understand connectivity between Pods: "revision-topics/05-services-and-networking/part-1.md"
+          - Define and enforce Network Policies: "revision-topics/05-services-and-networking/part-2.md"
+          - Use ClusterIP, NodePort, LoadBalancer service types and endpoints: "revision-topics/05-services-and-networking/part-3.md"
+          - Use the Gateway API to manage Ingress traffic: "revision-topics/05-services-and-networking/part-4.md"
+          - Know how to use Ingress controllers and Ingress resources: "revision-topics/05-services-and-networking/part-5.md"
+          - Understand and use CoreDNS: "revision-topics/05-services-and-networking/part-6.md"
+
 
 markdown_extensions:
   - admonition
