@@ -46,6 +46,18 @@ nav:
           - "Overview": "revision-topics/03-workloads-and-scheduling/overview.md"
           - "Understand application deployments and how to perform rolling update and rollbacks": "revision-topics/03-workloads-and-scheduling/part-1.md"
           - "Use ConfigMaps and Secrets to configure applications": "revision-topics/03-workloads-and-scheduling/part-2.md"
+          - "Configure workload autoscaling": "revision-topics/03-workloads-and-scheduling/part-3.md"
+          - "Understand the primitives used to create robust, self-healing, application deployments": "revision-topics/03-workloads-and-scheduling/part-4.md"
+          - "Configure Pod admission and scheduling limits, node affinity, etc": "revision-topics/03-workloads-and-scheduling/part-5.md"
+      - 'Part Four - Architecture':
+          - "Manage role based access control (RBAC)": "revision-topics/04-architecture/part-1.md"
+          - "Prepare underlying infrastructure for installing a Kubernetes cluster": "revision-topics/04-architecture/part-2.md"
+          - "Create and manage Kubernetes clusters using kubeadm": "revision-topics/04-architecture/part-3.md"
+          - "Manage the lifecycle of Kubernetes clusters": "revision-topics/04-architecture/part-4.md"
+          - "Implement and configure a highly-available control plane": "revision-topics/04-architecture/part-5.md"
+          - "Use Helm and Kustomize to install cluster components": "revision-topics/04-architecture/part-6.md"
+          - "Understand extension interfaces (CNI, CSI,CRI, etc.)": "revision-topics/04-architecture/part-7.md"
+          - "Understand CRDs, install and configure operators": "revision-topics/04-architecture/part-8.md"
 
 markdown_extensions:
   - admonition

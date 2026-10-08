@@ -26,7 +26,6 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
-
 ```
 
 Acquire Pod Name:
