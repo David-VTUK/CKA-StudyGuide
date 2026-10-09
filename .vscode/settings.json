@@ -1,0 +1,12 @@
+{
+    "markdown.validate.enabled": true,
+    "cSpell.words": [
+        "dearmor",
+        "frontends",
+        "keyrings",
+        "netfilter",
+        "rolebinding",
+        "serviceaccount"
+    ],
+    "cSpell.language": "en-GB",
+}

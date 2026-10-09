@@ -8,11 +8,9 @@ Notes from revising the topics listed in the curriculum, grouped to correlate to
 
 ## Lab Guide With Example Answers
 
-To complement the revision topics, these lab guides are designed to exercise the topics learnt from the corresponding revision topics sections.
+To complement the revision topics, these lab guides are designed to provide practical experience.
 
 ## Resources / References
-
-[http://www.kubernet.io/](http://www.kubernet.io/) (Currently offline)
 
 [https://github.com/kelseyhightower/kubernetes-the-hard-way](https://github.com/kelseyhightower/kubernetes-the-hard-way)
 
@@ -30,4 +28,4 @@ To complement the revision topics, these lab guides are designed to exercise the
 
 ## Contact
 
-Twitter = @VT_UK
+david (dot) holder (at) gmail (dot) com

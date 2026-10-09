@@ -90,7 +90,7 @@
 1. Create a configmap named `mycm` that has the following key=value pair
     1. `key` = owner
     2. `value` = yourname
-2. Create a pod of your choice, such as `nginx`. Configure this Pod so that the underlying container has the environent varibale `OWNER` set to the value of this configmap
+2. Create a pod of your choice, such as `nginx`. Configure this Pod so that the underlying container has the environment variable `OWNER` set to the value of this configmap
 
 ??? Answer
 
@@ -271,7 +271,7 @@
             - containerPort: 80
     ```
 
-## Excerise 5 - Understand how resource limits can affect Pod scheduling
+## Exercise 5 - Understand how resource limits can affect Pod scheduling
 
 1. Create a new namespace called "tenant-b-100mi"
 2. Create a memory limit of 100Mi for this namespace

@@ -1,30 +1,90 @@
 site_name: CKA-Studyguide 
 theme:
-  name: readthedocs
+  name: material
+  features:
+    - navigation.sections
+  palette:
+
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
 
 docs_dir: cka-study-guide/docs
 
 nav:
   - Home: 'index.md'
   - 'Revision Topics':
-      - 'Part One - Architecture, Installation and Configuration' : 'revision-topics/01-architcture-installation-configuration.md'
-      - 'Part Two - Workloads & Scheduling' : 'revision-topics/02-workloads-and-scheduling.md'
-      - 'Part Three - Services & Networking' : 'revision-topics/03-services-and-networking.md'
-      - 'Part Four - Storage' : 'revision-topics/04-storage.md'
-      - 'Part Five - Troubleshooting' : 'revision-topics/05-troubleshooting.md'
-
+      - 'Part One - Storage':
+          - "Overview": "revision-topics/01-storage/overview.md" 
+          - "Implement storage classes and dynamic volume provisioning": "revision-topics/01-storage/part-1.md"
+          - "Configure volume types, access modes and reclaim policies": "revision-topics/01-storage/part-2.md"
+          - "Manage persistent volumes and persistent volume claims": "revision-topics/01-storage/part-3.md"
+      - 'Part Two - Troubleshooting':
+          - "Overview": "revision-topics/02-troubleshooting/overview.md"
+          - "Troubleshoot clusters and nodes": "revision-topics/02-troubleshooting/part-1.md"
+          - "Troubleshoot cluster components": "revision-topics/02-troubleshooting/part-2.md"
+          - "Monitor cluster and application resource usage": "revision-topics/02-troubleshooting/part-3.md"
+          - "Manage and evaluate container output streams": "revision-topics/02-troubleshooting/part-4.md"
+          - "Troubleshoot services and networking": "revision-topics/02-troubleshooting/part-5.md"
+      - 'Part Three - Workloads and Scheduling': 
+          - "Overview": "revision-topics/03-workloads-and-scheduling/overview.md"
+          - "Understand application deployments and how to perform rolling update and rollbacks": "revision-topics/03-workloads-and-scheduling/part-1.md"
+          - "Use ConfigMaps and Secrets to configure applications": "revision-topics/03-workloads-and-scheduling/part-2.md"
+          - "Configure workload autoscaling": "revision-topics/03-workloads-and-scheduling/part-3.md"
+          - "Understand the primitives used to create robust, self-healing, application deployments": "revision-topics/03-workloads-and-scheduling/part-4.md"
+          - "Configure Pod admission and scheduling limits, node affinity, etc": "revision-topics/03-workloads-and-scheduling/part-5.md"
+      - 'Part Four - Architecture':
+          - "Manage role based access control (RBAC)": "revision-topics/04-architecture/part-1.md"
+          - "Prepare underlying infrastructure for installing a Kubernetes cluster": "revision-topics/04-architecture/part-2.md"
+          - "Create and manage Kubernetes clusters using kubeadm": "revision-topics/04-architecture/part-3.md"
+          - "Manage the lifecycle of Kubernetes clusters": "revision-topics/04-architecture/part-4.md"
+          - "Implement and configure a highly-available control plane": "revision-topics/04-architecture/part-5.md"
+          - "Use Helm and Kustomize to install cluster components": "revision-topics/04-architecture/part-6.md"
+          - "Understand extension interfaces (CNI, CSI,CRI, etc.)": "revision-topics/04-architecture/part-7.md"
+          - "Understand CRDs, install and configure operators": "revision-topics/04-architecture/part-8.md"
+      - 'Part Five - Servicing and Networking':
+          - Understand connectivity between Pods: "revision-topics/05-services-and-networking/part-1.md"
+          - Define and enforce Network Policies: "revision-topics/05-services-and-networking/part-2.md"
+          - Use ClusterIP, NodePort, LoadBalancer service types and endpoints: "revision-topics/05-services-and-networking/part-3.md"
+          - Use the Gateway API to manage Ingress traffic: "revision-topics/05-services-and-networking/part-4.md"
+          - Know how to use Ingress controllers and Ingress resources: "revision-topics/05-services-and-networking/part-5.md"
+          - Understand and use CoreDNS: "revision-topics/05-services-and-networking/part-6.md"
   - 'Lab Guide':
-      - 'Part Zero - General Advice': 'lab-guide/00-general-advice.md'
-      - 'Part One - Architecture, Installation and Configuration' : 'lab-guide/01-architcture-installation-configuration.md'
-      - 'Part Two - Workloads & Scheduling' : 'lab-guide/02-workloads-and-scheduling.md'
-      - 'Part Three - Services & Networking' : 'lab-guide/03-services-and-networking.md'
-      - 'Part Four - Storage' : 'lab-guide/04-storage.md'
-      - 'Part Five - Troubleshooting' : 'lab-guide/05-troubleshooting.md'
+      - "Part Zero - General Advice": "lab-guide/00-general-advice.md"
+      - "Part One - Architecture, installation and configuration": "lab-guide/01-architcture-installation-configuration.md"
+      - "Part Two - Workloads and Scheduling": "lab-guide/02-workloads-and-scheduling.md"
+      - "Part Three - Services and Networking": "lab-guide/03-services-and-networking.md"
+      - "Part Four - Storage": "lab-guide/04-storage.md"
+      - "Part Five - Troubleshooting": "lab-guide/05-troubleshooting.md"
+
 
 markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - tables
+  - attr_list
 
 extra_css:
   - custom.css
