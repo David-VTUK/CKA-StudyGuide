@@ -70,3 +70,7 @@ Each plugin type has a specific purpose:
 | **CNI** | Container Network Interface | Configures network interfaces, IP address allocation (IPAM), and routes for Pods | Executable binary calls (`ADD`, `DEL`, `CHECK`) | Calico, Cilium, Flannel |
 | **CSI** | Container Storage Interface | Handles volume lifecycle (provisioning, attaching, mounting, snapshotting) | gRPC (`Identity`, `Controller`, `Node` services) | AWS EBS CSI, Longhorn, Rook/Ceph |
 | **CPI** | Cloud Provider Interface | Integrates Kubernetes control plane with cloud provider infrastructure (Node metadata, LBs, Routes) | Go interface inside `cloud-controller-manager` | AWS, GCP, Azure, OpenStack plugins |
+
+!!! success "Exam Tip"
+
+    CNI and CSI drivers are usually deployed as standard Kubernetes workloads. Therefore, use `kubectl` to inspect and retrieve the logs for the respective `pods` for troubleshooting.

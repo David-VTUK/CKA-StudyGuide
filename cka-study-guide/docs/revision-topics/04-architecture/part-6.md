@@ -129,3 +129,7 @@ kustomize build ./overlay/dev | kubectl apply -f -
 ```
 
 By running this, only 1 pod will be created in the deployment object, instead of what's defined in the `base` because of the customisation we've applied. We can do the same with prod, or any arbitrary number of environments.
+
+!!! success "Exam Tip"
+
+    Practice with upstream Helm charts for applications that interest you. Dig into how `values.yaml` work

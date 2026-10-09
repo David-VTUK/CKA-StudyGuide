@@ -1,17 +1,17 @@
-# Troubleshoot services and networking
+# Troubleshoot Services and Networking
 
 ## DNS Resolution
 
 `Pods` and `Services` will automatically have a DNS record registered against `coredns` in the cluster, aka "A" records for IPv4 and "AAAA" for IPv6. The format of which is:
 
-`pod-ip-address.my-namespace.pod.cluster-domain.example`
-`my-svc-name.my-namespace.svc.cluster-domain.example`
+`pod-ip-address.namespace.pod.cluster-domain`
+`my-svc-name.namespace.svc.cluster-domain`
 
-Pod DNS records resolve to a single entity, even if the Pod contains multiple containers as they share the same networking space.
+Pod DNS records resolve to a single entity, even if the Pod contains multiple containers as they share the same networking namespace.
 
 Service DNS records resolve to the respective service object.
 
-Pods will automatically have their DNS resolution configured based on coredns settings. This can be validated by opening a shell to the pod and inspecting /etc/resolv.conf:
+Pods will automatically have their DNS resolution configured based on the clusters coredns settings. This can be validated by opening a shell to the pod and inspecting /etc/resolv.conf:
 
 ```shell
 > kubectl exec -it web-server sh
@@ -38,7 +38,7 @@ NAME         READY   STATUS    RESTARTS   AGE     IP           NODE             
 web-server   1/1     Running   0          2d20h   10.42.1.31   ip-172-31-36-67   <none>           <none>
 ```
 
-Knowing the format of the A record:
+And knowing the format of the A record:
 
 `pod-ip-address.my-namespace.pod.cluster-domain.example`
 
@@ -106,15 +106,15 @@ NAME    READY   STATUS    RESTARTS   AGE   IP       NODE     NOMINATED NODE   RE
 nginx   0/1     Pending   0          57s   <none>   <none>   <none>           <none>
 ```
 
-`kubectl describe <pod>` can help identify issues with assigning IP addresses to nodes from the CNI
+`kubectl describe <pod>` can help identify issues with assigning IP addresses to nodes from the CNI.
 
 ## Port Checking
 
-Similarly, with leveraging `nslookup` to validate DNS resolution in our cluster, we can lean on other tools to perform other diagnostic. All we need is a pod that has a utility like `netcat`, `telnet` etc.
+Similarly, with leveraging `nslookup` to validate DNS resolution in our cluster, we can lean on other tools to perform other diagnostic. All we need is a `Pod` that has a utility like `netcat`, `telnet` etc.
 
 ## Endpoint Checking
 
-`kubectl get endpoints <service-name>` - Verify the service is successfully mapping to live pod IPs. If this is empty, your service selectors liekly don't match your pod labels.
+`kubectl get endpoints <service-name>` - Verify the service is successfully mapping to live pod IPs. If this is empty, your service selectors likely don't match your pod labels.
 
 ```bash
 david@fedora:~/cka$ kubectl get endpoints argocd-server -n argocd
@@ -123,6 +123,8 @@ argocd-server   10.0.1.121:8080                   39d
 ```
 
 ## Bypass K8s Service
+
+If you want to test connectivity by proxying the service to your local machine:
 
 `kubectl port-forward svc/<service-name> LocalMachinePort:WorkloadPort` - Bypass ingress entirely to test HTTP service routing directly from your local machine.
 
@@ -139,3 +141,11 @@ Handling connection for 8888
 Handling connection for 8888
 Handling connection for 8888
 ```
+
+!!! success "Exam Tip"
+
+    Lean on standard troubleshooting tools, `nslookup`, `dig`, `netcat`, `curl`, `wget` as you would do for non-containerised environments.
+
+!!! success "Exam Tip"
+
+    Section 5 goes through services in more detail, don't worry if it's still confusing at this stage.

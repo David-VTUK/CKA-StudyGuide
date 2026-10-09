@@ -1,6 +1,6 @@
 # Configure Pod admission and scheduling limits, node affinity, etc
 
-There are times when we require granularity when it comes to where or workloads get scheduled to, for a plethora of reasons, which include:
+There are times when we require granularity when it comes to where our workloads get scheduled to, for a plethora of reasons which include:
 
 * Scheduling workloads to GPU enabled Nodes
 * Enforcing Pods within a deployment are spread across multiple nodes (mitigate against node failure)
@@ -9,7 +9,7 @@ There are times when we require granularity when it comes to where or workloads 
 
 ## Pod Admission
 
-Pod admission governs how Kubernetes restricts the resources a Pod can consume and how it validates or modifies Pod creation requests before accepting them into the cluster.
+Pod admission governs how Kubernetes restricts the resources a Pod can consume, It also validates or modifies Pod creation requests before accepting them into the cluster.
 
 ### Resource Request and Limits
 
@@ -32,6 +32,45 @@ spec:
       limits:
         memory: "128Mi"
         cpu: "500m"
+```
+
+Which we can visualise like so:
+
+```mermaid
+flowchart TD
+    subgraph Pod [Pod: resource-limits-pod]
+        subgraph Container [Container: heavy-app]
+            direction LR
+            
+            subgraph CPU [CPU Resources]
+                direction TB
+                CpuReq(Request: 250m Guaranteed)
+                CpuLim(Limit: 500m - Maximum)
+            end
+            
+            subgraph Memory [Memory Resources]
+                direction TB
+                MemReq(Request: 64Mi Guaranteed)
+                MemLim(Limit: 128Mi Maximum)
+            end
+        end
+    end
+
+    %% CPU Flow
+    CpuReq -.-> |Bursts beyond 250m| CpuLim
+    CpuLim -.-> |Exceeds 500m| CpuThrottle(Throttle)
+    
+    %% Memory Flow
+    MemReq -.-> |Bursts beyond 64Mi| MemLim
+    MemLim -.-> |Exceeds 128Mi| MemKill(Terminated: OOMKilled)
+
+    %% Styling classes
+
+    classDef kill fill:#3E1414,stroke:#F44336,stroke-width:2px,color:#fff
+    
+    class CpuReq,MemReq req
+    class CpuLim,MemLim lim
+    class MemKill kill
 ```
 
 In this example, if this workload exceeds 500m CPU, it will be throttled. If it exceeds 128Mi of RAM, it will be `OOMKilled`
@@ -197,3 +236,17 @@ spec:
       - name: web-app
         image: nginx:1.36.1
 ```
+
+!!! success "Exam Tip"
+
+    Workloads exceeding their memory `limit` get `OOMkilled`
+
+
+!!! success "Exam Tip"
+
+    Affinity rules attract workloads together
+
+
+!!! success "Exam Tip"
+
+    Anti-Affinity rules repel workloads apart

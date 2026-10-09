@@ -25,9 +25,9 @@ graph LR
     %% Backend Storage
     subgraph Data [ Objects ]
         direction TB
-        DB1[(" ")]:::database
-        DB2[(" ")]:::database
-        DB3[(" ")]:::database
+        DB1[(" API ")]:::database
+        DB2[(" API ")]:::database
+        DB3[(" API ")]:::database
     end
 
     %% Routing / Connections
@@ -52,13 +52,11 @@ All authentication is handled via HTTP over TLS.
 
 ## Step 2 - Authorization
 
-After a user or service account is authenticated, the request must then be authorized. Any authentication request is followed by some kind of action request, and the action defines the object(s) that request needs to apply to, and what the action is. For example, to list the pods in a given namespace.
-
-Any and all requests are facilitated providing an existing policy gives the user those permissions.
+After a user or service account is authenticated, the request must then be authorised. Any authentication request is followed by some kind of action request, and the action defines the object(s) that request needs to apply to, and what the action is. For example, to list the pods in a given namespace.
 
 ## Steps 3 & 4 - Admission Control
 
-Admission Control Modules are software modules that can modify or reject requests. In addition to the attributes available to Authorization Modules, Admission Control Modules can access the contents of the object that is being created or updated. They act on objects being created, deleted, updated or connected (proxy), but not reads.
+Admission Control Modules can modify or reject requests. In addition to the attributes available to Authorisation Modules, Admission Control Modules can access the contents of the object that is being created or updated. They act on objects being created, deleted, updated or connected (proxy), but not reads.
 
 ## `Role` and `Rolebindings`
 
@@ -101,7 +99,7 @@ A `role` grants access to resources within a single namespace.
 
 A `rolebinding` grants the permissions from a role to a user, group or service account within a single namespace.
 
-`clusterrole` and `clusterrolebindings` operate similarly, but obviously provide access to non-namespaced resources.
+`clusterrole` and `clusterrolebindings` operate similarly, but provide access to cluster-scoped resources.
 
 `kubectl api-resources --namespaced=false` can be used to determine which resource types are not namespaced. Examples include: `node`, `persistentvolume`, `storageclass` and `users`.
 
@@ -124,10 +122,9 @@ metadata:
  namespace: rbac-test
 ```
 
-of particular importance is the format of the below.  
-`apiGroup` : Determines which API group to apply this to.
-`resources`: Which resource types to apply this to.
-`verbs`: What we can do to these objects (ie create, delete, watch, etc)
+`apiGroup` : Determines which API group to apply this to.  
+`resources`: Which resource types to apply this to.  
+`verbs`: What we can do to these objects (ie create, delete, watch, etc)  
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -170,3 +167,11 @@ However with `secrets`, it returns `no`
 kubectl -n rbac-test --as=system:serviceaccount:rbac-test:rbac-test-sa auth can-i get secrets
 no
 ```
+
+!!! success "Exam Tip"
+
+    `roles` and `rolebindings` are namespace-scoped. `clusterRoles` and `clusterBindings` are cluster-scoped.
+
+!!! success "Exam Tip"
+
+    `roles` provide the "persona" - ie admin, reader, deployer, etc. `bindings` provide the glue between a user and a role.

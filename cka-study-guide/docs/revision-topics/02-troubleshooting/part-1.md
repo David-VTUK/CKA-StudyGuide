@@ -69,10 +69,25 @@ If we can get an output from `kubectl` this tells us that:
 * The Kubernetes API server is running and responding to requests
 * ETCD is working
 
-In particular, we're looking for the node `status` `role` and `version`
+At a node level. we're looking at the `status` `role` and `version` values. If a node status is anything other than `Ready` we know the `kubelet` is reporting an issue.
 
 `kubectl describe node <name>` - Enables us to inspect node conditions, for example, if it's exhibiting `MemoryPressure`, `DiskPressure` and allocatable resources
 
 `kubectl get events --sort-by-'.lastTimestamp'` - Presents a list of cluster wide events, sorted in chronological order to spot systemic issues such as scheduling failures.
 
 `journalctl -u kubelet` - Run this directly on a node to inspect the `kubelet` service logs if a node is not reporting a `Ready` status.
+
+## Exam Flashcards
+
+!!! success "Exam Tip"
+
+    The `Kubelet` is the component that reports back to the Kubernetes API server. If a node is not `ready`. Checking its logs is often the first clue
+
+
+!!! success "Exam Tip"
+
+    Ensure you're using the correct `kubeconfig` file that references the IP/FQDN of the Kubernetes API server you're trying to access.
+
+!!! success "Exam Tip"
+
+    Try to discern the topology of the cluster you're working with - how many nodes their are, their roles, if roles are consolidated, etc.

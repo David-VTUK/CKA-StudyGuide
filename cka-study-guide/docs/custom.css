@@ -3,7 +3,7 @@
 }
 
 .md-grid {
-  max-width: 80%; /* Change to 100% for maximum edge-to-edge width */
+  max-width: 100%; /* Change to 100% for maximum edge-to-edge width */
 }
 
 /* 1. Optimise Code Blocks: Shrink to fit content */
@@ -20,9 +20,10 @@
   margin: 2em 0; /* Adds a bit of breathing room above and below the diagram */
 }
 
-/* Increases the left sidebar width on desktop screens */
+/* Increase the width of the left navigation sidebar on desktop views */
 @media screen and (min-width: 76.25em) {
   .md-sidebar--primary {
-    width: 18rem !important; /* The default is usually 12.1rem. Increase as needed. */
+    width: 18rem; /* Default is ~12.1rem (242px). Increase to 16rem - 20rem as needed */
   }
 }
+

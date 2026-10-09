@@ -12,7 +12,7 @@ For example, if asked to create and apply a `service` object, search for `Servic
 
 ## Caution on documentation
 
-When using the Kubernetes.io docs, be careful of the search results - **some will point to resources outside of kubernetes.io and the list of accepted resource for the exam. Should you navigate to these your exam may be cancelled. Sanity check the URL the search result is pointing to prior to procedding.**
+When using the Kubernetes.io docs, be careful of the search results - **some will point to resources outside of kubernetes.io and the list of accepted resource for the exam. Should you navigate to these your exam may be cancelled. Sanity check the URL the search result is pointing to prior to proceeding.**
 
 ## Don't write YAML manifests from scratch
 

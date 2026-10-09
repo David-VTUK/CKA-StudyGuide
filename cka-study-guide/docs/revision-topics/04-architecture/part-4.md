@@ -115,3 +115,7 @@ To perform a restore:
 ```shell
 ETCDCTL_API=3 etcdctl snapshot restore snapshot.db
 ```
+
+!!! success "Exam Tip"
+
+    Practice corrupting and restoring etcd. Think about failure scenarios that could occur whilst upgrading

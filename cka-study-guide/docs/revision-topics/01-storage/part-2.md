@@ -1,6 +1,6 @@
 # Configure volume types, access modes and reclaim policies
 
-## Overview
+## Volume Types
 
 Two volume types exist:
 
@@ -28,8 +28,7 @@ spec:
 
 !!! tip "Tip"
 
-    Although the `PersistentVolume` is consumed by the `Pod`, it is mounted onto the `node` that's running the `Pod`. Hence, when we describe the differences between the access modes, we refer to the node that does the mounting.
-
+    Although the `PersistentVolume` is consumed by the `Pod`, it is mounted onto the `node` that's running the `Pod`. Hence, when we describe the differences between the access modes, we refer to the node that performs the mounting.
 
 Four types of access modes exist:
 
@@ -58,8 +57,7 @@ spec:
       storage: 1Gi
 ```
 
-A decision we need to make is which storage type and access mode to use. This is largely driven by the application requirements. We could apply the following thought process to the volume type:
-
+A decision we need to make is which storage type and access mode to use for a given application. This is largely driven by the application requirements. We could apply the following thought process to the volume type:
 
 ```mermaid
 flowchart LR
@@ -95,6 +93,8 @@ graph LR
     Q3 -->|Yes| D[ReadWriteOnce]
     Q3 -->|No| E[ReadWriteOncePerPod]
 ```
+
+## Reclaim Policies
 
 Reclaim Policies determine what happens to the `PersistentVolume` object when its associated `PersistentVolumeClaim` is deleted. Two main modes exist:
 

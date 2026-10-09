@@ -1,10 +1,10 @@
 # Implement storage classes and dynamic volume provisioning
 
-## Overview
+## Volume Provisioning
 
 In order to decouple running application code and its persistent data, we leverage the `PersistentVolumeClaim` API. This effectively carves out storage from a specific provider for the application to consume.
 
-A provider in this context can be a cloud vendor (ie AWS, Google, Azure) and on premises providers (ie NetAPP, Dell, etc).
+A provider in this context can be a cloud vendor (ie AWS, Google, Azure) and on premises providers (ie NetAPP, Dell Technologies, etc).
 
 Given the example in the previous page, lets expand on this so that persistent data is captured in a `PersistentVolumeClaim`
 
@@ -54,11 +54,11 @@ spec:
 
 We've performed a number of changes from the original manifest:
 
-* Changed the `Deployment` spec to include `volumes` and `volumeMounts`
+* Changed the `Deployment` spec to include `volumes` and `volumeMounts`.
 
 `.spec.volumes` indicates "Within this pod, theres a volume, this volume is based off the claim called "nginx-pvc".
 
-`.spec.volumeMounts` indicates "Within this container *inside this pod* we're going to take the aforementioned persistent volume and mount it to `/usr/share/nginx/html`
+`.spec.volumeMounts` indicates "Within this container *inside this pod* we're going to take the aforementioned persistent volume and mount it to `/usr/share/nginx/html`.
 
 * Created a `PersistentVolumeClaim` object that provides the actual storage.
 
@@ -102,7 +102,7 @@ david@fedora:~/cka$ kubectl exec nginx-deployment-767d55ff87-6xn2k -- curl -s lo
 
 The Pod was deleted and rescheduled, but the data persisted. Because the Pod spec references a PVC, it is re-attached once rescheduled.
 
-We're now dealing with two distinct object types, a Kubernetes `Pod` , and a `PersistentVolumeClaim`
+We're now dealing with two distinct object types, a Kubernetes `Pod` , and a `PersistentVolumeClaim`. Their life cycles are independent of one another.
 
 ```mermaid
 graph TD
@@ -124,7 +124,9 @@ graph TD
     style storage rx:10,ry:10
 ```
 
-You may be wondering, how the "magic" happens when we request storage, and part of that is `StorageClasses`
+## Storage Classes
+
+You may be wondering, how the "magic" happens when we request storage, and part of that is `StorageClasses`.
 
 !!! tip "Tip"
 
@@ -149,11 +151,9 @@ volumeBindingMode: Immediate
 
 Key parts of the specification are:
 
-* `provisioner` : Determine which volume plugin to use. This usually matches to a cloud provider, and a specific storage service that it offers. In this example AWS Elastic Block Store. It could also be a on premises NetAPP, Dell etc array.
+* `provisioner` : Determines which volume plugin to use. This usually matches to a cloud provider, and a specific storage service that it offers. In this example AWS Elastic Block Store. It could also be a on premises NetAPP, Dell Technologies array, etc.
 
 * `parameters` : Describe characteristics of this storage class in context of the underlying provisioner. In this example, the `type` is `gp2` which, in AWS vernacular relates General Purpose SSD. Other types include `IO1` (Provisioned IOPS), `ST1` (Throughput Optimised) and `STC` (Cold Storage). Difference storage providers will have different parameters.
-
-The `StorageClass` object
 
 We've thrown around a number of different API's, so here's how they relate to each other:
 
@@ -181,7 +181,7 @@ longhorn-static      driver.longhorn.io      Delete          Immediate          
 standard             kubernetes.io/aws-ebs   Retain          Immediate           true                   17h
 ```
 
-A cluster can have multiple `StorageClasses`. One of these instances can be designated the `default`. This is the `StorageClass` that will be used to satisfy a `PersistentVolumeClaim` when no `StorageClass` is explicitly defined.
+A cluster can have multiple `StorageClasses`. One of these instances can be designated the `default`. This is the `StorageClass` that will be used to satisfy a `PersistentVolumeClaim` when no `StorageClass` is explicitly defined as part of its manifest.
 
 A `StorageClass` is typically backed by a Container Storage Interface driver, which is a workload deployed to the Kubernetes cluster that typically also creates the `StorageClass` object. In my example, I have `longhorn` installed, we can view its components like so:
 
@@ -206,7 +206,7 @@ longhorn-csi-plugin-t4w2m                           3/3     Running   13 (5d ago
 longhorn-csi-plugin-wkjgd                           3/3     Running   9 (5d1h ago)   28d
 ```
 
-Note different `Pods` have different responsibilities for this particular CSI, such as attaching storage to the correct node, resizing (if supported), snapshotting, etc.
+Note different `Pods` have different responsibilities. For this particular CSI, these include attaching storage to the correct node, resizing (if supported), snapshotting, etc.
 
 ## Exam Flashcards
 

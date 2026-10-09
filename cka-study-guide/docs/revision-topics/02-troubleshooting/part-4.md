@@ -1,8 +1,8 @@
 # Manage and evaluate container output streams
 
-A container has two output steams - `stderr` and `stdout`
+A container has two output steams - `stderr` and `stdout`.
 
-* `stderr` - Stream used to write diagnostic output from the application. For example, when an error has occured inside the application code, a API call to a third party service fails, etc.
+* `stderr` - Stream used to write diagnostic output from the application. For example, when an error has occurred inside the application code, a API call to a third party service fails, etc.
 * `stdout` - Stream used to write general-purpose information. For example, debug logging, process completion, etc.
 
 The diagram below depicts this process in more detail:
@@ -41,12 +41,12 @@ The flow is like so:
 
 1. The application process inside the container writes logs to `stdout` and `stderr`.
 2. The container runtime intercepts these steams.
-3. After intercepting these streams, it encodes them (typically as JSON), adding meta data (ie timestamps) and writes it to a log file on the nodes filesystem.
+3. After intercepting these streams, it encodes them (typically as JSON), adding metadata (ie timestamps) and writes it to a log file on the nodes filesystem.
 4. When users request these logs, `kubectl` issues a command the the `kube-apiserver`, which, in turn, proxies the request to the `kubelet` on the worker node that's running that Pod. It then reads the log files and streams the output back to the users terminal.
 
 This process retrieves and amalgamates both `stderr` and `stdout` streams. There is no specific distinction between the two.
 
-If you wanted to, you could acess these logs directly on a Worker Node
+If you wanted to, you could access these logs directly on a Worker Node:
 
 ```bash
 david@fedora:~/cka$ ssh ubuntu@172.25.50.241
@@ -112,3 +112,11 @@ david@fedora:~/cka$ kubectl logs -l app=nginx-demo # or kubectl logs deployment/
 2026/10/05 15:52:51 [notice] 1#1: start worker process 30
 2026/10/05 15:52:51 [notice] 1#1: start worker process 31
 ```
+
+!!! success "Exam Tip"
+
+    stderr and stdout streams are both captured in kubectl logs
+
+!!! success "Exam Tip"
+
+    If there's a deployment with multiple Pods and the application is failing, only one of the Pods may be writing the error. Therefore, check the logs from all the Pods in the deployment

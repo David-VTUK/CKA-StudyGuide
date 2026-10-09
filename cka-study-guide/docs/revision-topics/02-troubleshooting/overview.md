@@ -54,3 +54,4 @@ flowchart TB
     class API core;
 ```
 
+Understanding the components and their relationships is crucial to effectively troubleshooting. Which we will go into further detail in the following sections.

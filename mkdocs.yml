@@ -2,7 +2,7 @@ site_name: CKA-Studyguide
 theme:
   name: material
   features:
-    - navigation.expand
+    - navigation.sections
   palette:
 
     # Palette toggle for automatic mode
@@ -65,6 +65,13 @@ nav:
           - Use the Gateway API to manage Ingress traffic: "revision-topics/05-services-and-networking/part-4.md"
           - Know how to use Ingress controllers and Ingress resources: "revision-topics/05-services-and-networking/part-5.md"
           - Understand and use CoreDNS: "revision-topics/05-services-and-networking/part-6.md"
+  - 'Lab Guide':
+      - "Part Zero - General Advice": "lab-guide/00-general-advice.md"
+      - "Part One - Architecture, installation and configuration": "lab-guide/01-architcture-installation-configuration.md"
+      - "Part Two - Workloads and Scheduling": "lab-guide/02-workloads-and-scheduling.md"
+      - "Part Three - Services and Networking": "lab-guide/03-services-and-networking.md"
+      - "Part Four - Storage": "lab-guide/04-storage.md"
+      - "Part Five - Troubleshooting": "lab-guide/05-troubleshooting.md"
 
 
 markdown_extensions:

@@ -64,3 +64,19 @@ Kubernetes imposes the following fundamental requirements on any networking impl
 
 * `Pods` on a node can communicate with all `Pods` on all nodes without NAT.
 * Agents on a node (e.g. system daemons, Kubelet) can communicate with all pods on that node.
+
+!!! success "Exam Tip"
+
+    All `pods` inside a cluster operate as if they are on the same L2 network.
+
+!!! success "Exam Tip"
+
+    The `CNI` is responsible for a lot of the networking scaffolding a Pod is subject to.
+
+!!! success "Exam Tip"
+
+    Every `pod` gets an IP address, but `containers` within that Pod share it. Use port numbers to delimitate traffic between them.
+
+!!! success "Exam Tip"
+
+    By default, `pod` IP addresses are not accessible directly from outside the cluster. We use `services` to forward traffic to them from outside of the cluster.

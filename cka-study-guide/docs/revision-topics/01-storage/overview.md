@@ -2,7 +2,7 @@
 
 Storage in Kubernetes enables the persistence of data independent of the lifecycle of the Pod. All Pods use some form of storage, and by default Pods will use `ephemeral` storage - a temporary, non persistent placeholder for data intrinsically tied to the lifecycle of the Pod; if the Pod terminates, its data is gone. If it gets re-scheduled (for example, in the event it's terminated) it will resort to the state of the image.
 
-Let's take a practical example and deploy simple single replica `nginx` deployment
+Let's take a practical example and deploy simple single replica `nginx` deployment:
 
 ```yaml
 apiVersion: apps/v1
@@ -74,7 +74,6 @@ root@nginx-deployment-8df5fbf9b-hzgxc:/# curl localhost
 
 Note how we get the default nginx welcome page.
 
-
 This setup is represented in the diagram below. If the Pod terminates, so does its ephemeral storage.
 
 ``` mermaid
@@ -93,7 +92,7 @@ graph TD
 
 !!! note "Note"
 
-    Not all workloads require storage. Stateless workloads such as web frontends are a good example of this. Stateful workload examples include services such as databases and message queues that, at least in production, will definitely need persistant storage. 
+    Not all workloads require storage. Stateless workloads such as web frontends are a good example of this. Stateful workload examples include services such as databases and message queues that, at least in production, will definitely need persistent storage. 
 
 By leveraging storage mechanisms in K8s we can decouple the application data from the Pod itself:
 

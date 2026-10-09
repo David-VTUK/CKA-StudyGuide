@@ -125,3 +125,15 @@ kubectl rollout undo deployment/nginx-deployment --to-revision 5
 ```
 
 Source of `revision`: `kubectl rollout history deployment/nginx-deployment`
+
+!!! success "Exam Tip"
+
+    Standalone Pods (not deployed via a deployment object) will not get rescheduled when deleted. Pods from a deployment object, will, however.
+
+!!! success "Exam Tip"
+
+    Avoid deploying standalone Pods. If you only need 1 replica of a instance, deploy a deployment object with a single replica
+
+!!! success "Exam Tip"
+
+    Changes made to a deployment object will be reflected in the Pods that it deploys.

@@ -84,3 +84,11 @@ While many operators are installed in the real world using package managers like
    `kubectl apply -f custom-app-instance.yaml`.
 5. **Troubleshooting**: If your custom application doesn't deploy as expected, you must check the operator's logs to see why it failed to reconcile the resource.
    `kubectl logs deploy/<operator-name> -n <operator-namespace>`.
+
+!!! success "Exam Tip"
+
+    Operators typically deploy with a controller `pod`. This is the entity that watches for instances of specific custom resources and often provides a good starting point for troubleshooting.
+
+!!! success "Exam Tip"
+
+    You can list and filter custom resources in a cluster by running `kubectl get crd`.

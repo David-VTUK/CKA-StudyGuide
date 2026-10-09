@@ -40,3 +40,11 @@ If you are running a firewall (like `ufw` or `firewalld`), you must explicitly o
   * `10250` (Kubelet API)
   * `30000-32767` (Default NodePort Services range)
 * **Pod Network CIDR:** You must select and define a contiguous block of IP addresses (CIDR) that will be allocated to your Pods. This CIDR block must not overlap with the host network's IP range.
+
+!!! success "Exam Tip"
+
+    Become familiar with the Linux distro you intend to use to act as your control plane and worker nodes
+
+!!! success "Exam Tip"
+
+    The topology you decide (how many control plane nodes, worker nodes, etc) will influence some of the networking requirements.

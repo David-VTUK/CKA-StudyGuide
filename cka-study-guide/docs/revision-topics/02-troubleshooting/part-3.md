@@ -1,7 +1,6 @@
 # Monitor cluster and application resource usage
 
-Several `kubectl` commands can be used to determine resource usage at the cluster level and at the application level
-
+Several `kubectl` commands can be used to determine resource usage at the cluster level and at the application level:
 
 ## Cluster level resource usage
 
@@ -35,7 +34,7 @@ cert-manager             cert-manager-cainjector-6468bc96c7-rwp7m               
 cert-manager             cert-manager-webhook-558c6d4f4d-5g8hc                       1m           12Mi            
 ```
 
-By default this will iterate through all namespaces alphabetically. Say we wanted to view the Top pods by CPU usage we can run `kubectl top pods -A --sort-by=cpu`.
+By default this will iterate through all namespaces alphabetically. If we wanted to view the top pods by CPU usage we can run `kubectl top pods -A --sort-by=cpu`.
 
 ```bash
 david@fedora:~/cka$ kubectl top pods -A --sort-by=cpu
@@ -72,4 +71,4 @@ kubectl describe pod <pod-name> | grep -A 4 Requests
 
 !!! success "Exam Tip"
 
-    If you see a Pod has been `OOM Killed` but the node has available resources - check the Pods memory limit. If a Pod tries to exceed its memory limit, it will be `OOM Killed`.
+    If you see a Pod has been `OOM Killed` (Out of Memory Killed) but the node it runs on has available resources - check the Pods memory limit. If a Pod tries to exceed its memory limit, it will be `OOM Killed`.

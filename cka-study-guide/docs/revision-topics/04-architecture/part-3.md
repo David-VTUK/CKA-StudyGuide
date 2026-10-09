@@ -145,3 +145,7 @@ NAME            STATUS   ROLES    AGE     VERSION
 k8s-cl02-ms01   Ready    master   50m     v1.37.1
 k8s-cl02-wk01   Ready    <none>   2m10s   v1.37.1
 ```
+
+!!! success "Exam Tip"
+
+    If possible, practice using kubeadm by deploying, destroying and redeploying clusters of different configurations. For example, single node, multi node. Experiment with different CNI's.

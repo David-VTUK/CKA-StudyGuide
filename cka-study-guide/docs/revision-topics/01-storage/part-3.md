@@ -1,19 +1,19 @@
 # Manage persistent volumes and persistent volume claims
 
-## Overview
+## Persistent Volumes and Claims
 
 A `PersistentVolume` is a allocation of storage from some kind of provider.
 A `PersistentVolumeClaim` is a workload request for storage that will map to a suitable `PersistentVolume`.
-Even with dynamic provisioning leveraging `StorageClass` objects, both the `PersistentVolume` and `PersistentVolumeClaim` objects will be deployed. The former is abstracted away.
+Even with dynamic provisioning leveraging `StorageClass` objects, both the `PersistentVolume` and `PersistentVolumeClaim` objects will be deployed. The former is abstracted.
 
 A `PersistentVolume` is a cluster-scoped API. We present this storage to the entire cluster for consumption.
-A `PersistentVolumeClaim` is a namespace-scoped API. We reference this in our workloads which are also cluster scoped.
+A `PersistentVolumeClaim` is a namespace-scoped API. We reference this in our workloads requiring storage.
 
 There is a strict 1:1 mapping between a `PersistentVolumeClaim` and a `PersistentVolume`. This relationship is called a binding. Once bound, the relationship is exclusive.
 
 This relationship is further defined having the following attributes:
 
-* **No sharing of leftover space** - If your PVC requests 5GB of storage, and Kubernetes binds it to an available 10GB `PersistentVoluume.`, the remaining 5GB on that volume cannot be claimed by another PVC. You can, however, if the CSI driver supports it, *expand* the volume at a later date.
+* **No sharing of leftover space** - If your PVC requests 5GB of storage, and Kubernetes binds it to an available 10GB `PersistentVolume.`, the remaining 5GB on that volume cannot be claimed by another PVC. You can, however, if the CSI driver supports it, *expand* the volume at a later date.
 * **Many Pods can reference a single `PersistentVolumeClaim`** - While you cannot bind multiple `PersistentVolumeClaims` to a single `PersistentVolume`, you can have multiple Pods mount the exact same PVC (provided the storage backend supports the ReadWriteMany access mode).
 
 The flow graph below depicts both scenarios : Static and Dynamic provisioning.
@@ -57,10 +57,10 @@ pvc-4100c254-020e-4323-9cd8-9eee23532eee   5Gi        RWO            Delete     
 pvc-bc92e08f-55f4-4d65-8698-6d49f9777820   100Gi      RWO            Delete           Bound    kube-prometheus-stack/prometheus-kube-prometheus-stack-prometheus-db-prometheus-kube-prometheus-stack-prometheus-0   longhorn       <unset>                          38d
 pvc-dcf22320-f45a-486b-9c11-ea97a6311d64   1Gi        RWO            Delete           Bound    default/nginx-pvc                                                                                                    longhorn       <unset>                          23h
 ```
+
 Note these are cluster-scoped API's
 
 To list the current `PersistentVolumeClaims`:
-
 
 ```bash
 david@fedora:~/cka$ kubectl get pvc -A
@@ -99,7 +99,7 @@ You can modify existing PVC's, but only for a very limited set of parameters, th
 
 !!! success "Exam Tip"
 
-    If a `PersistentVolume` is failing to initalise. Check the CSI driver Pod logs.
+    If a `PersistentVolume` is failing to initialise. Check the CSI driver Pod logs.
 
 !!! success "Exam Tip"
 

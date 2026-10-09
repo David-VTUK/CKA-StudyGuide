@@ -67,7 +67,7 @@ spec:
 
 This is what the Kubernetes API will continuously monitor. If this changes, or if the running state does not match the desired state, it takes action.
 
-This differs from running standlone `Pods` - When a `Pod` is terminated, it's gone forever. When a replica in a `Deployment` is terminated, it is replaced.
+This differs from running standalone `Pods` - When a `Pod` is terminated, it's gone forever. When a replica in a `Deployment` is terminated, it is replaced.
 
 Not all failures are obvious, a application can be running but deadlocked, or silently failing. This is where probes come in.
 
@@ -79,7 +79,7 @@ A `probe` in Kubernetes is a mechanism for determining the state of an applicati
 
 * Is the container alive and functioning properly? (`liveness` probe)
 * Is the container ready to receive traffic? (`readiness` probe)
-* Is the continer finished with its initial boot sequence and ready for standard health monitoring to being? (`startup` probe)
+* Is the container finished with its initial boot sequence and ready for standard health monitoring to being? (`startup` probe)
 
 Regardless of which probe to use, they all use the same `type`:
 
@@ -92,7 +92,7 @@ Regardless of which probe to use, they all use the same `type`:
 
 ### Liveness Probe
 
-In this example, the kubelet will, every 5 seconds issue a `HTTP GET` command to the container on port 80. If it passes? do nothing. If it fails, terminate it:
+In this example, the `kubelet` will, every 5 seconds issue a `HTTP GET` command to the container on port 80. If it passes? do nothing. If it fails, terminate it:
 
 ```yaml hl_lines="21-27"
 apiVersion: apps/v1
@@ -318,7 +318,7 @@ Three options exist:
 
 1. `always` - This is the default. The Kubelet will automatically restart the container regardless of why it stopped.
 2. `onFailure` - The Kubelet will automatically restart the container only when it exists with a non-zero exit code, or terminated by a `probe`.
-3. `never` - The Kubelet will not restart the contuner **under any circumstances**.
+3. `never` - The Kubelet will not restart the container **under any circumstances**.
 
 We define it under `.spec.restartPolicy` inside the Pod spec:
 
@@ -346,3 +346,19 @@ spec:
         ports:
         - containerPort: 80
 ```
+
+!!! success "Exam Tip"
+
+    Liveness and readiness `probes` provide a continuous check to establish if our application is healthy.
+
+!!! success "Exam Tip"
+
+    If a liveness probe fails, the Pod is terminated#
+
+!!! success "Exam Tip"
+
+    If a readiness probe fails, the Pod is not terminated, but its endpoint is removed from the service list.
+
+!!! success "Exam Tip"
+
+    Use startup probes for applications that need a grace period upon starting up (ie for initialisation, migrations, pulling down data, etc).

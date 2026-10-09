@@ -1,6 +1,6 @@
 # Use ConfigMaps and Secrets to configure applications
 
-Both `ConfigMaps` and `Secrets` are used to decouple application configuration from the container image. By doing so, we have greater flexibility in changing the behavior of our applications. They can be used in two ways:
+Both `ConfigMaps` and `Secrets` are used to decouple application configuration from the container image. By doing so, we have greater flexibility in changing the behaviour of our applications. They can be used in two ways:
 
 * Mounted as a `Volume`
 * Injected as a `Environment Variable`
@@ -34,8 +34,10 @@ graph LR
     class VOL,ENV innerNode;
 ```
 
-`ConfigMaps` are intended for general purpose application configuration - names, URL's, Application specific environment variables, etc
+`ConfigMaps` are intended for general purpose application configuration - names, URL's, Application specific environment variables, etc.
 `Secrets` are intended to store sensitive information - API keys, passwords, certificates, etc.
+
+Both are simple key:value pairs.
 
 !!! danger "Danger"
 
@@ -47,7 +49,7 @@ It's incredibly easy to create either of these objects using `kubectl`:
 kubectl create configmap <map-name> <data-source>
 ```
 
-`Map-name` is an arbitrary name we give to this particular map, and “data-source” corresponds to a key-value pair that resides in the config map.
+`Map-name` is an arbitrary name we give to this particular `configmap`, and “data-source” corresponds to a key-value pair that will reside in the `configmap`.
 
 ```shell
 kubectl create configmap vt-cm --from-literal=blog=virtualthoughts.co.uk
@@ -121,3 +123,15 @@ spec:
       secret:
         secretName: blog-name
 ```
+
+!!! success "Exam Tip"
+
+    Use `configMaps` for general purpose key-value pairs, and `secrets` for sensitive information
+
+!!! success "Exam Tip"
+
+    Both `secrets` and `configMaps` can be created with `kubectl` and can use a file as a source, ie `  kubectl create secret generic my-secret --from-file=path/to/bar`
+
+!!! success "Exam Tip"
+
+    Leverage `configMaps` and `secrets` to avoid hard-coding details inside container images (API keys, configurable variables, etc).

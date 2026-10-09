@@ -53,7 +53,6 @@ flowchart TB
     class API core;
 ```
 
-
 ## Control Plane Node Components
 
 ### ETCD
@@ -62,7 +61,7 @@ Usually, most etcd implementations also include etcdctl, which can aid in monito
 
 `find / -name etcdctl`
 
-Leveraging this tool to check the cluster status:
+Leveraging this tool to check the etcd cluster status:
 
 ```bash
 etcdctl --write-out=table --endpoints=$ENDPOINTS endpoint status
@@ -75,7 +74,7 @@ etcdctl --write-out=table --endpoints=$ENDPOINTS endpoint status
 +------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
 ```
 
-The cluster this was executed on has only one master node, hence only one result from the script. You will normally receive a response for each etcd member in the cluster.
+The cluster this was executed on has only one control plane node, hence only one result from the script. You will normally receive a response for each etcd member in the cluster.
 
 Alternatively, leverage kubectl get componentstatuses:
 
@@ -219,3 +218,11 @@ Or
 ```shell
 cat /var/log/containerd.log
 ```
+
+!!! success "Exam Tip"
+
+    A lot of modern distributions, including kubeadm package control plane components as static Pods. Therefore, we can use regular `kubectl` commands to extract logs.
+
+!!! success "Exam Tip"
+
+    A lot of modern distributions, including kubeadm deploy the Kubelet as a systemd service. Therefore, we can use `journalctl` to view its logs. This is a crucial communication path between worker nodes and the API server.
