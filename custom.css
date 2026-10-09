@@ -1,3 +1,29 @@
 .wy-nav-content {
-    max-width: 1200px !important;
+    max-width: 100px !important;
 }
+
+.md-grid {
+  max-width: 100%; /* Change to 100% for maximum edge-to-edge width */
+}
+
+/* 1. Optimise Code Blocks: Shrink to fit content */
+.md-typeset div.highlight {
+  width: auto;
+  min-width: 50%; /* Prevents very short one-line commands from looking too narrow */
+  /* margin: 0 auto; Uncomment this line if you also want to center your code blocks */
+}
+
+/* 2. Center Align Mermaid Diagrams */
+.md-typeset .mermaid {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0; /* Adds a bit of breathing room above and below the diagram */
+}
+
+/* Increase the width of the left navigation sidebar on desktop views */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary {
+    width: 18rem; /* Default is ~12.1rem (242px). Increase to 16rem - 20rem as needed */
+  }
+}
+

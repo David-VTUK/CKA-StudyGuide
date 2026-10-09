@@ -1,114 +1,1881 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Part Five - Troubleshooting - CKA-Studyguide</title>
-    <link rel="stylesheet" href="../../css/theme.css" />
-    <link rel="stylesheet" href="../../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
-        <link href="../../custom.css" rel="stylesheet" />
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
     
-      <script>
-        // Current page data
-        var mkdocs_page_name = "Part Five - Troubleshooting";
-        var mkdocs_page_input_path = "lab-guide/05-troubleshooting.md";
-        var mkdocs_page_url = null;
-      </script>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../04-storage/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
-    <!--[if lt IE 9]>
-      <script src="../../js/html5shiv.min.js"></script>
-    <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-      <script>hljs.highlightAll();</script> 
-</head>
+    
+      
+        <title>Part Five - Troubleshooting - CKA-Studyguide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
 
-<body class="wy-body-for-nav" role="document">
 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-    <div class="wy-side-scroll">
-      <div class="wy-side-nav-search">
-          <a href="../.." class="icon icon-home"> CKA-Studyguide
-        </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
-  </form>
-</div>
-      </div>
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
-                </li>
-              </ul>
-              <p class="caption"><span class="caption-text">Revision Topics</span></p>
-              <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/03-services-and-networking/">Part Three - Services & Networking</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/04-storage/">Part Four - Storage</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../../revision-topics/05-troubleshooting/">Part Five - Troubleshooting</a>
-                  </li>
-              </ul>
-              <p class="caption"><span class="caption-text">Lab Guide</span></p>
-              <ul class="current">
-                  <li class="toctree-l1"><a class="reference internal" href="../00-general-advice/">Part Zero - General Advice</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../01-architcture-installation-configuration/">Part One - Architecture, Installation and Configuration</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../02-workloads-and-scheduling/">Part Two - Workloads & Scheduling</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../03-services-and-networking/">Part Three - Services & Networking</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../04-storage/">Part Four - Storage</a>
-                  </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Part Five - Troubleshooting</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#exercise-0-setup">Exercise 0 - Setup</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#exercise-1-evaluate-cluster-and-node-logging">Exercise 1 - Evaluate cluster and node logging</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#exercise-2-understand-how-to-monitor-applications">Exercise 2 - Understand how to monitor applications</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#exercise-3-troubleshoot-application-failure">Exercise 3 - Troubleshoot application failure</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#exercise-4-troubleshoot-networking">Exercise 4 - Troubleshoot networking</a>
-    </li>
-    </ul>
-                  </li>
-              </ul>
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-exercises-for-troubleshooting" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="CKA-Studyguide" class="md-header__button md-logo" aria-label="CKA-Studyguide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CKA-Studyguide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Part Five - Troubleshooting
+            
+          </span>
+        </div>
       </div>
     </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../..">CKA-Studyguide</a>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
         
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
       </nav>
-      <div class="wy-nav-content">
-        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">Lab Guide</li>
-      <li class="breadcrumb-item active">Part Five - Troubleshooting</li>
-    <li class="wy-breadcrumbs-aside">
-    </li>
-  </ul>
-  <hr/>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-            <div class="section" itemprop="articleBody">
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
               
-                <h1 id="lab-exercises-for-troubleshooting">Lab Exercises for Troubleshooting</h1>
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="CKA-Studyguide" class="md-nav__button md-logo" aria-label="CKA-Studyguide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    CKA-Studyguide
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Revision Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Revision Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part One - Storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part One - Storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/01-storage/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/01-storage/part-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implement storage classes and dynamic volume provisioning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/01-storage/part-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure volume types, access modes and reclaim policies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/01-storage/part-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage persistent volumes and persistent volume claims
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part Two - Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part Two - Troubleshooting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/02-troubleshooting/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/02-troubleshooting/part-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshoot clusters and nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/02-troubleshooting/part-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshoot cluster components
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/02-troubleshooting/part-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitor cluster and application resource usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/02-troubleshooting/part-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage and evaluate container output streams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/02-troubleshooting/part-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshoot services and networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part Three - Workloads and Scheduling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part Three - Workloads and Scheduling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/03-workloads-and-scheduling/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/03-workloads-and-scheduling/part-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Understand application deployments and how to perform rolling update and rollbacks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/03-workloads-and-scheduling/part-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use ConfigMaps and Secrets to configure applications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/03-workloads-and-scheduling/part-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure workload autoscaling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/03-workloads-and-scheduling/part-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Understand the primitives used to create robust, self-healing, application deployments
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/03-workloads-and-scheduling/part-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configure Pod admission and scheduling limits, node affinity, etc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part Four - Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part Four - Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/04-architecture/part-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage role based access control (RBAC)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/04-architecture/part-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prepare underlying infrastructure for installing a Kubernetes cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/04-architecture/part-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create and manage Kubernetes clusters using kubeadm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/04-architecture/part-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage the lifecycle of Kubernetes clusters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/04-architecture/part-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implement and configure a highly-available control plane
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/04-architecture/part-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Helm and Kustomize to install cluster components
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/04-architecture/part-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Understand extension interfaces (CNI, CSI,CRI, etc.)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/04-architecture/part-8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Understand CRDs, install and configure operators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part Five - Servicing and Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part Five - Servicing and Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/05-services-and-networking/part-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Understand connectivity between Pods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/05-services-and-networking/part-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Define and enforce Network Policies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/05-services-and-networking/part-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use ClusterIP, NodePort, LoadBalancer service types and endpoints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/05-services-and-networking/part-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use the Gateway API to manage Ingress traffic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/05-services-and-networking/part-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Know how to use Ingress controllers and Ingress resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../revision-topics/05-services-and-networking/part-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Understand and use CoreDNS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Lab Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-general-advice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part Zero - General Advice
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-architcture-installation-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part One - Architecture, installation and configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-workloads-and-scheduling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part Two - Workloads and Scheduling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-services-and-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part Three - Services and Networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part Four - Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part Five - Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part Five - Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-0-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 0 - Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-evaluate-cluster-and-node-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 1 - Evaluate cluster and node logging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-understand-how-to-monitor-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 2 - Understand how to monitor applications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-troubleshoot-application-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 3 - Troubleshoot application failure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-troubleshoot-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 4 - Troubleshoot networking
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-0-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 0 - Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-1-evaluate-cluster-and-node-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 1 - Evaluate cluster and node logging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-2-understand-how-to-monitor-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 2 - Understand how to monitor applications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-3-troubleshoot-application-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 3 - Troubleshoot application failure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercise-4-troubleshoot-networking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 4 - Troubleshoot networking
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="lab-exercises-for-troubleshooting">Lab Exercises for Troubleshooting</h1>
 <h2 id="exercise-0-setup">Exercise 0 - Setup</h2>
 <ul>
 <li>Prepare a cluster (Single node, kubeadm, k3s, etc)</li>
@@ -131,15 +1898,17 @@
 <ol>
 <li>1 Is dependent on how the cluster was made and potentially which OS's were used. For example, if K8S components manifest as Kubernetes Pods:</li>
 </ol>
-<pre class="highlight"><code class="language-shell">kubectl logs &lt;podname&gt; &lt;namespace&gt;</code></pre>
-<pre class="highlight"><code class="language-shell">kubectl get events</code></pre>
-<pre class="highlight"><code class="language-shell">etcdctl --write-out=table --endpoints=$ENDPOINTS endpoint status
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>&lt;podname&gt;<span class="w"> </span>&lt;namespace&gt;
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>events
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>etcdctl<span class="w"> </span>--write-out<span class="o">=</span>table<span class="w"> </span>--endpoints<span class="o">=</span><span class="nv">$ENDPOINTS</span><span class="w"> </span>endpoint<span class="w"> </span>status
 +------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
-|        ENDPOINT        |        ID        | VERSION | DB SIZE | IS LEADER | IS LEARNER | RAFT TERM | RAFT INDEX | RAFT APPLIED INDEX | ERRORS |
+<span class="p">|</span><span class="w">        </span>ENDPOINT<span class="w">        </span><span class="p">|</span><span class="w">        </span>ID<span class="w">        </span><span class="p">|</span><span class="w"> </span>VERSION<span class="w"> </span><span class="p">|</span><span class="w"> </span>DB<span class="w"> </span>SIZE<span class="w"> </span><span class="p">|</span><span class="w"> </span>IS<span class="w"> </span>LEADER<span class="w"> </span><span class="p">|</span><span class="w"> </span>IS<span class="w"> </span>LEARNER<span class="w"> </span><span class="p">|</span><span class="w"> </span>RAFT<span class="w"> </span>TERM<span class="w"> </span><span class="p">|</span><span class="w"> </span>RAFT<span class="w"> </span>INDEX<span class="w"> </span><span class="p">|</span><span class="w"> </span>RAFT<span class="w"> </span>APPLIED<span class="w"> </span>INDEX<span class="w"> </span><span class="p">|</span><span class="w"> </span>ERRORS<span class="w"> </span><span class="p">|</span>
 +------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
-| https://127.0.0.1:2379 | 4e30a295f2c3c1a4 |   3.5.0 |  8.1 MB |      true |      false |         3 |       7903 |               7903 |        |
+<span class="p">|</span><span class="w"> </span>https://127.0.0.1:2379<span class="w"> </span><span class="p">|</span><span class="w"> </span>4e30a295f2c3c1a4<span class="w"> </span><span class="p">|</span><span class="w">   </span><span class="m">3</span>.5.0<span class="w"> </span><span class="p">|</span><span class="w">  </span><span class="m">8</span>.1<span class="w"> </span>MB<span class="w"> </span><span class="p">|</span><span class="w">      </span><span class="nb">true</span><span class="w"> </span><span class="p">|</span><span class="w">      </span><span class="nb">false</span><span class="w"> </span><span class="p">|</span><span class="w">         </span><span class="m">3</span><span class="w"> </span><span class="p">|</span><span class="w">       </span><span class="m">7903</span><span class="w"> </span><span class="p">|</span><span class="w">               </span><span class="m">7903</span><span class="w"> </span><span class="p">|</span><span class="w">        </span><span class="p">|</span>
 +------------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
-</code></pre>
+</code></pre></div>
 </details>
 <h2 id="exercise-2-understand-how-to-monitor-applications">Exercise 2 - Understand how to monitor applications</h2>
 <ol>
@@ -148,17 +1917,18 @@
 </ol>
 <details class="answer">
 <summary>Answer</summary>
-<pre class="highlight"><code class="language-shell">kubectl logs counter
-0: Mon Dec  9 13:15:08 UTC 2024
-1: Mon Dec  9 13:15:09 UTC 2024
-2: Mon Dec  9 13:15:10 UTC 2024
-3: Mon Dec  9 13:15:11 UTC 2024
-4: Mon Dec  9 13:15:12 UTC 2024
-5: Mon Dec  9 13:15:13 UTC 2024
-6: Mon Dec  9 13:15:14 UTC 2024
-7: Mon Dec  9 13:15:15 UTC 2024
-8: Mon Dec  9 13:15:16 UTC 2024
-9: Mon Dec  9 13:15:17 UTC 2024</code></pre>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>counter
+<span class="m">0</span>:<span class="w"> </span>Mon<span class="w"> </span>Dec<span class="w">  </span><span class="m">9</span><span class="w"> </span><span class="m">13</span>:15:08<span class="w"> </span>UTC<span class="w"> </span><span class="m">2024</span>
+<span class="m">1</span>:<span class="w"> </span>Mon<span class="w"> </span>Dec<span class="w">  </span><span class="m">9</span><span class="w"> </span><span class="m">13</span>:15:09<span class="w"> </span>UTC<span class="w"> </span><span class="m">2024</span>
+<span class="m">2</span>:<span class="w"> </span>Mon<span class="w"> </span>Dec<span class="w">  </span><span class="m">9</span><span class="w"> </span><span class="m">13</span>:15:10<span class="w"> </span>UTC<span class="w"> </span><span class="m">2024</span>
+<span class="m">3</span>:<span class="w"> </span>Mon<span class="w"> </span>Dec<span class="w">  </span><span class="m">9</span><span class="w"> </span><span class="m">13</span>:15:11<span class="w"> </span>UTC<span class="w"> </span><span class="m">2024</span>
+<span class="m">4</span>:<span class="w"> </span>Mon<span class="w"> </span>Dec<span class="w">  </span><span class="m">9</span><span class="w"> </span><span class="m">13</span>:15:12<span class="w"> </span>UTC<span class="w"> </span><span class="m">2024</span>
+<span class="m">5</span>:<span class="w"> </span>Mon<span class="w"> </span>Dec<span class="w">  </span><span class="m">9</span><span class="w"> </span><span class="m">13</span>:15:13<span class="w"> </span>UTC<span class="w"> </span><span class="m">2024</span>
+<span class="m">6</span>:<span class="w"> </span>Mon<span class="w"> </span>Dec<span class="w">  </span><span class="m">9</span><span class="w"> </span><span class="m">13</span>:15:14<span class="w"> </span>UTC<span class="w"> </span><span class="m">2024</span>
+<span class="m">7</span>:<span class="w"> </span>Mon<span class="w"> </span>Dec<span class="w">  </span><span class="m">9</span><span class="w"> </span><span class="m">13</span>:15:15<span class="w"> </span>UTC<span class="w"> </span><span class="m">2024</span>
+<span class="m">8</span>:<span class="w"> </span>Mon<span class="w"> </span>Dec<span class="w">  </span><span class="m">9</span><span class="w"> </span><span class="m">13</span>:15:16<span class="w"> </span>UTC<span class="w"> </span><span class="m">2024</span>
+<span class="m">9</span>:<span class="w"> </span>Mon<span class="w"> </span>Dec<span class="w">  </span><span class="m">9</span><span class="w"> </span><span class="m">13</span>:15:17<span class="w"> </span>UTC<span class="w"> </span><span class="m">2024</span>
+</code></pre></div>
 </details>
 <h2 id="exercise-3-troubleshoot-application-failure">Exercise 3 - Troubleshoot application failure</h2>
 <ol>
@@ -166,10 +1936,11 @@
 </ol>
 <details class="answer">
 <summary>Answer</summary>
-<pre class="highlight"><code class="language-shell">kubectl describe pod nginx-pod
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>nginx-pod
 ..
-  Normal   BackOff    4m55s (x7 over 6m56s)  kubelet            Back-off pulling image "nginx:invalidversion"
-..</code></pre>
+<span class="w">  </span>Normal<span class="w">   </span>BackOff<span class="w">    </span>4m55s<span class="w"> </span><span class="o">(</span>x7<span class="w"> </span>over<span class="w"> </span>6m56s<span class="o">)</span><span class="w">  </span>kubelet<span class="w">            </span>Back-off<span class="w"> </span>pulling<span class="w"> </span>image<span class="w"> </span><span class="s2">"nginx:invalidversion"</span>
+..
+</code></pre></div>
 </details>
 <h2 id="exercise-4-troubleshoot-networking">Exercise 4 - Troubleshoot networking</h2>
 <ol>
@@ -182,98 +1953,118 @@
 </ol>
 <details class="answer">
 <summary>Answer</summary>
-<pre class="highlight"><code class="language-shell">nginx-service.default.svc.cluster.local</code></pre>
-<pre class="highlight"><code class="language-shell">kubectl apply -f https://k8s.io/examples/admin/dns/dnsutils.yaml
-kubectl exec -it dnsutils sh
-/ # nslookup nginx-service.default.svc.cluster.local
-Server: 10.96.0.10
-Address: 10.96.0.10#53
+<div class="highlight"><pre><span></span><code>nginx-service.default.svc.cluster.local
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://k8s.io/examples/admin/dns/dnsutils.yaml
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>dnsutils<span class="w"> </span>sh
+/<span class="w"> </span><span class="c1"># nslookup nginx-service.default.svc.cluster.local</span>
+Server:<span class="w"> </span><span class="m">10</span>.96.0.10
+Address:<span class="w"> </span><span class="m">10</span>.96.0.10#53
 
-Name: nginx-service.default.svc.cluster.local
-Address: 10.99.41.254</code></pre>
-<pre class="highlight"><code class="language-shell">kubectl run curl --image=radial/busyboxplus:curl -i --tty
-If you don't see a command prompt, try pressing enter.
-[ root@curl:/ ]$ curl nginx-service.default.svc.cluster.local
-curl: (7) Failed to connect to nginx-service.default.svc.cluster.local port 80: Connection refused</code></pre>
+Name:<span class="w"> </span>nginx-service.default.svc.cluster.local
+Address:<span class="w"> </span><span class="m">10</span>.99.41.254
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>curl<span class="w"> </span>--image<span class="o">=</span>radial/busyboxplus:curl<span class="w"> </span>-i<span class="w"> </span>--tty
+If<span class="w"> </span>you<span class="w"> </span>don<span class="err">'</span>t<span class="w"> </span>see<span class="w"> </span>a<span class="w"> </span><span class="nb">command</span><span class="w"> </span>prompt,<span class="w"> </span>try<span class="w"> </span>pressing<span class="w"> </span>enter.
+<span class="o">[</span><span class="w"> </span>root@curl:/<span class="w"> </span><span class="o">]</span>$<span class="w"> </span>curl<span class="w"> </span>nginx-service.default.svc.cluster.local
+curl:<span class="w"> </span><span class="o">(</span><span class="m">7</span><span class="o">)</span><span class="w"> </span>Failed<span class="w"> </span>to<span class="w"> </span>connect<span class="w"> </span>to<span class="w"> </span>nginx-service.default.svc.cluster.local<span class="w"> </span>port<span class="w"> </span><span class="m">80</span>:<span class="w"> </span>Connection<span class="w"> </span>refused
+</code></pre></div>
 <p>Check service:</p>
-<pre class="highlight"><code class="language-shell">kubectl describe service nginx-service
-Name:              nginx-service
-Namespace:         default
-Labels:            &lt;none&gt;
-Annotations:       &lt;none&gt;
-Selector:          app=nginx
-Type:              ClusterIP
-IP Families:       &lt;none&gt;
-IP:                10.99.41.254
-IPs:               10.99.41.254
-Port:              &lt;unset&gt;  80/TCP
-TargetPort:        8080/TCP
-Endpoints:         10.244.1.18:8080,10.244.1.19:8080,10.244.1.20:8080
-Session Affinity:  None
-Events:            &lt;none&gt;</code></pre>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>service<span class="w"> </span>nginx-service
+Name:<span class="w">              </span>nginx-service
+Namespace:<span class="w">         </span>default
+Labels:<span class="w">            </span>&lt;none&gt;
+Annotations:<span class="w">       </span>&lt;none&gt;
+Selector:<span class="w">          </span><span class="nv">app</span><span class="o">=</span>nginx
+Type:<span class="w">              </span>ClusterIP
+IP<span class="w"> </span>Families:<span class="w">       </span>&lt;none&gt;
+IP:<span class="w">                </span><span class="m">10</span>.99.41.254
+IPs:<span class="w">               </span><span class="m">10</span>.99.41.254
+Port:<span class="w">              </span>&lt;unset&gt;<span class="w">  </span><span class="m">80</span>/TCP
+TargetPort:<span class="w">        </span><span class="m">8080</span>/TCP
+Endpoints:<span class="w">         </span><span class="m">10</span>.244.1.18:8080,10.244.1.19:8080,10.244.1.20:8080
+Session<span class="w"> </span>Affinity:<span class="w">  </span>None
+Events:<span class="w">            </span>&lt;none&gt;
+</code></pre></div>
 <p>Note:</p>
 <ul>
 <li>Service is listening on port 80</li>
 <li>Service has a endpoint list, with target port of 8080</li>
 <li>Test <code>curl</code> directly against pod:</li>
 </ul>
-<pre class="highlight"><code class="language-shell">curl 10.244.1.18:8080
-curl: (7) Failed to connect to 10.244.1.18 port 8080: Connection refused</code></pre>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span><span class="m">10</span>.244.1.18:8080
+curl:<span class="w"> </span><span class="o">(</span><span class="m">7</span><span class="o">)</span><span class="w"> </span>Failed<span class="w"> </span>to<span class="w"> </span>connect<span class="w"> </span>to<span class="w"> </span><span class="m">10</span>.244.1.18<span class="w"> </span>port<span class="w"> </span><span class="m">8080</span>:<span class="w"> </span>Connection<span class="w"> </span>refused
+</code></pre></div>
 <p>Port 8080 isn't listening, check the pod config:</p>
-<p><pre class="highlight"><code class="language-shell">kubectl describe po nginx-deployment-5d59d67564-bk9xb | grep -i "port:"
-    Port:           80/TCP</code></pre>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>po<span class="w"> </span>nginx-deployment-5d59d67564-bk9xb<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"port:"</span>
+<span class="w">    </span>Port:<span class="w">           </span><span class="m">80</span>/TCP
+</code></pre></div>
 The service is trying to forward traffic to port 8080 on the container, but the container is only listening on port 80. Reconfigure the <code>service</code> object, ie:</p>
-<pre class="highlight"><code class="language-shell">kubectl edit service nginx-service
-Replace targetPort: 8080 with targetPort: 80</code></pre>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>service<span class="w"> </span>nginx-service
+Replace<span class="w"> </span>targetPort:<span class="w"> </span><span class="m">8080</span><span class="w"> </span>with<span class="w"> </span>targetPort:<span class="w"> </span><span class="m">80</span>
+</code></pre></div>
 <p>Retest:</p>
-<pre class="highlight"><code class="language-shell">curl nginx-service.default.svc.cluster.local
-&lt;!DOCTYPE html&gt;
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>nginx-service.default.svc.cluster.local
+&lt;!DOCTYPE<span class="w"> </span>html&gt;
 &lt;html&gt;
 &lt;head&gt;
-&lt;title&gt;Welcome to nginx!&lt;/title&gt;</code></pre>
+&lt;title&gt;Welcome<span class="w"> </span>to<span class="w"> </span>nginx!&lt;/title&gt;
+</code></pre></div>
 </details>
-              
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
             </div>
-          </div><footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../04-storage/" class="btn btn-neutral float-left" title="Part Four - Storage"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-  </div>
-
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
           
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
-      </div>
-
-    </section>
-
-  </div>
-
-  <div class="rst-versions" role="note" aria-label="Versions">
-  <span class="rst-current-version" data-toggle="rst-current-version">
-    
-    
-      <span><a href="../04-storage/" style="color: #fcfcfc">&laquo; Previous</a></span>
-    
-    
-  </span>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
 </div>
-    <script src="../../js/jquery-3.6.0.min.js"></script>
-    <script>var base_url = "../..";</script>
-    <script src="../../js/theme_extra.js"></script>
-    <script src="../../js/theme.js"></script>
-      <script src="../../search/main.js"></script>
-    <script>
-        jQuery(function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        });
-    </script>
-
-</body>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
 </html>
