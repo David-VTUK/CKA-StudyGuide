@@ -37,8 +37,8 @@
       replicas: 6
       strategy:
         rollingUpdate:
-          maxSurge: 25%
-          maxUnavailable: 25%
+          maxSurge: 50%
+          maxUnavailable: 50%
       selector:
         matchLabels:
           app: nginx
