@@ -1908,7 +1908,7 @@
 <h2 id="exercise-1-understand-deployments-and-how-to-perform-rolling-update-and-rollbacks">Exercise 1 - Understand deployments and how to perform rolling update and rollbacks</h2>
 <ol>
 <li>Create a deployment object consisting of 6 pods, each containing a single <code>nginx:1.19.5</code> container</li>
-<li>Identify the update strategy adopted by this deployment</li>
+<li>Identify the update strategy adopted by this deployment, noting the default <code>maxSurge</code> and <code>maxUnavailable</code> values Kubernetes applies when <code>spec.strategy</code> is omitted</li>
 <li>Modify the update strategy so <code>maxSurge</code> is equal to <code>50%</code> and <code>maxUnavailable</code> is equal to <code>50%</code></li>
 <li>Perform a rolling update to this deployment so that the image gets updated to <code>nginx1.19.6</code></li>
 <li>Undo the most recent change</li>
@@ -1916,7 +1916,7 @@
 <details>
 <summary>Answer - Imperative</summary>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>deployment<span class="w"> </span>nginx<span class="w"> </span>--image<span class="o">=</span>nginx:1.19.5<span class="w"> </span>--replicas<span class="o">=</span><span class="m">6</span>
-kubectl<span class="w"> </span>describe<span class="w"> </span>deployment<span class="w"> </span>nginx<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>StrategyType
+kubectl<span class="w"> </span>describe<span class="w"> </span>deployment<span class="w"> </span>nginx<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>strategy
 kubectl<span class="w"> </span>patch<span class="w"> </span>deployment<span class="w"> </span>nginx<span class="w"> </span>-p<span class="w"> </span><span class="s2">"{\"spec\": {\"strategy\": {\"rollingUpdate\": { \"maxSurge\":\"50%\"}}}}"</span><span class="w"> </span>--record<span class="o">=</span><span class="nb">true</span>
 kubectl<span class="w"> </span>patch<span class="w"> </span>deployment<span class="w"> </span>nginx<span class="w"> </span>-p<span class="w"> </span><span class="s2">"{\"spec\": {\"strategy\": {\"rollingUpdate\": { \"maxUnavailable\":\"50%\"}}}}"</span><span class="w"> </span>--record<span class="o">=</span><span class="nb">true</span>
 kubectl<span class="w"> </span><span class="nb">set</span><span class="w"> </span>image<span class="w"> </span>deployment<span class="w"> </span>nginx<span class="w"> </span><span class="nv">nginx</span><span class="o">=</span>nginx:1.19.6<span class="w"> </span>--record<span class="o">=</span><span class="nb">true</span>
@@ -1933,10 +1933,6 @@ kubectl<span class="w"> </span>rollout<span class="w"> </span>undo<span class="w
 <span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6</span>
-<span class="w">  </span><span class="nt">strategy</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">rollingUpdate</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">maxSurge</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">25%</span>
-<span class="w">      </span><span class="nt">maxUnavailable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">25%</span>
 <span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
@@ -1951,8 +1947,12 @@ kubectl<span class="w"> </span>rollout<span class="w"> </span>undo<span class="w
 <span class="w">        </span><span class="nt">ports</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>deployment<span class="w"> </span>nginx<span class="w"> </span><span class="o">(</span>unless<span class="w"> </span>specified,<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>listed<span class="w"> </span>as<span class="w"> </span><span class="s2">"UpdateStrategy"</span><span class="o">)</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>deployment<span class="w"> </span>nginx<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>strategy
 </code></pre></div>
+<p>Note:</p>
+<ul>
+<li>Since <code>spec.strategy</code> was omitted, Kubernetes applies the default <code>RollingUpdate</code> strategy with <code>maxUnavailable: 25%</code> and <code>maxSurge: 25%</code>, shown in the describe output as <code>RollingUpdateStrategy: 25% max unavailable, 25% max surge</code>.</li>
+</ul>
 <p>patch.yaml contents:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apps/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment</span>
@@ -2050,7 +2050,7 @@ kubectl<span class="w"> </span>rollout<span class="w"> </span>undo<span class="w
 <span class="w">  </span><span class="nt">restartPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Never</span>
 </code></pre></div>
 <p>Which can be validated with:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>nginx-secret<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>db<span class="w">                                                  </span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>nginx-secret<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>db
 <span class="nv">dbuser</span><span class="o">=</span>MyDatabaseUser
 <span class="nv">dbpassword</span><span class="o">=</span>MyDatabasePassword
 </code></pre></div>
