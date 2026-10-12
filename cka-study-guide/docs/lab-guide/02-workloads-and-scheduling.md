@@ -8,7 +8,7 @@
 ## Exercise 1 - Understand deployments and how to perform rolling update and rollbacks
 
 1. Create a deployment object consisting of 6 pods, each containing a single `nginx:1.19.5` container
-2. Identify the update strategy adopted by this deployment
+2. Identify the update strategy adopted by this deployment, noting the default `maxSurge` and `maxUnavailable` values Kubernetes applies when `spec.strategy` is omitted
 3. Modify the update strategy so `maxSurge` is equal to `50%` and `maxUnavailable` is equal to `50%`
 4. Perform a rolling update to this deployment so that the image gets updated to `nginx1.19.6`
 5. Undo the most recent change
@@ -17,7 +17,7 @@
 
     ```shell
     kubectl create deployment nginx --image=nginx:1.19.5 --replicas=6
-    kubectl describe deployment nginx | grep StrategyType
+    kubectl describe deployment nginx | grep -i strategy
     kubectl patch deployment nginx -p "{\"spec\": {\"strategy\": {\"rollingUpdate\": { \"maxSurge\":\"50%\"}}}}" --record=true
     kubectl patch deployment nginx -p "{\"spec\": {\"strategy\": {\"rollingUpdate\": { \"maxUnavailable\":\"50%\"}}}}" --record=true
     kubectl set image deployment nginx nginx=nginx:1.19.6 --record=true
@@ -35,10 +35,6 @@
         app: nginx
     spec:
       replicas: 6
-      strategy:
-        rollingUpdate:
-          maxSurge: 50%
-          maxUnavailable: 50%
       selector:
         matchLabels:
           app: nginx
@@ -55,8 +51,12 @@
     ```
 
     ```shell
-    kubectl describe deployment nginx (unless specified, will be listed as "UpdateStrategy")
+    kubectl describe deployment nginx | grep -i strategy
     ```
+
+    Note:
+
+    * Since `spec.strategy` was omitted, Kubernetes applies the default `RollingUpdate` strategy with `maxUnavailable: 25%` and `maxSurge: 25%`, shown in the describe output as `RollingUpdateStrategy: 25% max unavailable, 25% max surge`.
 
     patch.yaml contents:
 
@@ -91,6 +91,7 @@
     1. `key` = owner
     2. `value` = yourname
 2. Create a pod of your choice, such as `nginx`. Configure this Pod so that the underlying container has the environment variable `OWNER` set to the value of this configmap
+
 
 ??? Answer
 
@@ -173,7 +174,7 @@
     Which can be validated with:
 
     ```shell
-    kubectl logs nginx-secret | grep db                                                  
+    kubectl logs nginx-secret | grep db
     dbuser=MyDatabaseUser
     dbpassword=MyDatabasePassword
     ```
@@ -320,3 +321,4 @@
     ```shell
     The Pod "default-mem-demo" is invalid: spec.containers[0].resources.requests: Invalid value: "150Mi": must be less than or equal to memory limit
     ```
+    
